@@ -1,0 +1,92 @@
+body {
+    background: #f2f2f2;
+}
+
+.page__bd_spacing {
+    padding: 0 15px;
+}
+
+.weui-cell:before, .weui-cells:before {
+    border: none;
+}
+
+.input_control {
+    margin: 0 auto;
+    width: 90%;
+    position: relative;
+    border: 1px solid #dadada;
+    /*padding: 15px 0;*/
+    height: 50px;
+    border-radius: 5px;
+}
+
+.input_control > img {
+    width: 25px;
+    height: 25px;
+    right: 15px;
+    top: 15px;
+    position: absolute;
+}
+
+.form_input {
+    width: 97%;
+    outline: none;
+    border: none;
+    height: 50px;
+    background: #f2f2f2;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.weui-label {
+    font-weight: bold
+}
+
+.weui-input {
+    color: #666666;
+}
+
+.show-list {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.show-list li {
+    height: 1rem;
+    font-size: .3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.weui-mask_transparent {
+    background: #000;
+    opacity: 0.5;
+}
+
+.content {
+    text-align: center;
+}
+#judge{
+    background: #00A1E9;
+    margin-left: 5px;
+    margin-right: 2.5px;
+}
+#advice{
+    background: #80C26A;
+    margin-right: 5px;
+    margin-left: 2.5px;
+}
+#cancel{
+    background: #FA4A45;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.button{
+    color: #fff;
+    padding: 10px 35px;
+    border-radius: 5px;
+    text-align: center;
+}

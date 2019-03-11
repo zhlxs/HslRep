@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.core.dao.ILogDao">
+	<resultMap type="com.jrwp.core.entity.Core_Log" id="logMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="areaName" column="areaName" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="controlName" column="controName" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="actionName" column="actionName" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="parameterJson" column="parameterJson"
+			javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="recordTime" column="recordTime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="recordIP" column="recordIP" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="controlDisplay" column="controDisplay"
+			javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="actionDisplay" column="actionDisplay"
+			javaType="java.lang.String" jdbcType="VARCHAR" />
+		<association property="user" javaType="com.jrwp.core.entity.Core_User">
+			<id property="id" column="userid" javaType="Long" jdbcType="INTEGER" />
+			<result property="fullName" column="fullName" javaType="java.lang.String"
+				jdbcType="VARCHAR" />
+			<association property="dept" javaType="com.jrwp.core.entity.Core_Dept">
+				<result property="deptName" column="deptName" javaType="java.lang.String"
+					jdbcType="VARCHAR" />
+			</association>
+		</association>
+	</resultMap>
+	<select id="list" resultMap="logMap">
+		select l.*,u.fullname,d.deptName from core_log l 
+		left join core_user u on l.userid=u.id
+		left join core_dept d on u.deptid=d.id
+		${whereSql}
+		<if test="begintime !=null and begintime!=''">
+            and to_date(to_char(l.recordTime,'yyyy-mm-dd'),'yyyy-mm-dd') &gt;= to_date(#{begintime},'yyyy-mm-dd')
+        </if>
+        <if test="endtime !=null and endtime!=''">
+            and to_date(to_char(l.recordTime,'yyyy-mm-dd'),'yyyy-mm-dd') &lt;= to_date(#{endtime},'yyyy-mm-dd')
+        </if>
+		order by l.recordtime desc
+	</select>
+	<select id="getObjectById" parameterType="Long" resultMap="logMap">
+		select * from core_log l left join core_user u on l.userid=u.id left
+		join core_dept d on u.deptid=d.id where l.id = #{id}
+	</select>
+	<insert id="save" parameterType="com.jrwp.core.entity.Core_Log">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_CORE_Log.nextval as id from dual
+		</selectKey>
+		insert into
+		core_log(id,userid,areaname,controname,actionname,parameterjson,recordtime,recordip,controdisplay,actiondisplay)
+		values(#{id},#{user.id},#{areaName},#{controlName},#{actionName},#{parameterJson},#{recordTime},#{recordIP},#{controlDisplay},#{actionDisplay})
+	</insert>
+</mapper>

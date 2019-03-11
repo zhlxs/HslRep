@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IMac_WindowsDao">
+	<resultMap type="com.jrwp.payMent.entity.Mac_Windows" id="macMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="devicenumber" column="devicenumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="ckbh" column="ckbh" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="status" column="status" />
+		<result property="deviceip" column="deviceip" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="deptid" column="deptid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="systitle" column="systitle" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="sysunit" column="sysunit" javaType="String"
+			jdbcType="VARCHAR" />
+		<association property="dept" javaType="com.jrwp.core.entity.Core_Dept">
+			<id property="id" column="did" javaType="Long" jdbcType="INTEGER" />
+			<result property="deptName" column="deptname" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!-- 列表 -->
+	<select id="list" resultMap="macMap">
+		select m.*,cd.deptname from
+		mac_windows m
+		left join core_dept cd on cd.id = m.deptid
+		${whereSql}
+	</select>
+	<!-- 新列表 -->
+	<select id="listForDept" resultMap="macMap">
+		select m.*,cd.deptname from
+		mac_windows m
+		left join core_dept cd on cd.id = m.deptid
+		where 1=1
+		<if test="deptId != null">
+			<!-- 递归查询 -->
+			and m.deptid in (select id from core_dept start with id =#{deptId} connect by prior id=parentid)
+		</if>
+		<if test="deviceNumber != null">
+			and m.deviceNumber like #{deviceNumber}
+		</if>
+		<if test="ckbh != null">
+			and m.ckbh = #{ckbh}
+		</if>
+		<if test="startCodes != null">
+			and
+			<foreach collection="startCodes" item="startCode" index="index"
+				open="(" close=")" separator="or">
+				cd.deptcode like #{startCode}
+			</foreach>
+		</if>
+	</select>
+	<!-- 增加 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.Mac_Windows">
+		<selectKey keyProperty="id" order="BEFORE" resultType="Long">
+			SELECT SEQ_mac_windows.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO mac_windows
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="devicenumber != null">
+				devicenumber,
+			</if>
+			<if test="ckbh != null">
+				ckbh,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="deviceip != null">
+				deviceip,
+			</if>
+			<if test="deptid != null">
+				deptid,
+			</if>
+			<if test="systitle != null">
+				systitle,
+			</if>
+			<if test="sysunit != null">
+				sysunit,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="devicenumber != null">
+				#{devicenumber},
+			</if>
+			<if test="ckbh != null">
+				#{ckbh},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="deviceip != null">
+				#{deviceip},
+			</if>
+			<if test="deptid != null">
+				#{deptid},
+			</if>
+			<if test="systitle != null">
+				#{systitle},
+			</if>
+			<if test="sysunit != null">
+				#{sysunit},
+			</if>
+		</trim>
+	</insert>
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from mac_windows where id = #{id}
+	</delete>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.Mac_Windows">
+		update mac_windows
+		<set>
+			<if test="devicenumber != null">
+				devicenumber = #{devicenumber},
+			</if>
+			<if test="ckbh != null">
+				ckbh = #{ckbh},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="deviceip != null">
+				deviceip = #{deviceip},
+			</if>
+			<if test="deptid != null">
+				deptid = #{deptid},
+			</if>
+			<if test="systitle != null">
+				systitle = #{systitle},
+			</if>
+			<if test="sysunit != null">
+				sysunit = #{sysunit},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 查询一个对象 -->
+	<select id="getObjectById" resultType="com.jrwp.payMent.entity.Mac_Windows">
+		select m.*,cd.deptname
+		from
+		mac_windows m
+		left join core_dept cd on cd.id = m.deptid
+		where m.id = #{id}
+	</select>
+</mapper>

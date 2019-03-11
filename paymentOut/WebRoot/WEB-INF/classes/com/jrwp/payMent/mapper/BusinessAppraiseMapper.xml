@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.BusinessAppraiseDao">
+	<resultMap type="com.jrwp.payMent.entity.BusinessAppraise"
+		id="businessApprMap">
+		<id property="id" column="id" />
+		<result property="dlbh" column="dlbh" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="qusxh_sxh" column="qusxh_sxh" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="ywpjjg" column="ywpjjg" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="ywpjrqsj_rqsj" column="ywpjrqsj_rqsj"
+			javaType="java.util.Date" jdbcType="TIMESTAMP" />
+		<result property="ywlsh" column="ywlsh" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="userid" column="userid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="deptid" column="deptid" javaType="Long"
+			jdbcType="INTEGER" />
+		<association property="dept" javaType="com.jrwp.core.entity.Core_Dept">
+			<id property="id" column="did" javaType="Long" jdbcType="INTEGER" />
+			<result property="deptName" column="deptname" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+		<association property="user" javaType="com.jrwp.wx.entity.RegisterUser">
+			<id property="id" column="uid" javaType="Long" jdbcType="INTEGER" />
+			<result property="wxOpenId" column="wxOpenId" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="username" column="username" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!-- 列表 -->
+	<select id="list" resultMap="businessApprMap">
+		select b.*,cd.deptname,r.username from BUSINESSAPPRAISEINFO b
+		left join core_dept cd on cd.id = b.deptid
+		left join WX_REGISTERUSER r on r.id = b.userid ${whereSql}
+		order by b.id desc
+	</select>
+	<!-- 保存评价记录 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.BusinessAppraise">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_BUSINESSAPPRAISEINFO.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO BUSINESSAPPRAISEINFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="dlbh != null">
+				dlbh,
+			</if>
+			<if test="qusxh_sxh != null">
+				qusxh_sxh,
+			</if>
+			<if test="ywpjjg != null">
+				ywpjjg,
+			</if>
+			<if test="ywpjrqsj_rqsj != null">
+				ywpjrqsj_rqsj,
+			</if>
+			<if test="ywlsh != null">
+				ywlsh,
+			</if>
+			<if test="userid != null">
+				userid,
+			</if>
+			<if test="deptid != null">
+				deptid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="dlbh != null">
+				#{dlbh},
+			</if>
+			<if test="qusxh_sxh != null">
+				#{qusxh_sxh},
+			</if>
+			<if test="ywpjjg != null">
+				#{ywpjjg},
+			</if>
+			<if test="ywpjrqsj_rqsj != null">
+				#{ywpjrqsj_rqsj},
+			</if>
+			<if test="ywlsh != null">
+				#{ywlsh},
+			</if>
+			<if test="userid != null">
+				#{userid},
+			</if>
+			<if test="deptid != null">
+				#{deptid},
+			</if>
+		</trim>
+	</insert>
+</mapper>

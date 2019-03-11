@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.ISequenceSyncDao">
+	<select id="list" resultType="com.jrwp.payMent.entity.SequenceSync">
+		select id ,status,isexport,winnumber from
+		SQUENCE_SYNC where isexport = 0
+	</select>
+
+	<update id="update" parameterType="com.jrwp.payMent.entity.SequenceSync">
+		update SQUENCE_SYNC set
+		isexport = 1 where id = #{id}
+	</update>
+</mapper>

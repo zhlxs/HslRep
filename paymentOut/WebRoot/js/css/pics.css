@@ -1,0 +1,153 @@
+﻿
+/*右上角导航栏*/
+#nav, #nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+    #nav li {
+    float: right;
+    /* position: relative; */
+    width: 10em;
+    color: #2D486C;
+    margin-right: -6em;
+    margin-top: -32px;
+    }
+
+    #nav a:link, #nav a:visited {
+        display: block;
+        text-decoration: none;
+        padding-left: 1em;
+        color: #FFFFFF;
+    }
+
+    #nav ul {
+        display: none;
+        position: absolute;
+        padding-top: 0.5em;
+    }
+
+        #nav ul li {
+            float: none;
+            border: 0 none transparent;
+            border: 1px solid #009787;
+            background-color: #009787;
+            font-size: 100%;
+            margin: 0;
+            margin-bottom: 0.2em;
+            padding: 0;
+            color: #FFFFFF;
+        }
+
+    #nav li:hover ul {
+        display: block;
+    }
+
+
+.img_tit {
+    height: 47px;
+    line-height: 45px;
+    background: #f1f1f1;
+    color: #1899eb;
+    font-size: 24px;
+    font-family: "微软雅黑";
+    padding-left: 20px;
+    font-size: 18px;
+}
+.img_tit a {
+    color: #1899eb;
+    font-size: 24px;
+}
+.list3 {
+    overflow: hidden;
+    _display: inline;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.list3 li {
+    line-height: 32px;
+    font-size: 14px;
+    text-indent: 1em;
+    font-family: "微软雅黑";
+    color: #515151;
+    text-decoration: none;
+    margin: 0px;
+    background-image: url(http://imgs.xinhuanet.com/icon/2011air/img/dot01.gif);
+    background-repeat: no-repeat;
+    background-position: 0px -30px;
+}
+.list3 li span {
+    line-height: 28px;
+    font-size: 11px;
+    text-indent: 1em;
+    font-family: "微软雅黑";
+    color: #999999;
+    text-decoration: none;
+    margin-left: 8px;
+}
+
+
+.list3 li a {
+    color: #515151;
+    text-decoration: none;
+}
+
+.more {
+    float: right;
+    margin-right: 20px;
+}
+.more a {
+    color: #1899eb;
+    font-size: 12px;
+}
+.clear20 {
+    clear: both;
+    height: 20px;
+}
+
+/*星级*/
+.star-ww {width:985px;margin:0 auto;height:56px;background-image:url(/images/pf-back.png);/*margin-top:30px;*/position: absolute;z-index: 12;background-size: cover;margin-left: -8px;}
+.star-right{line-height: 56px;font-size: 20px;}
+.star-font{margin-left: 19px;color:white;background-color:#1d8be9;padding: 9px 12px;}
+/*.star{width:99px; display: inline-block;height: 40px;background: url(/images/yellowstar.png) repeat-x 0 16px;margin-left: 10px;background-size: 25px;}*/
+.star{width:120px; display: inline-block;height: 40px;background: url(/images/workingScore.png) repeat-x 0 16px;margin-left: 10px;background-size: 30px;}
+
+
+/*.star-ww {background-color:#f2f2f2;width:968px;margin:0 auto;height:40px;color:#009787}
+.star-right{border-left:6px solid #009787;line-height: 40px;font-size: 26px;}
+.star{width:99px; display: inline-block;height: 40px;background: url(/images/yellowstar.png) repeat-x 0 8px;margin-left: 10px;background-size: 25px;}*/
+
+
+#tb {float:right;margin-top:12px;}
+#tb ul{width:500px; height:60px;}
+#tb li{width:40px;height:30px;margin:1px auto; float:right;list-style-type:none}
+
+.qp{display: block;
+    background-color: red;
+    color: white;
+    padding: 3px;
+    width: 21px;
+    height: 21px;
+    border-radius: 21px;
+    margin: -51px 0px 0px 83px;
+    text-align: center;
+    line-height: 21px;
+    position: absolute;
+}
+
+  .boxshow {
+        /*#0CC*/
+        -webkit-box-shadow: 0 0 10px #e09e2f;
+        -moz-box-shadow: 0 0 10px #e09e2f;
+        box-shadow: 0 0 12px;
+    }
+
+  hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #ffffff;
+}

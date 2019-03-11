@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.core.dao.IConfigDao">
+	<resultMap type="com.jrwp.core.entity.Core_Config" id="configMap">
+		<result property="configName" column="configname" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="configJson" column="configjson" javaType="String"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getSysBaseInfo" resultType="com.jrwp.core.entity.Core_Config">
+		select * from core_config
+	</select>
+	<update id="save" parameterType="com.jrwp.core.entity.Core_Config">
+		update core_config set
+		configname=#{configName},configjson=#{configJson} where
+		configname=#{configName}
+	</update>
+</mapper>

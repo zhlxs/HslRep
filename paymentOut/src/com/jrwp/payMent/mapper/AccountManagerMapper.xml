@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IAccountManagerDao">
+	<resultMap type="com.jrwp.payMent.entity.AccountManager" id="accountMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="account" column="account" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="password" column="password" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="jynumber" column="jynumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="name" column="name" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="photo" column="photo" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="deptid" column="deptid" javaType="Long"
+			jdbcType="INTEGER" />
+		<association property="dept" javaType="com.jrwp.core.entity.Core_Dept">
+			<id property="id" column="did" javaType="Long" jdbcType="INTEGER" />
+			<result property="deptName" column="deptname" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!-- 列表 -->
+	<select id="list" resultMap="accountMap">
+		select m.*,cd.deptname from
+		ACCOUNTMANAGER m
+		left join core_dept cd on cd.id = m.deptid
+		${whereSql}
+	</select>
+	<!-- 增加 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.AccountManager">
+		<selectKey keyProperty="id" order="BEFORE" resultType="Long">
+			SELECT SEQ_ACCOUNTMANAGER.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO ACCOUNTMANAGER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="account != null">
+				account,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="jynumber != null">
+				jynumber,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="photo != null">
+				photo,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="deptid != null">
+				deptid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="account != null">
+				#{account},
+			</if>
+			<if test="password != null">
+				#{password},
+			</if>
+			<if test="jynumber != null">
+				#{jynumber},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="photo != null">
+				#{photo},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+			<if test="deptid != null">
+				#{deptid},
+			</if>
+		</trim>
+	</insert>
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from ACCOUNTMANAGER where id = #{id}
+	</delete>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.AccountManager">
+		update ACCOUNTMANAGER
+		<set>
+			<if test="account != null">
+				account = #{account},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="jynumber != null">
+				jynumber = #{jynumber},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="photo != null">
+				photo = #{photo},
+			</if>
+			<if test="deptid != null">
+				deptid = #{deptid},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 查询一个对象 -->
+	<select id="getObjectById" resultType="com.jrwp.payMent.entity.AccountManager">
+		select m.*,cd.deptname
+		from
+		ACCOUNTMANAGER m
+		left join core_dept cd on cd.id = m.deptid where
+		m.id = #{id}
+	</select>
+</mapper>

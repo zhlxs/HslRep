@@ -1,0 +1,26 @@
+body {
+    background-color: #f8f8f8;
+}
+.hzdb {
+    width: 100%;
+    height: 46px;
+    line-height: 46px;
+    background-color: #2185de;
+    font-size: 17px;
+    color: white;
+    /*text-align: center;*/
+}
+.hzdb img {
+    width: 12px;
+    vertical-align: middle;
+    /* margin-top: 7px; */
+}
+.hzdb-left {
+    margin-left: 15px;
+}
+.hzdb-right {
+    width: 100%;
+    float: left;
+    text-align: center;
+    /*display: none;*/
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.wx.dao.ClientDao">
+<resultMap type="com.jrwp.wx.entity.EvaluateSetting" id="evaluateSettingJson">
+		<result property="updateTime" column="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="waitingTime" column="waitingTime" javaType="int" jdbcType="INTEGER"/>
+		<result property="autoEvaluateID" column="autoEvaluateID" javaType="String" jdbcType="VARCHAR"/>
+		<collection property="evaluateList" ofType="com.jrwp.wx.entity.Evaluate">
+			<result property="evaluateID" column="evaluateID" javaType="Long" jdbcType="INTEGER"/>
+			<result property="title" column="title" javaType="String" jdbcType="VARCHAR"/>
+			<result property="imageContent" column="imageContent"/>
+			<result property="isdefault" column="isdefault" javaType="int" jdbcType="INTEGER"/>
+        </collection>
+	</resultMap>
+	
+	<select id="getEvaluateSetting" resultMap="evaluateSettingJson">
+		select a.updateTime,a.OUTTIME as waitingTime,b.id as evaluateID,b.APPRAISENAME as title,b.icon as imageContent,b.isdefault from APPRAISE_MODEL a left join APPRAISE_DETAIL b on a.id=b.APPRAISEMODELID where a.id=1
+	</select>
+	
+	<select id="getJYInfo" resultType="com.jrwp.wx.entity.PersonInfo">
+		select id,account,password,jynumber,name,photo,deptID from ACCOUNTMANAGER where account=#{userName} and password=#{passWord}
+	</select>
+	
+	<insert id="insertAppraise">
+     	<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_USERAPPR_ID.nextval as id from dual
+		</selectKey>
+        insert into USER_APPRAISE (ID,APPRAISEDETAILID, CREATETIME,ORDERID, ISDEFAULT, ISWECHAT,ISEXPORT,SQUENCE_INFOID,ISWRITE)
+        values (#{id,jdbcType=INTEGER},#{evaluateID},sysdate,#{userid},#{isdefault},0,0,#{squence_infoid},1)
+    </insert>
+    
+    <select id="getDeviceNumber" resultType="com.jrwp.wx.entity.BeiAnInfoJson">
+		select devicenumber as sbkzjsjbh,ser_code as kbywlb,WICKETNUMBER as ckbh,deptid,controlip,deviceip as jsjip from WICKETINFO where WICKETNUMBER=#{winNumber}
+	</select>
+    
+    <update id="updateStatusByPrimaryKey">
+    	update squence_info set STATUS=#{type}
+    	where id=#{id}
+    </update>
+    
+    <select id="getWinNumMachineCode" resultType="com.jrwp.wx.entity.AppConfig">
+		select Ckbh as winNum,systitle,sysunit from MAC_WINDOWS where deviceip=#{machineCode}
+	</select>
+	
+	<select id="getMachineCodeByCode" resultType="String">
+		select DEVICENUMBER from MAC_WINDOWS where DEVICENUMBER=#{machineCode}
+	</select>
+	
+	<insert id="insertMachineCode">
+     	<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_MAC_WINDOWS.nextval as id from dual
+		</selectKey>
+        insert into MAC_WINDOWS (id,DEVICENUMBER,statu)
+        values (#{id,jdbcType=INTEGER},#{machineCode},0)
+    </insert>
+    
+    <update id="updateRecallTime">
+    	update squence_info set callcount=callcount + 1
+    	where id=#{id}
+    </update>
+</mapper>

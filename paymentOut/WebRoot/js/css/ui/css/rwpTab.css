@@ -1,0 +1,20 @@
+﻿.rwpTabContentItem{ height:100%; overflow-y:auto;}
+.rwpTabContentItem iframe{ height: 100%; width: 100%; }
+.rwpTabContentItem { height:100%;}
+.rwpTabNavList{height:40px; clear:both; zoom:1; border-bottom:1px solid #E9E9EE; }
+.rwpTabNavItem{display:inline; float:left; margin-right:10px; background-color:#fff;}
+.rwpTabNavItem a{display:inline; float:left; padding:0 20px; height:39px; font:500 14px/39px "宋体"; border:1px solid #E9E9EE; border-width:1px 1px 0 1px; color:#535353; cursor:pointer;}
+.rwpTabNavItem.rwpTabCurrent{position:relative; margin-bottom:-1px; font-weight:bold; background:url(../images/imgShopDotBg.gif) repeat-x 0 0;}
+.rwpTabNavItem.rwpTabCurrent a{ margin-top:2px; border-top:0; background-color:#fff;}
+
+/*前台中心*/
+.rwpTab .rwpTabNavItem.hover{position:relative; margin-bottom:-1px; font-weight:bold; background:url(../images/imgShopDotBg.gif) repeat-x 0 0;}
+.rwpTab .rwpTabNavItem.hover a{ margin-top:2px; border-top:0; background-color:#fff;}
+
+.defMerchant .rwpTab .rwpTabNavItem.rwpTabCurrent{background:url(../images/imgShopDotBg.gif) repeat-x 0 0;}
+.defUser .rwpTab .rwpTabNavItem.rwpTabCurrent{background:url(../images/imgUserDotBg.gif) repeat-x 0 0;}
+
+.defMerchant .rwpTab .rwpTabNavItem.hover{background:url(../images/imgShopDotBg.gif) repeat-x 0 0;}
+.defUser .rwpTab .rwpTabNavItem.hover{background:url(../images/imgUserDotBg.gif) repeat-x 0 0;}
+
+

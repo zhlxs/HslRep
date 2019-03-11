@@ -1,0 +1,114 @@
+﻿input,textarea{padding:0 3px; border:1px solid #d5d5d5;}
+fieldset {padding-bottom:10px; margin:2px 2px 10px 2px; border:1px solid #D5E3EF;}
+fieldset legend { margin-left:10px; font:bold 15px/24px "微软雅黑"; color:#478FCA;}
+fieldset legend i{display:inline; float:left; margin:3px 2px 0 2px; width:15px; height:20px; background:url(../images/imgIcon.gif) no-repeat -122px -103px;}
+fieldset .searchBar{background-color:#fff;}
+.formpanel{ display:block; width:100%;}
+
+/*只读form*/
+.formpanel .uReadPanel.uReadPanel2{margin:0 10px 5px 10px; background-color:#fff;}
+.formpanel .uReadPanel.uReadPanel1{padding:10px; margin-bottom:10px; border:4px solid #eee;}
+.formpanel .uReadPanel.uReadPanel1 .list{padding-left:5px; padding-right:5px;}
+.formpanel .uReadPanel .list{clear:both; padding-top:8px; padding-bottom:8px; border-bottom:1px solid #ddd; zoom:1; overflow:hidden;}
+.formpanel .uReadPanel .list1{background-color:#F9F9F9;}
+.formpanel .uReadPanel .list2{border-bottom:0;}
+.formpanel .uReadPanel .contentValue{display:block; padding:5px; margin-top:5px; height:100px; overflow:auto; border:1px solid #ddd; color:#666;}
+
+/*可写form*/
+.formpanel .uWritePanel{margin-top:-15px;}
+.formpanel .clear{display:block; clear:both; margin:5px 20px;}
+.formpanel .labelWidth {display:inline; float:left; margin-right:10px;}
+.formpanel .DialabelWidth {display:inline;	float:left; width:260px; overflow:hidden;}
+.formpanel .editor-label{display:block; height:24px; line-height:24px; font-size:14px;}
+.formpanel .DialabelWidth .editor-label{ _margin-left:-15px;}
+.formpanel .editor-label label{display:inline; float:left;}
+.formpanel .editor-label .red{display:inline-block; margin-left:2px; color:#D6487E; font-weight: bold;}
+.formpanel .editor-field {display:inline;}
+.formpanel .editor-tip{}
+
+.formpanel .DialabelWidth .rwpButton{height: 22px; line-height: 22px;}
+
+
+.formpanel .colItem{display:inline; float:left; margin-right:20px;}
+.formpanel .colLabel{display:inline; float:left; padding-right:2px; line-height:30px; font-size:14px;}
+.formpanel .colLabel label{ line-height:30px;}
+.formpanel .colField{display:inline; float:left; }
+.formpanel .colFieldValue{clear:both; display:block; zoom:1; line-height:30px;}
+.formpanel .colFieldVal{clear:both; display:block; zoom:1; height:20px; line-height:20px;}
+
+.formpanel .rwpInputText{height:26px; line-height: 26px;}
+.formpanel .editor-validation{display:block; height:20px; line-height:20px;}
+.formpanel .DialabelWidth .editor-validation{ _margin-left:-15px;}
+
+/*小标题*/
+.fieldH2{margin-left:20px; margin-bottom:5px; padding-bottom:5px; border-bottom:1px dotted #ccc;}
+.fieldH2 i{display:inline; float:left; width:10px; height:24px; line-height:0; font-size:0; background:url(../images/imgIcon.gif) no-repeat -204px -2px;}
+
+/*控件*/
+.formpanel .rwpCombobox .rwpInputText{ border:0; height:24px; line-height:24px;}
+.formpanel .rwpToggle{margin-top:3px;}
+
+/*伪隐藏*/
+.fFalseDisplay{width:0; height:0; overflow:hidden; line-height:0; font-size:0;}
+
+/*搜索*/
+.searchBar{clear:both; padding:10px 0; width:100%; background-color:#EFF3F8; border-bottom:1px dotted #e2e2e2; zoom:1; overflow:hidden;}
+.searchBar .mainBox{padding:0 10px;}
+.searchBar dl{display:inline; float:left; padding:2px 0; height:28px; overflow:hidden;}
+.searchBar .labelWidth{display:inline;	float: left; padding: 0 5px 0 10px; line-height:28px; text-wrap:none; text-align:right;}
+.searchBar .inputWidth{display:inline;	float: left; padding: 0 5px 0 3px; height:28px;}
+.searchBar .inputButton{display:inline; float:left; padding-left:10px; padding-top:1px;}
+.searchBar .rwpToggle{margin-top:3px;}
+.rwpDialog .searchBar{width:auto;}
+
+
+/*
+  验证提示
+*/
+.rwpInputText{width:180px;	height:26px; line-height:26px; border:1px solid #D5D5D5;}
+.rwpTextDisabled{ border-color:#D5D5D5;  background-color:#F5F5F5; color:#999;}
+.rwpTextOver{ border-color:#bbb;}
+.rwpTextFocus{ border-color:#F59942;}
+
+/*错误*/
+.field-validation-error{display:block;}
+.field-validation-error span{display:inline-block; padding-left:20px; line-height:20px; background:url(../images/imgValIcon.gif) no-repeat 0 -23px; color:#D68273; font-size: 13px; vertical-align:text-bottom; font-family:SimSun;}
+.formpanel .DialabelWidth .field-validation-error{width:100%;}
+
+.input-validation-error{ border:1px solid #F09784; color:#D68273;}
+.validation-summary-errors{display:block; font-weight:bold; color:#D68273;}
+.validation-summary-valid{display: none;}
+
+/*信息*/
+.field-validation-valid {display:none;}
+.field-validation-valid span{display:inline-block; padding-left:20px; line-height:20px; background:url(../images/imgValIcon.gif) no-repeat 0 2px; color:#D68273; vertical-align:text-bottom; font-family:SimSun;}
+
+.editor-submit {text-align: center; padding: 5px 0;}
+.editor-submit .inputbtn,.editor-submit .inputbtn:hover{ display:block; margin:0 auto; width:100px; height:32px; color: #fff; border:0; font-size:14px; font-weight:bold; cursor: pointer;}
+
+/*
+  人员选择管理
+*/
+.rwpGroup{ margin:20px auto 0 auto; width:510px; height:415px;}
+.rwpGroup .lt,.rwpGroup .rt{float:left; overflow:hidden;}
+.rwpGroup .rt{margin-left:20px;}
+.rwpGroup .h4{ display:block; margin-bottom:10px; width:240px; line-height:26px;}
+.rwpGroup .moveAll{float:right;}
+.rwpGroup .rwpGroupItem{width:240px; border:1px solid #bcbdbd; border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px; background-color:#fff;}
+
+/*内容*/
+.rwpGroup .rwpGroupItem .ct{width:240px; height:350px; overflow:auto;}
+.rwpGroup .rwpGroupItem ul.rwpGroupTree li:hover{background-color:#F2F2F2;}
+.rwpGroup .rwpGroupItem ul.rwpGroupTree li input{margin-left:5px;}
+.rwpGroup .rwpGroupItem ul.rwpGroupTree li a{display:inline-block;}
+.rwpGroup .lt .rwpGroupItem{background-color:#F6F6F6;}
+.rwpGroup .rt .rwpGroupItem a.rwpGroupLabel b{ display:inline-block; margin-right:5px; width:10px; height:10px; background:url(../images/groupTool.gif) no-repeat 0 -18px;}
+.rwpGroup .rt .rwpGroupItem a.rwpGroupLabel.sel b{ background-position:-17px -18px;}
+
+.rwpGroup .rt .rwpGroupItem a{ display:block; padding:3px; height:20px; }
+.rwpGroup .rt .rwpGroupItem a.rwpGroupLabel:hover{ background-color:#F2F2F2; }
+.rwpGroup .rt .rwpGroupItem a.rwpGroupLabel span{ color:#0275C2;}
+
+.rwpGroup .rt .rwpGroupItem a:hover i,.rwpGroup .rt i.dis{float:right; width:18px; height:14px; margin:3px; background:url(../images/groupTool.gif) no-repeat 0 0;}
+.rwpGroup .rt .rwpGroupItem a{display:block !important;}
+.rwpGroup .rt .rwpGroupItem a i{ background-position:0 0;}

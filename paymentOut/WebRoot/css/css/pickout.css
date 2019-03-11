@@ -1,0 +1,65 @@
+.pk-modal {
+    transform: translateX(-50%) scale(.8, .8);
+    left: 20%;
+    top: 25%;
+    right: 20%;
+    border-radius: 3px;
+    position: absolute;
+    /*width: 280px;*/
+    max-height: 90%;
+    overflow-y: auto;
+    z-index: 1111;
+    transition: all .3s;
+    visibility: hidden;
+    background: #f2f2f2;
+    opacity: 0
+}
+
+.pk-modal > .head {
+    width: calc(100% - 20px);
+    font-size: 18px;
+    padding: 20px 10px
+}
+
+.pk-modal.-clean {
+    background: #fff;
+    border-bottom: 10px solid #efefef
+}
+
+.pk-modal.-clean > .head {
+    color: #777;
+    background: #efefef
+}
+
+.pk-modal.-show {
+    transform: translateX(-50%) scale(1, 1);
+    visibility: visible;
+    opacity: 1;
+    box-shadow: 1px 1px 20px 2px #888
+}
+.pk-modal > .close {
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    color: #ccc;
+    font-size: 22px;
+    /*cursor: pointer*/
+}
+
+.pk-option {
+    overflow: hidden;
+    padding: 14px 10px;
+    width: calc(100% - 20px);
+    border-bottom: 1px solid #efefef
+}
+.pk-option:last-child {
+    border: 0
+}
+.icon{
+    float: left;
+    margin-left: 1rem;
+}
+.txt{
+    float: left;
+    margin-left: 5rem;
+}

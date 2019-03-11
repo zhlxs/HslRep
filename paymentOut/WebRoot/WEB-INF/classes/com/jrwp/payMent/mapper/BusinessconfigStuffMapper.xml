@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.BusinessconfigStuffDao">
+	<resultMap type="com.jrwp.payMent.entity.BusinessconfigStuff"
+		id="businessStuffMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="bconfigstrname" column="bconfigstrname"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="ismustfill" column="ismustfill" />
+		<result property="ordercode" column="ordercode" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="sampleid" column="sampleid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="applytypeid" column="applytypeid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="datatype" column="datatype" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="showtype" column="showtype" javaType="Long"
+			jdbcType="INTEGER" />
+		<!-- 当前业务流程类型 -->
+		<association property="businessconfigType"
+			javaType="com.jrwp.payMent.entity.BusinessconfigType">
+			<id property="id" column="tid" javaType="Long" jdbcType="INTEGER" />
+			<result property="serCode" column="ser_Code" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="applyTypeName" column="applyTypeName"
+				javaType="java.lang.String" jdbcType="VARCHAR" />
+		</association>
+		<!-- 当前样图 -->
+		<association property="photoSample"
+			javaType="com.jrwp.payMent.entity.PhotoSample">
+			<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+			<result property="bconfigstrcname" column="photoname"
+				javaType="String" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!-- 列表 -->
+	<select id="listChildren" resultMap="businessStuffMap">
+		select wb.*,wa.applyTypeName,wp.bconfigstrcname photoname from WX_BUSINESSCONFIGSTR wb
+		left join WX_ApplyType wa on wa.id = wb.applytypeid
+		left join WE_PhotoSample wp on wp.id = wb.sampleid
+		where wb.applytypeid = #{id}
+		order by wb.ordercode
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.BusinessconfigStuff">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_WX_BUSINESSCONFIGSTR.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO WX_BUSINESSCONFIGSTR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="bconfigstrname != null">
+				bconfigstrname,
+			</if>
+			<if test="ismustfill != null">
+				ismustfill,
+			</if>
+			<if test="ordercode != null">
+				ordercode,
+			</if>
+			<if test="sampleid != null">
+				sampleid,
+			</if>
+			<if test="applytypeid != null">
+				applytypeid,
+			</if>
+			<if test="datatype != null">
+				datatype,
+			</if>
+			<if test="showtype != null">
+				showtype,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="bconfigstrname != null">
+				#{bconfigstrname},
+			</if>
+			<if test="ismustfill != null">
+				#{ismustfill},
+			</if>
+			<if test="ordercode != null">
+				#{ordercode},
+			</if>
+			<if test="sampleid != null">
+				#{sampleid},
+			</if>
+			<if test="applytypeid != null">
+				#{applytypeid},
+			</if>
+			<if test="datatype != null">
+				#{datatype},
+			</if>
+			<if test="showtype != null">
+				#{showtype},
+			</if>
+		</trim>
+	</insert>
+	<!--获取最大排序码 -->
+	<select id="getMaxCode" resultType="String">
+		select max(ordercode) from
+		WX_BUSINESSCONFIGSTR
+	</select>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.BusinessconfigStuff">
+		update WX_BUSINESSCONFIGSTR
+		<set>
+			<if test="bconfigstrname != null">
+				bconfigstrname = #{bconfigstrname},
+			</if>
+			<if test="ismustfill != null">
+				ismustfill = #{ismustfill},
+			</if>
+			<if test="ordercode != null">
+				ordercode = #{ordercode},
+			</if>
+			<if test="sampleid != null">
+				sampleid = #{sampleid},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 获取当前对象 -->
+	<select id="getObjectById" resultMap="businessStuffMap">
+		select wb.*,wa.applyTypeName,wp.bconfigstrcname photoname from WX_BUSINESSCONFIGSTR wb
+		left join WX_ApplyType wa on wa.id = wb.applytypeid
+		left join WE_PhotoSample wp on wp.id = wb.sampleid
+		where wb.id = #{id}
+	</select>
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from WX_BUSINESSCONFIGSTR where id = #{id}
+	</delete>
+	<!-- 修改排序码 -->
+	<update id="updateordercode">
+		update WX_BUSINESSCONFIGSTR set ordercode=#{ordercode} where id=#{id}
+	</update>
+</mapper>

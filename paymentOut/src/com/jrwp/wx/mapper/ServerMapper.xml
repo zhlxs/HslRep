@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.wx.dao.ServerDao">
+	<resultMap type="com.jrwp.wx.entity.SupplementRecord" id="supplementRecord">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER"/>
+		<result property="ywckjsjip" column="ywckjsjip" javaType="String" jdbcType="VARCHAR"/>
+		<result property="sbkzjsjip" column="sbkzjsjip" javaType="String" jdbcType="VARCHAR"/>
+		<result property="deptid" column="deptid" javaType="Long" jdbcType="INTEGER"/>
+		<result property="kbywlb" column="kbywlb" javaType="String" jdbcType="VARCHAR"/>
+		<result property="iswrite" column="iswrite" javaType="int" jdbcType="INTEGER"/>
+		
+	</resultMap>
+	
+	<resultMap type="com.jrwp.wx.entity.OrderCount" id="orderCountJson">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER"/>
+		<result property="time" column="time" javaType="String" jdbcType="VARCHAR"/>
+		<result property="orderCount" column="orderCount" javaType="int" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<select id="getAllTime" resultMap="orderCountJson">
+		select b.time,b.id from Dic_Time b
+	</select>
+	
+	<select id="getSupplementRecord" resultMap="supplementRecord">
+		select  id,ywckjsjip,sbkzjsjip,kbywlb from SUPPLEMENTRECORD where deptid=#{deptid} and iswrite=0 and to_char(createtime,'yyyy-MM-dd')=#{dateString}
+	</select>
+	
+	<insert id="insertBeiAnInfo" parameterType="com.jrwp.wx.entity.BeiAnInfoJson">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_WICKETINFO.nextval as id from dual
+		</selectKey>
+		insert into
+		WICKETINFO(id,WICKETNUMBER,SER_CODE,DEVICENUMBER,DEVICETYPE,DEVICEIP,STATU,CONTROLIP)
+		values
+		(#{id,jdbcType=INTEGER},#{ckbh},#{kbywlb},#{sbkzjsjbh},#{jsjlb},#{jsjip},0,#{controlip})
+	</insert>
+	
+	<select id="getDeviceNumber" resultType="com.jrwp.wx.entity.BeiAnInfoJson">
+		select devicenumber as sbkzjsjbh,ser_code as kbywlb,WICKETNUMBER as ckbh,deptid,controlip from WICKETINFO where deviceip=#{ywckjsjip}
+	</select>
+	
+	<select id="getCallSquence" resultType="com.jrwp.wx.entity.WXSquenceInfo">
+        select t.id,t.squence,t.businesstype,t.isappointment,t.cardnumber,t.createtime,t.getnumbertype,t.name,t.serialnumber from squence_info t where t.isappointment=#{isappointment}
+        and t.status=1
+        and to_char(t.createtime,'yyyy-MM-dd')=#{date}
+        and t.deptid =#{deptid} and t.businesstype in (${ser_code})
+        <if test="isearly != null">
+            and t.isearly = #{isearly}
+        </if>
+        <if test="nowtimequan != null">
+            and t.timequantum &lt;= #{nowtimequan}
+        </if>
+        and t.squence=
+        (select min(t1.squence) from squence_info t1 where t1.isappointment=#{isappointment}
+        and to_char(t1.createtime,'yyyy-MM-dd')=#{date}
+        and t1.status=1
+        and t1.deptid =#{deptid} and t1.businesstype in (${ser_code})
+        <if test="isearly != null">
+            and t1.isearly = #{isearly}
+        </if>
+        <if test="nowtimequan != null">
+            and t1.timequantum &lt;= #{nowtimequan}
+        </if>
+        )
+    </select>
+    
+	<!--  供综合平台使用，查出代理人信息 -->
+    <select id="getCallSquenceTwo" resultType="com.jrwp.wx.entity.WXSquenceInfo">
+        select t.id,t.squence,t.businesstype,t.isappointment,t.cardnumber,t.createtime,t.getnumbertype,t.name,t.serialnumber,t.isproxy,t.proxyname,t.proxycardnumber    
+        from squence_info t 
+        where t.isappointment=#{isappointment}
+        and t.status=1
+        and to_char(t.createtime,'yyyy-MM-dd')=#{date}
+        and t.deptid =#{deptid} and t.businesstype in (${ser_code})
+        <if test="isearly != null">
+            and t.isearly = #{isearly}
+        </if>
+        <if test="nowtimequan != null">
+            and t.timequantum &lt;= #{nowtimequan}
+        </if>
+        and t.squence=
+        (select min(t1.squence) from squence_info t1 where t1.isappointment=#{isappointment}
+        and to_char(t1.createtime,'yyyy-MM-dd')=#{date}
+        and t1.status=1
+        and t1.deptid =#{deptid} and t1.businesstype in (${ser_code})
+        <if test="isearly != null">
+            and t1.isearly = #{isearly}
+        </if>
+        <if test="nowtimequan != null">
+            and t1.timequantum &lt;= #{nowtimequan}
+        </if>
+        )
+    </select>
+    
+    <update id="updateSquenceInfo">
+    	update squence_info set STATUS=2,WICKETNUMBER=#{ckbh},calltime=sysdate
+    	where id=#{id}
+    </update>
+    
+    <select id="getSquenceInfoBySerialNumber" resultType="com.jrwp.wx.entity.WXSquenceInfo">
+        select b.deviceip,b.controlip,a.id,a.serialnumber,a.squence,a.businessType,a.cardnumber,a.name,a.createtime,a.getNumberType,a.wicketnumber,a.deptid
+        from squence_info a left join WICKETINFO b on a.WICKETNUMBER=b.WICKETNUMBER where a.serialnumber=#{qhxxxlh} and to_char(a.createtime,'yyyy-MM-dd')=#{dateString}
+    </select>
+    
+    <select id="getSquenceInfoBySerialNumberTwo" resultType="com.jrwp.wx.entity.WXSquenceInfo">
+        select b.deviceip,b.controlip,a.id,a.serialnumber,a.squence,a.businessType,a.cardnumber,a.name,a.createtime,a.getNumberType,a.wicketnumber,a.deptid,a.isproxy,a.proxyname,a.proxycardnumber 
+        from squence_info a left join WICKETINFO b on a.WICKETNUMBER=b.WICKETNUMBER where a.serialnumber=#{qhxxxlh} and to_char(a.createtime,'yyyy-MM-dd')=#{dateString}
+    </select>
+    
+    <update id="updateSquenceOver">
+    	update squence_info set STATUS=3,passtime=sysdate
+    	where id=#{id}
+    </update>
+    
+    <select id="getWinStatu" resultType="int">
+        select statu from WICKETINFO where deviceip=#{ywckjsjip}
+    </select>
+    
+    <update id="updateWinStatu">
+    	update MAC_WINDOWS set STATU=#{statuAfter}
+    	where deviceip=#{ywckjsjip}
+    </update>
+    
+    <insert id="insertChangeHistory">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_WICKETSTATUINFO.nextval as id from dual
+		</selectKey>
+		insert into
+		WICKETSTATUINFO(id,WICKETNUMBER,CREATETIME,STATU)
+		values
+		(#{id,jdbcType=INTEGER},#{ywckjsjip},sysdate,#{statuBefore})
+	</insert>
+	
+	<insert id="insertSupplementRecord" parameterType="com.jrwp.wx.entity.SupplementRecord">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_SUPPLEMENTRECORD.nextval as id from dual
+		</selectKey>
+		insert into
+		SUPPLEMENTRECORD(id,ywckjsjip,sbkzjsjip,kbywlb,iswrite,createtime,deptid)
+		values
+		(#{id,jdbcType=INTEGER},#{ywckjsjip},#{sbkzjsjip},#{kbywlb},#{iswrite},sysdate,#{deptid})
+	</insert>
+    
+    <update id="updateSquence">
+    	update squence_info set STATUS=#{statu},WICKETNUMBER=#{ckbh},SERIALNUMBER=#{serialNumber}
+    	where id=#{squenceid}
+    </update>
+    
+    <update id="updateSupplement">
+    	update SUPPLEMENTRECORD set iswrite=1,squenceinfoid=#{squenceid},writetime=sysdate
+    	where id=#{supplementRecordid}
+    </update>
+    
+    <select id="getWindowBySerialNumber" resultType="com.jrwp.wx.entity.WXSquenceInfo">
+        select a.id,a.wicketnumber,a.deptid,a.squence
+        from squence_info a where a.SERIALNUMBER=#{qhxxxlh}
+    </select>
+    
+    <insert id="insertWaitAppraise">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_WAIT_APPRAISE.nextval as id from dual
+		</selectKey>
+		insert into
+		WAIT_APPRAISE(id,CREATETIME,SQUENCE_INFOID,CKBH,ISAPPRAISE,ispass)
+		values
+		(#{id,jdbcType=INTEGER},sysdate,#{squence_infoid},#{wicketnumber},0,0)
+	</insert>
+	
+	<update id="updateSquenceFinish">
+    	update squence_info set STATUS=6,FINSHTIME=sysdate
+    	where id=#{id}
+    </update>
+    
+    <update id="updateReatCall">
+    	update squence_info set STATUS=5,callcount=callcount + 1
+    	where SERIALNUMBER=#{qhxxxlh} and to_char(createtime,'yyyy-MM-dd')=#{dateString}
+    </update>
+    
+    <update id="updatePassBefore">
+    	update WAIT_APPRAISE set ispass=1
+    	where CKBH=#{wicketnumber}
+    </update>
+    
+    <insert id="insertSquenceOrder">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_SQUENCEORDER.nextval as id from dual
+		</selectKey>
+		insert into
+		SQUENCEORDER(id,CREATETIME,SERIALNUMBER,YWCKJSJIP)
+		values
+		(#{id,jdbcType=INTEGER},sysdate,#{serialnumber},#{ywckjsjip})
+	</insert>
+	
+	<select id="getLastSerialNumber" resultType="com.jrwp.wx.entity.WXSquenceInfo">
+        select b.serialnumber,b.status,b.id from SQUENCE_INFO b where to_char(b.createtime,'yyyy-MM-dd')=#{dateString} and b.serialnumber=(select serialnumber from (select c.serialnumber from squenceorder c where c.ywckjsjip=#{ywckjsjip} and to_char(c.createtime,'yyyy-MM-dd')=#{dateString} order by c.createtime desc) where rownum=1)
+    </select>
+    
+    <update id="updateSquenceSNYC">
+    	update squence_sync set STATUS=#{status},isexport=#{isexport}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateSquenceSNYCAndWinNumber">
+    	update squence_sync set STATUS=#{status},isexport=#{isexport},winnumber=#{ckbh}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateSquenceStatus">
+    	update squence_info set STATUS=#{status}
+    	where id=#{id}
+    </update>
+    
+    <update id="updateLedShow">
+    	update LEDSHOW set CONTENT=#{pdh},deptid=#{deptid},status=2
+    	where winnumber=#{winnumber} and deptid=#{deptid}
+    </update>
+    
+    <update id="updateLedShowGhOrfinish">
+    	update LEDSHOW set status=#{status}
+    	where CONTENT=#{squence} and deptid=#{deptid}
+    </update>
+    
+    <select id="getSquenceConfig" resultType="com.jrwp.wx.entity.SquenceConfig">
+        select isopen,minutes
+        from DEPT_ADDRESS a where a.deptid=#{deptid}
+    </select>
+    
+    <update id="updateLedStatus">
+    	update LEDSHOW set status=5
+    </update>
+    
+    <select id="getwinNumberById" resultType="String">
+        select wicketnumber
+        from SQUENCE_INFO a where a.id=#{id}
+    </select>
+    
+    <update id="updateShowStatu">
+    	update LEDSHOW a set a.status=#{status} where a.winnumber=#{winNumber} and a.deptid=(select b.deptid from squence_info b where b.id=#{id})
+    </update>
+    
+    <update id="updateRecallTime">
+    	update squence_info set callcount=callcount + 1
+    	where SERIALNUMBER=#{qhxxxlh} and to_char(createtime,'yyyy-MM-dd')=#{dateString}
+    </update>
+</mapper>

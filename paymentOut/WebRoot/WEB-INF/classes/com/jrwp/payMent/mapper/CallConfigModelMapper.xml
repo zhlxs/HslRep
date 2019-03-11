@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.CallConfigModelDao">
+	<resultMap type="com.jrwp.payMent.entity.CallConfigModel" id="callConfigMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="deviceNumber" column="deviceNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="modelName" column="modelName" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isStart" column="isStart" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<!-- 模板列表 -->
+	<select id="list" resultMap="callConfigMap">
+		select * from CALLCONFIGMODEL
+		${whereSql} order by createtime desc
+	</select>
+	<!-- 保存方法 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.CallConfigModel">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_CALLCONFIGMODEL.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO CALLCONFIGMODEL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="deviceNumber != null">
+				deviceNumber,
+			</if>
+			<if test="modelName != null">
+				modelName,
+			</if>
+			<if test="isStart != null">
+				isStart,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="deviceNumber != null">
+				#{deviceNumber},
+			</if>
+			<if test="modelName != null">
+				#{modelName},
+			</if>
+			<if test="isStart != null">
+				#{isStart},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+		</trim>
+	</insert>
+	<!-- 修改方法 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.CallConfigModel">
+		update CALLCONFIGMODEL
+		<set>
+			<if test="deviceNumber != null">
+				deviceNumber = #{deviceNumber},
+			</if>
+			<if test="modelName != null">
+				modelName = #{modelName},
+			</if>
+			<if test="isStart != null">
+				isStart = #{isStart},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 删除方法 -->
+	<delete id="delete">
+		delete from CALLCONFIGMODEL where id = #{id}
+	</delete>
+	<!-- 获取单个对象的方法 -->
+	<select id="getObjectById" resultMap="callConfigMap">
+		select * from CALLCONFIGMODEL where id = #{id}
+	</select>
+</mapper>

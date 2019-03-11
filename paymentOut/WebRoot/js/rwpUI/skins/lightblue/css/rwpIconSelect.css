@@ -1,0 +1,5 @@
+﻿.rwpIconSelect{width:92px;}
+.rwpIconSelect i{ display:block; margin:0 auto;}
+.rwpIconList li{ float:left; cursor:pointer; border: 1px solid #fff;}
+.rwpIconList li.rwpIconSelectedItem{ border-color: #87B87F;}
+.rwpIconList li:hover{border-color: #6FB3E0;}

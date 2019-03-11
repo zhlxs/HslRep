@@ -1,0 +1,79 @@
+﻿.rwpGridTable {position:relative; zoom:1;}
+.rwpGridTable #checkid ,.rwpGridTable #checkall{ display:block; padding:0px; border:0;}
+.rwpGridTable .ftal{text-align:left;}
+
+/*工具栏*/
+.rwpGridToolbar{margin-left: -1px; height:33px; border:1px solid #E1E1E1; border-width:1px 1px 0 1px; background-color:#fafafa;}
+.rwpGridToolbar .rwpButton{margin-top: -1px; padding:0 10px; height:26px; line-height:26px; border-width:4px;}
+.rwpGridToolbar .rwpButton .rwpButtonIcon{margin-right:5px;}
+
+.rwpGridTableHead{height:40px; background:url(../images/datagrid/imgDgHdBg.gif) repeat-x 0 0; border:1px solid #E1E1E1; overflow:hidden;  }
+.rwpGridTableHead table{ table-layout:fixed; text-align:center;}
+.rwpGridTableHead table tr{height:18px;}
+.rwpGridTableHead table th{display:table-cell; padding:10px 5px; height:20px; border-right:1px solid #E1E1E1; text-align:center; font:bold 14px/20px "微软雅黑";}
+
+.rwpGridTableBody {border:1px solid #E1E1E1; border-width:0 1px 1px 1px; background-color:#fff; overflow:auto; }
+.rwpGridTableBody table {table-layout:fixed; border-bottom:1px solid #E1E1E1; }
+.rwpGridTableBody tr{ cursor:pointer;}
+.rwpGridTableBody tr:hover{background-color:#EFF4F7;}
+.rwpGridTableBody .rwpGridEvenTr{background-color:#F9F9F9;}
+
+.rwpGridTableBody td{display:table-cell; padding:0 5px; height:39px; overflow:hidden; border:1px solid #E1E1E1; border-width:0 1px 1px 0; word-break:break-all; white-space:normal; text-align:center;}
+.rwpGridTableBody td .rwpDia{ display:inline-block; text-align:center;}
+.rwpGridTableBody td .rwpButton {display:inline-block; margin-left:5px; width:18px; height:18px;}
+.rwpGridTableBody td input{ margin-top:6px;}
+.rwpGridTableBody td .rwpTreeIcon{display:inline; float:left; width:18px;}
+.rwpGridTableBody td .rwpGridTreeContent{display:inline; float:left;}
+.rwpGridTableBody .rwpGridTableTrFocus{ background-color:#E4EFC9;}
+.rwpGridTableBody .rwpGridTableTrFocus td{border-right-color:#C7D3A9;}
+.rwpGridTableBody .rwpGridTableTrFocus:hover{ background-color:#E4EFC9;}
+.rwpGridTableBody a{ color:#428bca;}
+.rwpGridTableBody a:hover{ color:#2a6496;}
+.rwpGridTreeSpace{display:inline; float:left; width:18px; height:18px; line-height:20px;}
+
+/*图标*/
+.rwpDgIcon{display:inline-block; width:100%; height:20px; text-align:center;}
+.rwpDgIcon .icon{display:inline-block; width:20px; margin:0 5px; background:url(../images/imgIcon.gif) no-repeat 0 0;}
+.rwpDgIcon .eye1{background-position:-138px -58px;}
+.rwpDgIcon .eye1:hover{background-position:-243px -58px;}
+.rwpGridTableTrFocus .rwpDgIcon .eye1{background-position:-138px -79px;}
+.rwpGridTableTrFocus .rwpDgIcon .eye1:hover{background-position:-243px -79px;}
+
+.rwpDgIcon .eye2{background-position:-111px -58px;}
+.rwpDgIcon .eye2:hover{background-position:-215px -58px;}
+.rwpGridTableTrFocus .rwpDgIcon .eye2{background-position:-111px -79px;}
+.rwpGridTableTrFocus .rwpDgIcon .eye2:hover{background-position:-215px -79px;}
+
+.rwpDgIcon .down{background-position:-165px -58px;}
+.rwpDgIcon .down:hover{background-position:-270px -58px;}
+.rwpGridTableTrFocus .rwpDgIcon .down{background-position:-165px -79px;}
+.rwpGridTableTrFocus .rwpDgIcon .down:hover{background-position:-270px -79px;}
+
+.rwpDgIcon .up{background-position:-188px -58px;}
+.rwpDgIcon .up:hover{background-position:-293px -58px;}
+.rwpGridTableTrFocus .rwpDgIcon .up{background-position:-188px -79px;}
+.rwpGridTableTrFocus .rwpDgIcon .up:hover{background-position:-293px -79px;}
+
+.rwpDgIcon .del{background-position:-44px -55px;}
+.rwpDgIcon .del:hover{background-position:-66px -53px;}
+.rwpGridTableTrFocus .rwpDgIcon .del{background-position:-44px -55px;}
+.rwpGridTableTrFocus .rwpDgIcon .del:hover{background-position:-66px -53px;}
+
+
+
+
+/*分页*/
+.rwpGridPage{padding:8px 0; height:26px; overflow:hidden; background-color:#EFF3F8; line-height:24px;}
+.rwpGridPage .rwpPageCount{display:inline; float:left;}
+.rwpGridPage .rwpGridPaging{ display:inline; float:right; margin-right:10px;}
+.rwpGridPage .rwpGridPaging span{display:inline; float:left;}
+.rwpGridPage .rwpGridPaging .rwpGridPageLink{ display:inline; float:left; padding:0 12px; margin-left:-1px;	font:12px/24px "Arial"; text-align:center; background-color:#fff; border:1px solid #E0E8EB; color:#2283c5; vertical-align:middle;}
+.rwpGridPage .rwpGridPaging .rwpGridPageLink:hover{background-color:#EAEFF2;}
+.rwpGridPage .rwpGridPaging .rwpGridPageLink.rwpGridPageCurrent{background-color:#6FAED9; border-color:#6FAED9; color:#fff;}
+
+.rwpGridPage .rwpGridPaging .rwpGridInputPage{display:inline; float:left; padding:0 2px; margin-right:5px; height:24px; line-height:24px; overflow:hidden; border:1px solid #E0E8EB; background-color:#fff;}
+.rwpGridPage .rwpGridPaging .rwpGridInputPage input{display:inline; float:left; padding:0; height:24px; line-height:24px; border:0; text-align:center;}
+.rwpGridPage .rwpGridPaging .rwpButton{ display:inline; float:left; height:24px; font:12px/24px "Arial"; text-align:center; background-color:#fff; border:1px solid #E0E8EB; color:#2283c5; vertical-align:middle;}
+.rwpGridPage .rwpGridPaging .rwpButton:hover{background-color:#6FAED9; border-color:#6FAED9; color:#fff;}
+.rwpGridPage .rwpGridPaging a{line-height:24px;}
+

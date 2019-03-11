@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.core.dao.IAuthDao">
+
+	<resultMap id="authMap" type="com.jrwp.core.entity.Core_Auth">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="authName" column="authName" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<collection property="actions"
+			ofType="com.jrwp.core.entity.Core_ActionForAuth" javaType="ArrayList">
+			<id property="id" column="a_id" javaType="Long" jdbcType="INTEGER"></id>
+			<result property="authId" column="authId" javaType="Long"
+				jdbcType="INTEGER"></result>
+			<result property="controlName" column="controName" javaType="String"
+				jdbcType="VARCHAR"></result>
+			<result property="actionName" column="actionName" javaType="String"
+				jdbcType="VARCHAR"></result>
+			<result property="display" column="display" javaType="String"
+				jdbcType="VARCHAR"></result>
+		</collection>
+	</resultMap>
+	<!-- 获取权限列表 -->
+	<select id="list" parameterType="String" resultType="com.jrwp.core.entity.Core_Auth">
+		select *
+		from core_auth ${whereSql}
+	</select>
+
+	<select id="getAuthListByIds" resultMap="authMap">
+		select * from core_auth
+		${ids}
+	</select>
+
+	<!-- 增加权限 -->
+	<insert id="add" parameterType="com.jrwp.core.entity.Core_Auth">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_CORE_AUTH.nextval from dual
+		</selectKey>
+		insert into
+		core_auth(id,authName)
+		values(#{id},#{authName})
+	</insert>
+
+	<!-- 修改权限 -->
+	<update id="update" parameterType="com.jrwp.core.entity.Core_Auth">
+		update core_auth set
+		authName=#{authName} where id=#{id}
+	</update>
+
+	<!-- 删除权限 -->
+	<delete id="delete" parameterType="Long">
+		delete from core_auth
+		where
+		id=#{id}
+	</delete>
+
+	<delete id="removeAction" parameterType="Long">
+		delete from
+		core_actionforauth where authid = #{id}
+	</delete>
+
+	<insert id="addAction">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+					select SEQ_CORE_ACTIONFORAUTH.nextval from dual
+		</selectKey>
+		insert into
+		core_actionforauth(id,authid,controname,actionname,display)
+		values(#{id,jdbcType=INTEGER},#{authId,jdbcType=INTEGER},#{contro,jdbcType=VARCHAR},#{action,jdbcType=VARCHAR},#{display,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="getObjectById" parameterType="Long" resultMap="authMap">
+		select
+		core_auth.*,a.id as
+		a_id,a.authid,a.controname,a.actionname,a.display
+		from core_auth left
+		join core_actionforauth a on core_auth.id=a.authid
+		where core_auth.id =
+		#{id}
+	</select>
+
+</mapper>

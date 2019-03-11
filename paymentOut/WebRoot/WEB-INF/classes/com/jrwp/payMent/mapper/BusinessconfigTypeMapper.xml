@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.BusinessconfigTypeDao">
+	<resultMap type="com.jrwp.payMent.entity.BusinessconfigType"
+		id="applyTypeMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="serCode" column="ser_Code" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="applyTypeName" column="applyTypeName"
+			javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="orderCode" column="ordercode" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="isValid" column="isvalid" />
+		<!-- 所属业务 -->
+		<association property="policeClassService"
+			javaType="com.jrwp.payMent.entity.PoliceClassService">
+			<id property="serCode" column="serCode" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="serName" column="ser_Name" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+		<!-- 包含业务类型 -->
+		<collection property="stuffs"
+			ofType="com.jrwp.payMent.entity.BusinessconfigStuff">
+			<id property="id" column="bsid" javaType="Long" jdbcType="INTEGER" />
+			<result property="bconfigstrname" column="bconfigstrname"
+				javaType="String" jdbcType="VARCHAR" />
+			<result property="ordercode" column="ordercode" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="sampleid" column="sampleid" javaType="Long"
+				jdbcType="INTEGER" />
+			<result property="applytypeid" column="applytypeid" javaType="Long"
+				jdbcType="INTEGER" />
+			<!-- 对应样图 -->
+			<association property="photoSample"
+				javaType="com.jrwp.payMent.entity.PhotoSample">
+				<id property="id" column="sid" javaType="Long" jdbcType="INTEGER" />
+				<result property="bconfigstrcname" column="photoname"
+					javaType="String" jdbcType="VARCHAR" />
+				<result property="photosamplepath" column="photoSamplePath"
+					javaType="String" jdbcType="VARCHAR" />
+				<result property="isvalid" column="isValid" />
+				<result property="photosample" column="photoSample" />
+			</association>
+		</collection>
+	</resultMap>
+	<!--查询其子集 -->
+	<select id="listChild" resultMap="applyTypeMap">
+		select at.*,ps.ser_code
+		sercode,ps.ser_name from WX_ApplyType at
+		left join policeclass_service
+		ps on ps.ser_code = at.ser_code
+		where at.ser_code = #{serCode}
+	</select>
+	<!--微信查询其子集 -->
+	<select id="listChildForWx" resultMap="applyTypeMap">
+		select at.*,wb.*,wp.* from WX_ApplyType at
+		<!-- left join policeclass_service ps on ps.ser_code = at.ser_code -->
+		left join WX_BUSINESSCONFIGSTR wb on wb.applytypeid = at.id
+		left join WE_PHOTOSAMPLE wp on wp.id = wb.sampleid
+		where at.ser_code = #{serCode}
+	</select>
+	<!--获取最大排序码 -->
+	<select id="getMaxOrderCode" resultType="String">
+		select case when
+		max(ordercode) is null then 1000 else max(ordercode) + 1 end from
+		WX_ApplyType
+	</select>
+	<!-- 状态更新 -->
+	<update id="isValid">
+		update WX_ApplyType set isvalid=#{isvalid} where
+		id=#{id}
+	</update>
+	<!--获取最大排序码 -->
+	<select id="getMaxCode" resultType="String">
+		select max(ordercode) from
+		WX_ApplyType
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.BusinessconfigType">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_WX_APPLYTYPE.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO WX_APPLYTYPE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="serCode != null">
+				ser_Code,
+			</if>
+			<if test="applyTypeName != null">
+				applyTypeName,
+			</if>
+			<if test="orderCode != null">
+				orderCode,
+			</if>
+			<if test="isValid != null">
+				isValid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="serCode != null">
+				#{serCode},
+			</if>
+			<if test="applyTypeName != null">
+				#{applyTypeName},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="isValid != null">
+				#{isValid},
+			</if>
+		</trim>
+	</insert>
+	<!-- 修改sql -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.BusinessconfigType">
+		update WX_APPLYTYPE
+		<set>
+			<if test="applyTypeName != null">
+				applyTypeName = #{applyTypeName},
+			</if>
+			<if test="isValid != null">
+				isValid = #{isValid},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="applyTypeMap">
+		select * from WX_APPLYTYPE
+		where id = #{id}
+	</select>
+	<!-- 删除操作 -->
+	<delete id="delete">
+		delete from WX_APPLYTYPE where id = #{id}
+	</delete>
+</mapper>

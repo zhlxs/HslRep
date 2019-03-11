@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.appr.dao.UserAppraiseDao">
+	<resultMap id="userApprMap" type="com.jrwp.appr.entity.UserAppraise">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="userid" column="userid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="appraisedetailid" column="appraisedetailid"
+			javaType="Long" jdbcType="INTEGER" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="orderid" column="orderid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="isdefault" column="isdefault" javaType="Int"
+			jdbcType="INTEGER" />
+		<result property="iswechat" column="iswechat" javaType="Int"
+			jdbcType="INTEGER" />
+		<result property="otheradvice" column="otheradvice" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="hotwords" column="hotwords" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isexport" column="isexport" javaType="Int"
+			jdbcType="INTEGER" />
+		<result property="sequence_infoid" column="sequence_infoid"
+			javaType="Long" jdbcType="INTEGER" />
+		<result property="iswrite" column="iswrite" javaType="Int"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<!-- 保存评价接口 -->
+	<insert id="saveAppr" parameterType="com.jrwp.appr.entity.UserAppraise">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_USERAPPR_ID.nextval as id from dual
+		</selectKey>
+		INSERT INTO USER_APPRAISE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="userid != null">
+				USERID,
+			</if>
+			<if test="appraisedetailid != null">
+				appraisedetailid,
+			</if>
+			<if test="createtime == null">
+				createtime,
+			</if>
+			<if test="orderid != null">
+				orderid,
+			</if>
+			<if test="isdefault != null">
+				isdefault,
+			</if>
+			<if test="iswechat != null">
+				iswechat,
+			</if>
+			<if test="otheradvice != null">
+				otheradvice,
+			</if>
+			<if test="hotwords != null">
+				hotwords,
+			</if>
+			<if test="isexport != null">
+				isexport,
+			</if>
+			<if test="sequence_infoid != null">
+				sequence_infoid,
+			</if>
+			<if test="iswrite != null">
+				iswrite,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="userid != null">
+				#{userid},
+			</if>
+			<if test="appraisedetailid != null">
+				#{appraisedetailid},
+			</if>
+			<if test="createtime == null">
+				sysdate,
+			</if>
+			<if test="orderid != null">
+				#{orderid},
+			</if>
+			<if test="isdefault != null">
+				#{isdefault},
+			</if>
+			<if test="iswechat != null">
+				#{iswechat},
+			</if>
+			<if test="otheradvice != null">
+				#{otheradvice},
+			</if>
+			<if test="hotwords != null">
+				#{hotwords},
+			</if>
+			<if test="isexport != null">
+				#{isexport},
+			</if>
+			<if test="sequence_infoid != null">
+				#{sequence_infoid},
+			</if>
+			<if test="iswrite != null">
+				#{iswrite},
+			</if>
+		</trim>
+	</insert>
+</mapper>

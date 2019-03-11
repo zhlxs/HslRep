@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.DicTimeDao">
+	<resultMap type="com.jrwp.payMent.entity.DicTime" id="timeMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="time" column="time" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isvalid" column="isvalid" />
+	</resultMap>
+	<!-- 列表 -->
+	<select id="list" resultMap="timeMap">
+		select id,time,isvalid from
+		dic_time
+	</select>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="timeMap">
+		select id,time,isvalid from
+		dic_time where id = #{id}
+	</select>
+</mapper>

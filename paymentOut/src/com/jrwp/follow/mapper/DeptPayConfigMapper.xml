@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.follow.dao.DeptPayConfigDao">
+
+
+    <!-- 根据部门找出支付信息 -->
+    <select id="getdeptConfig" resultType="com.jrwp.follow.entity.PayConfig">
+        select * from pay_config c left join dept_payconfig dp on dp.payconfigid = c.id
+        left join core_dept d on d.id = dp.deptid
+        where deptcode = #{deptcode}
+        <if test="type !=null">
+            and c.configtype = #{type}
+        </if>
+
+    </select>
+    <select id="isHave" resultType="Integer">
+        select c.id from pay_config c left join dept_payconfig dp on dp.payconfigid = c.id
+        left join core_dept d on d.id = dp.deptid
+        where deptcode = #{deptcode}
+    </select>
+    <select id="getByAppidAndMchId" resultType="com.jrwp.follow.entity.PayConfig">
+           select * from pay_config c  where c.appid =#{appid} and c.paymentpartnerid=#{mchid}
+    </select>
+</mapper>

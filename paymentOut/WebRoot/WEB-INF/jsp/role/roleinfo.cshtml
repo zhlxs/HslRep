@@ -1,0 +1,52 @@
+﻿@model RWP.Domain.core_role_dto
+@{
+    ViewBag.Title = "角色信息";
+    Layout = null;
+    int IsSysUser = (int)ViewBag.IsSysUser;    
+}
+<script type="text/javascript">
+    rwpTemp.f_selectauth = function() {
+        var url = '@Url.Action("authdialog", "auth", new { @area = "Core" })?actiontype=selectauth&authids=' + $("#authIDs").val() + '&rnd=' + Math.random();
+        return rwpPluginHelper.selectContact('选择所属权限', url, 'ID', 'authName', 'authIDs', 'authNames');
+    }
+    $(function () {        
+        $("#authNames").rwpUICombobox({
+            onBeforeOpen: rwpTemp.f_selectauth
+        });
+
+        if ("@IsSysUser" == 1) {
+            $("#ulIsSys").show();            
+        }        
+        $("#ajaxform").rwpUIForm({ isAjaxSubmit: true });
+    });    
+</script>
+
+@using (Html.BeginForm("saverole", "role", FormMethod.Post, new { @id = "ajaxform" }))
+{ 
+    <fieldset>
+        <legend><i class="i"></i>@ViewBag.Title</legend>
+        @Html.HiddenFor(m => m.ID)        
+        <div class="formpanel">  
+            <div class="clear">
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.roleName)</li>
+                    <li class="editor-field">@Html.TextBoxFor(m => m.roleName)</li> 
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.roleName)</li>
+                </ul>
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.auths)</li>
+                    <li style=" display: none;">@Html.HiddenFor(m => m.authIDs)</li>
+                    <li class="editor-field">@Html.TextBoxFor(m => m.authNames)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.auths)</li>
+                </ul>                
+            </div>
+            <div class="clear">
+                <ul class="DialabelWidth" id ="ulIsSys" style="display:none;">
+                    <li class="editor-label">@Html.LabelFor(m => m.isSys)</li>                
+                    <li class="editor-field">@Html.CheckBoxFor(m => m.isSys)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.isSys)</li>                       
+                </ul>
+            </div>                     
+        </div>
+    </fieldset>
+}

@@ -1,0 +1,38 @@
+﻿@model RWP.Domain.core_auth_dto
+@{
+    ViewBag.Title = "权限信息";
+    Layout = null;
+}
+<script type="text/javascript">
+    rwpTemp.f_selectaction = function () {
+        var url = '@Url.Action("actiontree", "auth", new { @area = "Core" })?actions=' + $("#actionValues").val() + '&rnd=' + Math.random();
+        return rwpPluginHelper.selectContact('选择所属动作', url, 'controllerAction', 'display', 'actionValues', 'actionNames');
+    }
+    $(function () {        
+        $("#actionNames").rwpUICombobox({
+            onBeforeOpen: rwpTemp.f_selectaction
+        });
+        $("#ajaxform").rwpUIForm({ isAjaxSubmit: true });
+    });    
+</script>
+
+@using (Html.BeginForm("saveauth", "auth", FormMethod.Post, new { @id = "ajaxform" }))
+{ 
+    <fieldset>
+    <legend><i class="i"></i>@ViewBag.Title</legend>
+    <div class="formpanel">
+        @Html.HiddenFor(m => m.ID)
+        <ul class="clear">
+            <li class="editor-label">@Html.LabelFor(m => m.authName)</li>
+            <li class="editor-field">@Html.TextBoxFor(m => m.authName)</li>
+            <li class="editor-validation">@Html.ValidationMessageFor(m => m.authName)</li>
+        </ul>
+        <ul class="clear">
+            <li class="editor-label">@Html.LabelFor(m => m.actions)</li>        
+            <li style=" display: none;">@Html.HiddenFor(m => m.actionValues)</li>
+            <li class="editor-field">@Html.TextBoxFor(m => m.actionNames)</li>
+            <li class="editor-validation">@Html.ValidationMessageFor(m => m.actions)</li>      
+        </ul>
+    </div>
+    </fieldset>
+}

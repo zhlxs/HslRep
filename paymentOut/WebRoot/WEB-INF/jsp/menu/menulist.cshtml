@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "菜单列表";
+    Layout = null;
+}
+<script type="text/javascript">
+    rwpTemp.menubaritems = {
+        items: [
+        { text: '添加',
+            click: rwpListLayout.gridToolButtonClick.itemclick,
+            icon: 'add',
+            dia: { title: '菜单' },
+            url: '@Url.Action("addmenu", "menu", new { @area = "Core" })'
+        },        
+        { text: '修改',
+            click: rwpListLayout.gridToolButtonClick.itemclick,
+            icon: 'edit',
+            min: 1,
+            max: 1,
+            dia: { title: '菜单' },
+            url: '@Url.Action("editmenu", "menu", new { @area = "Core" })'
+        },        
+        { text: '删除',
+            click: rwpListLayout.gridToolButtonClick.itemclick,
+            icon: 'delete',
+            min: 1,
+            max: 1,
+            confirm: true,
+            postajax: true,
+            url: '@Url.Action("delmenu", "menu", new { @area = "Core" })'
+        }
+    ]
+    };        
+    $(function () {
+        $("#menugrid").rwpUIDatagrid({
+            columns: [
+            { display: '主键', name: 'ID', isHide: true, primarykey: true },
+            { display: '菜单名称', name: 'menuName', width: 250 },
+            { display: '分类标示', name: 'orderCode', width: 250 },
+            { display: '菜单路径', name: 'menuUrl', width: 250 },
+            { display: '状态', name: 'isShow', width: 60,
+                render: function (row) {
+                    var html = '';
+                    if (!isNaN(row.isShow)) {
+                        html = row.isShow == 1 ? '<span class="fClr3">显示</span>' : '<span class="fClr4">不显示</span>';
+                    }
+                    return html;
+                }
+            },
+            {
+                display: '操作', width: 120,
+                render: function (rowdata) {
+                    var html = '<span class="rwpDgIcon">';
+                    if (rowdata.ID > 0) {
+                        if (rowdata.isShow)
+                            html += '<a href="@Url.Action("showmenu", "menu", new { @area = "Core", @isshow = 0 })&id='
+                                    + rowdata.ID + '" rwpOpts="{ isajax: true }" class="eye2 icon">&nbsp;</a>';
+                        else
+                            html += '<a href="@Url.Action("showmenu", "menu", new { @area = "Core", @isshow = 1 })&id='
+                                    + rowdata.ID + '" rwpOpts="{ isajax: true }" class="eye1 icon">&nbsp;</a>';
+                        html += '<a href="@Url.Action("movemenu", "menu", new { @area = "Core", @movetype = 1 })&id='
+                                    + rowdata.ID + '" rwpOpts="{ isajax: true }"class="up icon">&nbsp;</a>';
+                        html += '<a href="@Url.Action("movemenu", "menu", new { @area = "Core", @movetype = 2 })&id='
+                                    + rowdata.ID + '" rwpOpts="{ isajax: true }" class="down icon">&nbsp;</a></span>';
+                    }
+                    return html;
+                }
+            }
+            ],
+            toolbar: rwpTemp.menubaritems,
+            usePager: false,            
+            checkbox: true,
+            autoCheckChildren: false,
+            tree: { columnName: 'menuName' },
+            url: '@Url.Action("menujson")',
+            height: '99%',            
+            onAfterShowData: function () { rwpListLayout.gridRowclick('menugrid') }
+        });                
+    });
+</script>
+
+<div class="tablepanel">
+  <div id="menugrid"></div>
+</div>

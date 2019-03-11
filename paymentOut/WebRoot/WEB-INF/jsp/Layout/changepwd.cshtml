@@ -1,0 +1,35 @@
+﻿@model RWP.FrameworkForWeb.PassWordInfo
+@{
+    ViewBag.Title = "修改密码";
+    Layout = null;   
+}
+<script type="text/javascript">
+    $(function () {
+        $("#ajaxform-changepassword").rwpUIForm({ isAjaxSubmit: true });
+    });
+</script>
+@using (Html.BeginForm("modifpassword", "layout", FormMethod.Post, new { @id = "ajaxform-changepassword" }))
+{ 
+    <fieldset>
+        <legend><i class="i"></i>@ViewBag.Title</legend>
+        <div class="formpanel">
+            <ul class="clear">
+                <li class="editor-label">@Html.LabelFor(m => m.oldPassWord)</li>
+                <li class="editor-field">@Html.PasswordFor(m => m.oldPassWord)</li>
+                <li class="editor-validation">@Html.ValidationMessageFor(m => m.oldPassWord)</li>
+            </ul>
+            <ul class="clear">
+                <li class="editor-label">@Html.LabelFor(m => m.newPassWord)</li>
+                <li class="editor-field">@Html.PasswordFor(m => m.newPassWord)</li>
+                <li class="editor-validation">@Html.ValidationMessageFor(m => m.newPassWord)</li>
+            </ul>
+            <div class="clear">
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.inputNewPassWord)</li>
+                    <li class="editor-field">@Html.PasswordFor(m => m.inputNewPassWord)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.inputNewPassWord)</li>
+                </ul>
+            </div>
+        </div>
+    </fieldset>
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IDeptTimesConfigDao">
+	<!-- 列表 -->
+	<select id="list" resultType="com.jrwp.payMent.entity.DeptTimesConfigJson">
+		select cd.id deptid,cd.deptname,dtc.timeinter,dtc.times,dtc.creator,dtc.updatetime from core_dept cd
+		left join DEPT_TIMES_CONFIG dtc on dtc.deptid = cd.id where 1=1
+		<if test="deptId != null">
+			<!-- 递归查询 -->
+			and cd.deptid in (select id from core_dept start with id =#{deptId} connect by prior id=parentid)
+		</if>
+		<if test="startCodes != null">
+			and
+			<foreach collection="startCodes" item="startCode" index="index"
+				open="(" close=")" separator="or">
+				cd.deptcode like #{startCode}
+			</foreach>
+		</if>
+		<if test="deptname != null">
+			and cd.deptname like #{deptname}
+		</if>
+	</select>
+	<!-- 根据主键获取配置对象 -->
+	<select id="getObjectById" resultType="com.jrwp.payMent.entity.DeptTimesConfig">
+		select * from DEPT_TIMES_CONFIG where deptid = #{id}
+	</select>
+	<!-- 保存配置 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.DeptTimesConfig">
+		insert into DEPT_TIMES_CONFIG (deptid,timeInter,times,creator,updatetime)
+		values (#{deptid},#{timeInter},#{times},#{creator},#{updatetime})
+	</insert>
+	<!-- 更新配置 -->
+	<update id="update">
+		update DEPT_TIMES_CONFIG set timeInter = #{timeInter},times = #{times},creator = #{creator},updatetime = #{updatetime}
+		where deptid = #{deptid}
+	</update>
+</mapper>

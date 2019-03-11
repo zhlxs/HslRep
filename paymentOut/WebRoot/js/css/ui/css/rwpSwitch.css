@@ -1,0 +1,6 @@
+.rwpSwitch .rwpSwitchItem{ display:inline; float:left; margin-right:-1px; padding:5px 10px; height:24px; border:1px solid #e5e5e5; line-height:24px; background-color:#F5F4F0; cursor:pointer;}
+
+.rwpSwitch .rwpSwitchItem.last{}
+.rwpSwitch .rwpSwitchItem.active{background-color:#E7A783; border-color:#E7A783; border-left-color:#fff; color:#fff;}
+.rwpSwitch .rwpSwitchItem.active:hover{background-color:#E7A783;}
+.rwpSwitch .rwpSwitchItem:hover{background:#fff;}

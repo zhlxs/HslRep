@@ -1,0 +1,200 @@
+﻿/*
+YUI CSS Reset
+*/
+html{color:#000;background:none;}
+*{margin:0; padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}
+caption,th{text-align:left;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+input,textarea,select{*font-size:100%;}
+legend{color:#000;}
+del,ins{text-decoration:none;}
+body{ height:100%; color:#666; line-height:24px; font-size:14px; font-family:'Verdana','宋体'; word-break:break-all;}
+a{ color:#666; text-decoration:none; cursor:pointer;}
+a:hover{ color:#4b88b7;}
+
+/*利用伪类:after和zoom:1清除浮动*/
+.clear{clear:both; line-height:0; zoom: 1; font-size:0; }
+.clear *{ height:auto; font-size:14px; line-height:24px;}
+.clear .edui-default iframe{height:inherit;}
+.clear:after{content:'.';clear:both;display:block;height:0;visibility:hidden;line-height:0;}
+
+.ffl{ display:inline; float:left;}
+.ftal{text-align:left;}
+.fClr1{color:#FF8900;}
+.fClr2{color:#01AA73;}
+.fClr3{color:#019DDA;}
+.fClr4{color:#D6487E;}
+.fClr5{color:#b94a48;}
+
+/*
+  滚动条
+*/
+div {
+ scrollbar-base-color:#F0F0F0; /*滚动条的基色*/
+ scrollbar-track-color: #F0F0F0;/*立体滚动条背景颜色*/
+	scrollbar-darkshadow-color: #D9DADC;/*立体滚动条阴影的颜色*/
+	scrollbar-face-color: #D9DADC;/*立体滚动条的颜色（包括箭头部分的背景色）*/
+	scrollbar-shadow-color: #D9DADC;/*立体滚动条阴影的颜色*/
+	scrollbar-arrow-color: #000;/*三角箭头的颜色*/
+	scrollbar-highlight-color: #F0F0F0;/*滚动条的高亮颜色（左阴影？）*/
+	scrollbar-3dlight-color: #D9DADC;/*立体滚动条亮边的颜色*/
+}
+
+/*
+  loading
+*/
+/*小*/
+.rwpMinLoading{ display:inline-block; width:20px; height:20px; background:url(../images/loading/imgLoading3.gif) no-repeat center center !important;}
+
+/*中*/
+.rwpMidLoading{display:block; position:absolute; padding:10px; margin-top:-50px; margin-left:-130px; left:50%; top:50%; height:25px; line-height:25px; padding:5px 10px 5px 45px; border:2px solid #95B8E7; background:#fff url(../images/loading/imgLoading2.gif) no-repeat 10px center;}
+
+/*大*/
+.rwpBigLoading{display:block; position:absolute; left:0; top:0; width:100%; height:100%; background:#fff url(../images/loading/imgLoading1.gif) no-repeat center center; line-height:50px;}
+
+/*
+  头部
+*/
+.gHd{height:125px; background:url(../images/imgHdBg1.gif) repeat-x 0 0;}
+.gHd .uTop{width:100%; height:41px;}
+.gHd .uCenter{width:100%; height:85px;}
+.gHd .Logo{display:inline; float:left; position:relative; margin:-5px 20px 0 20px; height:100%; overflow:hidden;}
+.gHd .Logo .t{display:inline; float:left; height:85px; background:url(../images/imgHdTBg.gif) no-repeat 0 0;}
+.gHd .Logo .first{ width:10px; background-position:0 0; font-size:0;}
+.gHd .Logo .txt{padding:10px 15px; background-position:0 -95px; background-repeat:repeat-x; font:24px/55px "微软雅黑"; text-align:center; color:#2679b5;}
+.gHd .Logo .end{ width:10px; line-height:90px; background-position:0 -200px; font-size:0;}
+
+
+/*
+提示
+*/
+.gHd .uTip {display:inline; float:right; padding-right:20px;}
+.gHd .uTip .i{display:inline-block; margin-right:5px; width:20px; background:url(../images/imgIcon.gif) no-repeat 0 -100px; vertical-align:middle; }
+.gHd .uTip li{display:inline; float:left; color:#fff;}
+.gHd .uTip li a{color:#fff;}
+.gHd .uTip li .back{display:inline-block; margin-top:9px;}
+.gHd .uTip li .back:hover{text-decoration:underline;}
+.gHd .uTip li .back .i{background-position:-170px -180px;}
+
+
+/*第一种菜单*/
+.gHd .uTip .tipList{display:inline; float:left; color:#fff;}
+
+/*
+提示-快捷操作菜单
+*/
+.gHd .uDropMenu{ position:relative; z-index:99; border-right:1px solid #fff; cursor:pointer;}
+.gHd .uDropMenu .dropMenuTitle{display:inline-block; padding:8px 10px; height:25px; line-height:25px; color:#fff;}
+.gHd .uDropMenu .dropMenuNum{display:inline-block; padding-right:9px; margin-left:5px; line-height:20px; color:#fff; background:url(../images/imgDropNumBg.gif) no-repeat right -20px;}
+.gHd .uDropMenu .dropMenuNum .numBg{display:inline-block; width:9px; height:20px; background:url(../images/imgDropNumBg.gif) no-repeat 0 0;}
+.gHd .uDropMenu .dropList{display:none; position:absolute; top:41px; left:0; z-index:999; overflow:visible; zoom:1; background-color:#fff; -webkit-box-shadow:#C6C6D8 0px 2px 4px; box-shadow:#C6C6D8 0px 2px 4px;}
+.gHd .uDropMenu .dropList .listToolBar{position:absolute; top: -5px; left:70px; z-index:9999; width:9px; height:5px; line-height:5px; background:url(../images/imgIcon.gif) no-repeat -154px -10px; font-size:0;}
+.gHd .uDropMenu .dropList .dropMenuNum{display:inline; float:right;}
+.gHd .uDropMenu .dropList .icon{display:inline; float:left; margin-right:5px; margin-top:11px; width:15px; height:15px; background:url(../images/imgIcon.gif) no-repeat -216px -100px;}
+.gHd .uDropMenu .dropList .i{margin-right:10px;}
+.gHd .uDropMenu .dropList .listTitle{padding:0 10px; font-size:13px; font-weight:bold;}
+.gHd .uDropMenu .dropList .list{display:block; padding:0 10px;}
+.gHd .uDropMenu .dropList .list strong{display:block; padding:10px 0; height:20px; font-weight:normal; line-height:20px; color:#666;}
+.gHd .uDropMenu .dropList .list.firstlist strong{border-top:0;}
+
+/*大型*/
+.gHd .uDropMenuBig .dropList{width:238px;}
+.gHd .uDropMenuBig .dropList .listTitle{ width:218px; height:34px; line-height:34px; overflow:hidden;}
+.gHd .uDropMenuBig .dropList .list strong{ width:218px; }
+
+/*小型*/
+.gHd .uDropMenuSmall .dropList{width:150px;}
+.gHd .uDropMenuSmall .dropList .listTitle{width:130px;}
+.gHd .uDropMenuSmall .dropList .list strong{padding-top:5px; padding-bottom:5px;}
+.gHd .uDropMenuSmall .dropList .i{margin-left:10px;}
+.gHd .uDropMenuSmall .dropList .list{margin-top:10px; margin-bottom:10px;}
+.gHd .uDropMenuSmall .dropList .line{ width:100%; border-bottom:1px solid #e5e5e5; font-size:0; line-height:0;}
+
+
+/*通告*/
+.gHd .dropMenuTip{background-color:#D6487E;}
+.gHd .dropMenuTip .i{background-position:-187px -103px;}
+.gHd .dropMenuTip .dropMenuNum{background-position:right -20px;}
+.gHd .dropMenuTip .dropMenuNum .num{background-position:0 0;}
+.gHd .dropMenuTip .dropList{border:1px solid #E5BCD4;}
+.gHd .dropMenuTip .dropList .listToolBar{background-position: -154px -10px;}
+.gHd .dropMenuTip .dropList .listTitle{border-bottom:1px solid #E5BCD4; background-color:#F7ECF2; color:#B471A0;}
+.gHd .dropMenuTip .dropList .list:hover{background-color:#FCF4F9;}
+.gHd .dropMenuTip .dropList .list strong{ border-top:1px solid #F3E4EC;}
+
+.gHd .dropMenuTip .dropList .dropListCom .i{background-position:-240px -100px;}
+.gHd .dropMenuTip .dropList .dropListCom .dropMenuNum{background-position:right -63px;}
+.gHd .dropMenuTip .dropList .dropListCom .dropMenuNum .numBg{background-position:0 -43px;}
+
+.gHd .dropMenuTip .dropList .dropListUser .i{background-position:-270px -100px;}
+.gHd .dropMenuTip .dropList .dropListUser .dropMenuNum{background-position:right -107px;}
+.gHd .dropMenuTip .dropList .dropListUser .dropMenuNum .numBg{background-position:0 -87px;}
+
+.gHd .dropMenuTip .dropList .dropListOrder .i{background-position:-300px -100px;}
+.gHd .dropMenuTip .dropList .dropListOrder .dropMenuNum{background-position:right -151px;}
+.gHd .dropMenuTip .dropList .dropListOrder .dropMenuNum .numBg{background-position:0 -131px;}
+
+/*用户*/
+.gHd .dropMenuUser{background-color:#579EC8; border-right:0;}
+.gHd .dropMenuUser .dropMenuTitle .i1{display:inline-block; margin-right:5px; width:25px; line-height:25px; background:url(../images/imgIcon.gif) no-repeat 0 0;}
+.gHd .dropMenuUser .dropMenuTitle .i2{display:inline-block; width:12px; height:20px; line-height:20px; background:url(../images/imgIcon.gif) no-repeat -22px -34px;}
+.gHd .dropMenuUser .dropList{border:1px solid #ddd;}
+.gHd .dropMenuUser .dropList .listToolBar{background-position:-177px -10px;}
+.gHd .dropMenuUser .dropList .list:hover{ background-color:#FEE188;}
+
+.gHd .dropMenuUser .dropList .editPwd .i{background-position:-83px -182px;}
+.gHd .dropMenuUser .dropList .editPwd:hover .i{background-position:-110px -182px;}
+.gHd .dropMenuUser .dropList .ext .i{background-position:2px -181px;}
+.gHd .dropMenuUser .dropList .ext:hover .i{background-position:-27px -181px;}
+
+/*第二种菜单*/
+.gHd .uTip .menuList{padding:8px 10px; height:25px; line-height:25px; }
+.gHd .uTip .time .i{background-position:0 -103px;}
+.gHd .uTip .time a{ line-height:25px; color:#fff;}
+
+.gHd .uTip .user .i1{display:inline-block; margin-right:5px; width:25px; line-height:25px; background:url(../images/imgIcon.gif) no-repeat 0 0;}
+
+.gHd .uTip .editPwd .i{background-position:-138px -180px;}
+.gHd .uTip .ext .i{background-position:-53px -180px;}
+
+
+/*菜单*/
+.gHd .gIMenu{display:inline; float:left; height:100%;}
+.gHd .gIMenu ul{padding-left:2px; height:100%; background:url(../images/imgHdBg2.gif) no-repeat left 0;}
+.gHd .gIMenu ul li{display:inline; float:left; padding-right:2px; width:100px; height:100%; overflow:hidden; background:url(../images/imgHdBg2.gif) no-repeat right 0; text-align:center;}
+.gHd .gIMenu a{display:block; height:100%; overflow:hidden; font:500 14px/30px "宋体"; text-align:center; color:#c7e0f7;}
+.gHd .gIMenu ul li.current a{ background:url(../images/imgHdBg3.gif) no-repeat 0 0; color:#fff;}
+.gHd .gIMenu ul a:hover{background:url(../images/imgHdBg3.gif) no-repeat 0 0; color:#fff;}
+.gHd .gIMenu .i{display:block; margin:20px auto 0 auto; width:30px; height:30px; background:url(../images/imgMenuIcon1.gif) no-repeat -4px -45px;}
+
+.gHd .gIMenu .config .i{ background-position:-4px -88px;}
+.gHd .gIMenu li.current .config .i{background-position:-4px -128px;}
+.gHd .gIMenu a.config:hover .i{background-position:-4px -128px;}
+
+.gHd .gIMenu .system .i{ background-position: -164px -8px ;}
+.gHd .gIMenu li.current .system .i{background-position:-164px -48px;}
+.gHd .gIMenu a.system:hover .i{background-position:-164px -48px;}
+
+.gHd .gIMenu .default .i{ background-position:-4px -8px;}
+.gHd .gIMenu li.current .default .i{ background-position:-4px -48px;}
+.gHd .gIMenu a.default:hover .i{ background-position:-4px -48px;}
+
+.gHd .gIMenu .work .i{ background-position:-44px -8px;}
+.gHd .gIMenu li.current .work .i{ background-position:-44px -48px;}
+.gHd .gIMenu a.work:hover .i{ background-position:-44px -48px;}
+
+.gHd .gIMenu .manage .i{ background-position:-85px -8px;}
+.gHd .gIMenu li.current .manage .i{ background-position:-85px -48px;}
+.gHd .gIMenu a.manage:hover .i{ background-position:-85px -48px;}
+
+.gHd .gIMenu .user .i{ background-position:-128px -8px;}
+.gHd .gIMenu li.current .user .i{ background-position:-128px -48px;}
+.gHd .gIMenu a.user:hover .i{ background-position:-128px -48px;}
+

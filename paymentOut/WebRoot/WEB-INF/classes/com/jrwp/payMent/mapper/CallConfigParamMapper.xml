@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.CallConfigParamDao">
+	<resultMap type="com.jrwp.payMent.entity.CallConfigParam" id="callConfigParamMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="modelId" column="modelId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="parentId" column="parentId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="orderCode" column="orderCode" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="icon" column="icon" />
+		<result property="title" column="title" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="topCoord" column="topCoord" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="leftCoord" column="leftCoord" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="businessType" column="businessType" />
+		<result property="updatetime" column="updatetime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="remark" column="remark" javaType="String"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 根据模板id查询列表方法 -->
+	<select id="listByModelId" resultMap="callConfigParamMap">
+		select * from
+		CALLCONFIGPARAM where 1=1 and modelid = #{modelId}
+		order by ordercode
+	</select>
+	<!-- 根据模板id查询默认参数方法 -->
+	<select id="listByModelIdDefault" resultMap="callConfigParamMap">
+		select * from
+		CALLCONFIGPARAM_DEFAULT where 1=1 and modelid = #{modelId}
+		order by ordercode
+	</select>
+	<!-- 保存方法 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.CallConfigParam">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_CALLCONFIGPARAM_DEFAULT.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO CALLCONFIGPARAM_DEFAULT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modelId != null">
+				modelId,
+			</if>
+			<if test="parentId != null">
+				parentId,
+			</if>
+			<if test="orderCode != null">
+				orderCode,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="topCoord != null">
+				topCoord,
+			</if>
+			<if test="leftCoord != null">
+				leftCoord,
+			</if>
+			<if test="businessType != null">
+				businessType,
+			</if>
+			<if test="updatetime != null">
+				updatetime,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="modelId != null">
+				#{modelId},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="icon != null">
+				#{icon},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="topCoord != null">
+				#{topCoord},
+			</if>
+			<if test="leftCoord != null">
+				#{leftCoord},
+			</if>
+			<if test="businessType != null">
+				#{businessType},
+			</if>
+			<if test="updatetime != null">
+				#{updatetime},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+		</trim>
+	</insert>
+	<!-- 保存方法 -->
+	<insert id="saveParam" parameterType="com.jrwp.payMent.entity.CallConfigParam">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_CALLCONFIGPARAM.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO CALLCONFIGPARAM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modelId != null">
+				modelId,
+			</if>
+			<if test="parentId != null">
+				parentId,
+			</if>
+			<if test="orderCode != null">
+				orderCode,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="topCoord != null">
+				topCoord,
+			</if>
+			<if test="leftCoord != null">
+				leftCoord,
+			</if>
+			<if test="businessType != null">
+				businessType,
+			</if>
+			<if test="updatetime != null">
+				updatetime,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="modelId != null">
+				#{modelId},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode},
+			</if>
+			<if test="icon != null">
+				#{icon},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="topCoord != null">
+				#{topCoord},
+			</if>
+			<if test="leftCoord != null">
+				#{leftCoord},
+			</if>
+			<if test="businessType != null">
+				#{businessType},
+			</if>
+			<if test="updatetime != null">
+				#{updatetime},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+		</trim>
+	</insert>
+	<!-- 修改方法 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.CallConfigParam">
+		update CALLCONFIGPARAM
+		<set>
+			<if test="parentId != null">
+				parentId = #{parentId},
+			</if>
+			<if test="icon != null">
+				icon = #{icon},
+			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="topCoord != null">
+				topCoord = #{topCoord},
+			</if>
+			<if test="leftCoord != null">
+				leftCoord = #{leftCoord},
+			</if>
+			<if test="businessType != null">
+				businessType = #{businessType},
+			</if>
+			<if test="updatetime != null">
+				updatetime = #{updatetime},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 删除方法 -->
+	<delete id="delete">
+		delete from CALLCONFIGPARAM_DEFAULT where id = #{id}
+	</delete>
+	<!-- 根据模板id删除方法 -->
+	<delete id="deleteByModelId">
+		delete from CALLCONFIGPARAM where modelid = #{modelId}
+	</delete>
+	<!-- 获取单个对象方法 -->
+	<select id="getObjectById" resultMap="callConfigParamMap">
+		select * from
+		CALLCONFIGPARAM_DEFAULT where id = #{id}
+	</select>
+	<!-- 获得插入数据的orderCode -->
+	<select id="getInsertCode" resultType="String" parameterType="Long">
+		select Max(ordercode) from CALLCONFIGPARAM_DEFAULT where parentid= #{parentId}
+	</select>
+</mapper>

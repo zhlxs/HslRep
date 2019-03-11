@@ -1,0 +1,47 @@
+[
+  {
+    "id":"0",
+    "name":"Tom",
+    "statu":"材料待完善",
+    "subtime":"提交时间：2017-11-9 17:10:29",
+    "revtime":"预审时间：2017-11-12 10:07:22",
+    "items":[
+      {"item":"伪造的集资证件","pass":"true"},
+      {"item":"集资诈骗的票据材料","pass":"true"}
+    ]
+  },
+  {
+    "id":"1",
+    "name":"Tom",
+    "statu":"材料待审核",
+    "subtime":"提交时间：2017-11-11 15:08:19",
+    "revtime":"预审时间：",
+    "items":[{"item":"贷款材料","pass":"false","reason":""}]
+  },
+  {
+    "id":"2",
+    "name":"Tom",
+    "statu":"窗口办理",
+    "subtime":"提交时间：2017-10-8 11:11:11",
+    "revtime":"预审时间：2017-11-12 10:07:22",
+    "items":[
+      {"item":"伪造的票据","pass":"true"},
+      {"item":"做过虚假记载的票据","pass":"true"},
+      {"item":"伪造的银行结算凭证","pass":"true"},
+      {"item":"涉嫌被骗财务的依据","pass":"true"},
+      {"item":"涉嫌人的身份证明材料","pass":"true"}
+    ]
+  },
+  {
+    "id":"3",
+    "name":"Tom",
+    "statu":"已退回",
+    "subtime":"提交时间：2017-11-9 17:10:29",
+    "revtime":"预审时间：2017-11-12 10:07:22",
+    "items":[
+      {"item":"涉嫌人是本单位职工的身份证明","pass":"false","reason":"材料照片模糊"},
+      {"item":"侵占单位财产的依据","pass":"true"},
+      {"item":"营业执照","pass":"false","reason":""}
+    ]
+  }
+]

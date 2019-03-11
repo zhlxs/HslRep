@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IPoliceServiceDao">
+	<resultMap type="com.jrwp.payMent.entity.PoliceClassService"
+		id="policeServiceMap">
+		<result property="serCode" column="SER_CODE" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="serName" column="SER_NAME" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="pcCode" column="PC_CODE" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="price" column="PRICE" javaType="double"
+			jdbcType="NUMERIC" />
+		<result property="isDel" column="ISDEL" javaType="String"
+			jdbcType="CHAR" />
+		<result property="parentCode" column="parentcode" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="orderCode" column="ordercode" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isProxy" column="isProxy" />
+		<result property="businessnoticeId" column="DIC_BUSINESSNOTICEID"
+			javaType="Long" jdbcType="INTEGER" />
+		<result property="businessType" column="businessType" />
+		<!-- 关联查询 -->
+		<association property="police"
+			javaType="com.jrwp.payMent.entity.Core_Police">
+			<result property="pcName" column="PC_NAME" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!--查询页数 -->
+	<select id="countsize" resultType="Integer">
+		select count(*) from
+		policeclass_service where parentcode=#{parentCode} and isdel='0'
+	</select>
+	<!--查询顶部业务 -->
+	<select id="getTopServices" resultMap="policeServiceMap">
+		select *
+		from (select tmp_page.*, rownum row_id
+		from (SELECT t.*,
+		t1.pc_name
+		FROM POLICECLASS_SERVICE t
+		LEFT JOIN policeclass t1
+		ON
+		t.pc_code = t1.pc_code
+		where t.isdel = '0'
+		and parentcode = 0
+		<if test="pcCode!=null and pcCode!=''">
+			and t.pc_code=#{pcCode}
+		</if>
+		ORDER BY ordercode) tmp_page
+		where rownum &lt; = #{end})
+		where row_id
+		&gt; #{star}
+	</select>
+
+	<!--查询level2 -->
+	<select id="getLevel2" resultMap="policeServiceMap">
+		SELECT t.*,t1.pc_name FROM
+		POLICECLASS_SERVICE t
+		LEFT JOIN policeclass t1 ON t.pc_code =
+		t1.pc_code where t.isdel='0' and parentcode=#{parentCode}
+		ORDER BY
+		ordercode
+	</select>
+
+	<select id="getLevel2Uservice" resultMap="policeServiceMap">
+		SELECT t.*,t1.pc_name
+		FROM POLICECLASS_SERVICE t
+		LEFT JOIN policeclass t1 ON t.pc_code =
+		t1.pc_code where t.isdel='0' and parentcode=#{parentCode}
+		and
+		t.SER_CODE NOT in (select t.ser_code from userservice t where
+		t.ui_code=#{uiCode} )
+		ORDER BY ordercode
+
+	</select>
+	<!--获取下一个ordercode -->
+	<select id="getInsertCode" resultType="String">
+		select
+		lpad(to_char(count(1) + 1), 5, '0')
+		from policeclass_service t
+		where
+		t.parentcode = #{parentCode}
+	</select>
+	<!-- 增加 -->
+	<insert id="savePoliceService" parameterType="com.jrwp.payMent.entity.PoliceClassService">
+		<selectKey resultType="String" order="BEFORE" keyProperty="serCode">
+			SELECT SEQ_POLICECLASS_SERVICE.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO
+		policeclass_service
+		(ser_code,ser_name,pc_code,price,parentcode,ordercode,businesstype)
+		VALUES
+		(
+		#{serCode},
+		#{serName,jdbcType=VARCHAR},
+		#{pcCode,jdbcType=VARCHAR},
+		#{price,jdbcType=NUMERIC},
+		#{parentCode,jdbcType=VARCHAR},
+		#{orderCode,jdbcType=VARCHAR},
+		#{businessType,jdbcType=INTEGER}
+		)
+	</insert>
+	<!-- 删除 -->
+	<delete id="deletePoliceService" parameterType="String">
+		DELETE FROM
+		policeclass_service WHERE ser_code = #{serCode}
+	</delete>
+	<!-- 修改 -->
+	<update id="updatePoliceService" parameterType="com.jrwp.payMent.entity.PoliceClassService">
+		UPDATE
+		policeclass_service SET
+		ser_name = #{serName,jdbcType=VARCHAR},
+		pc_code = #{pcCode,jdbcType=VARCHAR},
+		price = #{price,jdbcType=NUMERIC},
+		parentcode = #{parentCode,jdbcType=VARCHAR},
+		ordercode=#{orderCode,jdbcType=VARCHAR},
+		businessType = #{businessType,jdbcType=INTEGER}
+		WHERE ser_code = #{serCode}
+	</update>
+	<!-- 查询 -->
+	<select id="getPoliceServiceList" resultMap="policeServiceMap">
+		SELECT
+		t.*,t1.pc_name FROM POLICECLASS_SERVICE t
+		LEFT JOIN policeclass t1 ON
+		t.pc_code = t1.pc_code where t.isdel='0'
+		ORDER BY SER_CODE
+	</select>
+	<!-- 获取单个对象 -->
+	<select id="getObjectByCode" parameterType="String" resultMap="policeServiceMap">
+		SELECT * FROM policeclass_service WHERE SER_CODE = #{serCode}
+	</select>
+	<!-- 模糊查询 -->
+	<select id="getObjectByNames" resultMap="policeServiceMap">
+		SELECT t.*,t1.pc_name
+		FROM policeclass_service t
+		LEFT JOIN policeclass t1 ON t.pc_code =
+		t1.pc_code
+		WHERE 1=1
+		AND t.ser_name like #{serName}
+		AND t1.pc_name like
+		#{pcName}
+	</select>
+
+	<select id="findAddUserServices" resultMap="policeServiceMap"
+		parameterType="String">
+		select p.* from policeclass_service p where p.PC_Code
+		=#{pcCode} and p.SER_CODE NOT in (select t.ser_code from userservice t
+		where t.ui_code=#{uiCode} )
+	</select>
+
+	<!-- 根据pc_code查询 -->
+	<select id="getObjectByPcode" parameterType="String" resultMap="policeServiceMap">
+		SELECT
+		t.SER_CODE,t.SER_NAME,t.PC_CODE,t.PRICE,t1.pc_name,t.ordercode,t.parentcode,t.DIC_BUSINESSNOTICEID
+		FROM policeclass_service t
+		LEFT JOIN policeclass t1 ON t.pc_code =
+		t1.pc_code
+		WHERE t.PC_CODE = #{pcCode} and t.isdel='0'
+	</select>
+
+	<!-- 假删除(将isdel修改为1) -->
+	<update id="updateServiceIsdel" parameterType="String">
+		UPDATE
+		policeclass_service SET isdel = '1' WHERE ser_code = #{serCode}
+	</update>
+
+	<!-- 部门业务开通，获取还未开通的业务 -->
+	<select id="getServices" resultMap="policeServiceMap"
+		parameterType="String">
+		SELECT t.* FROM POLICECLASS_SERVICE t
+		where t.isdel='0'
+		and t.SER_CODE NOT IN (select U.SER_CODE
+		from USERSERVICE U
+		where
+		U.ui_code=#{uiCode} and U.authtype='1' and U.isdel='0')
+		ORDER BY
+		ordercode
+	</select>
+	<!-- 流程、依据配置 -->
+	<update id="updateNotice" parameterType="com.jrwp.payMent.entity.PoliceClassService">
+		update
+		POLICECLASS_SERVICE set DIC_BUSINESSNOTICEID = #{businessnoticeId}
+		where ser_code = #{serCode}
+	</update>
+</mapper>

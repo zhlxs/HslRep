@@ -1,0 +1,46 @@
+.wrap{
+    background: url("../img/bg.png") no-repeat;
+    background-size: cover;
+    height: 490px;
+    background-position: center;
+    /*padding-top: 65px;*/
+    position: relative;
+    /*background: #F7F7F7;*/
+}
+.content{
+    text-align: center;
+    font-size: 18px;
+    /*margin-top: 20px;*/
+}
+#count,#int{
+    color: red;
+    font-weight: bold;
+}
+.alert1{
+    color: #FEE969;
+    position: absolute;
+    top: 50%;
+    left: 24%;
+}
+#phone_number{
+    border: none;
+    position: absolute;
+    top: 56.5%;
+    left: 23%;
+    width: 55%;
+    height: 25px;
+}
+.sub{
+    position: relative;
+    top: 69%;
+    left: 12.5%;
+    height: 53px;
+    width: 280px;
+}
+#sub{
+    color: #FF0F45;
+    position: absolute;
+    top: 20%;
+    left: 35.5%;
+    font-size: 18px;
+}

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.PhotoSampleDao">
+	<resultMap type="com.jrwp.payMent.entity.PhotoSample" id="WE_PhotoSampleMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="bconfigstrcname" column="bconfigstrcname"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="photosamplepath" column="photoSamplePath"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="isvalid" column="isValid" />
+		<result property="photosample" column="photoSample" />
+		<!-- 添加人ID -->
+		<result property="creator" column="creator" javaType="Long" />
+		<result property="createtime" column="createTime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="describe" column="describe" javaType="String"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getPhotoSample" resultType="com.jrwp.payMent.entity.PhotoSample">
+		select
+		w.id,w.bConfigStrCName,w.photoSample,
+		w.photoSamplePath,w.isvalid,w.creator,w.createTime,w.describe from
+		WE_PhotoSample w where w.id=#{samplepathid}
+	</select>
+	<!-- 列表 -->
+	<select id="list" resultType="com.jrwp.payMent.entity.PhotoSample">
+		select
+		t.id,t.bconfigstrcname,t.photosamplepath,t.isvalid,t.creator,t.createtime,t.describe
+		from WE_PhotoSample t
+		${whereSql}
+		order by createtime desc
+	</select>
+	<!--查询有效数据 -->
+	<select id="listValid" resultType="com.jrwp.payMent.entity.PhotoSample">
+		select id,bConfigStrCName,
+		photoSamplePath,isValid,creator,createTime,describe
+		from WE_PhotoSample
+		${whereSql} and isValid=1
+		order by createTime desc
+		<!-- select * from WE_PhotoSample ${whereSql} and isValid=1 order by createTime -->
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.PhotoSample">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select seq_WE_PhotoSample.nextval as id from dual
+		</selectKey>
+		insert into
+		WE_PhotoSample(id,bconfigstrcname,photosamplepath,
+		<if test="photosample!=null and photosample!='' ">
+			photosample,
+		</if>
+		isvalid,
+		<if test="creator!=null and creator!='' ">
+			creator,
+		</if>
+		createTime,describe)
+		values(#{id},#{bconfigstrcname},
+		#{photosamplepath},
+		<if test="photosample!=null and photosample!='' ">
+			#{photosample},
+		</if>
+		#{isvalid},
+		<if test="creator!=null and creator!='' ">
+			#{creator},
+		</if>
+		sysdate,#{describe})
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.PhotoSample">
+		update WE_PhotoSample set
+		bconfigstrcname=#{bconfigstrcname,jdbcType=VARCHAR},
+		photosamplepath=#{photosamplepath},
+		<if test="photosample!=null and photosample!='' ">
+			photosample=#{photosample},
+		</if>
+		isvalid=#{isvalid,jdbcType=INTEGER},createTime=sysdate,describe=#{describe}
+		where id=#{id}
+	</update>
+	<!-- 更新修改 -->
+	<update id="updateIfPisnull" parameterType="com.jrwp.payMent.entity.PhotoSample">
+		update WE_PhotoSample
+		set
+		bconfigstrcname=#{bconfigstrcname,jdbcType=VARCHAR},
+		isvalid=#{isvalid,jdbcType=INTEGER},describe=#{describe}
+		where id=#{id}
+	</update>
+	<!-- 状态更新 -->
+	<update id="updateValid">
+		update WE_PhotoSample set isvalid=#{isvalid}
+		where
+		id=#{id}
+	</update>
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from WE_PhotoSample where id=#{id}
+	</delete>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="WE_PhotoSampleMap">
+		select * from
+		WE_PhotoSample where id = #{id}
+	</select>
+	<!-- 按类型id获取样图 -->
+	<select id="listofType" resultType="com.jrwp.payMent.entity.PhotoSample">
+		select
+		t.*
+		from WE_PhotoSample
+		t
+		left join WX_BUSINESSCONFIGSTR b on
+		t.id=b.sampleid
+		where 1=1 and
+		b.id=#{id}
+		order by createtime desc
+	</select>
+</mapper>

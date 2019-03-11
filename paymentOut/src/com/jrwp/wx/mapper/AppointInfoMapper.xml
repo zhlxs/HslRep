@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.wx.dao.AppointInfoDao">
+	<resultMap type="com.jrwp.wx.entity.AppointInfo" id="appointMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="cardNumber" column="cardNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="name" column="name" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="deptId" column="deptId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="appointmenttime" column="appointmenttime"
+			javaType="java.util.Date" jdbcType="TIMESTAMP" />
+		<result property="status" column="status" javaType="Integer"
+			jdbcType="INTEGER" />
+		<result property="phone" column="phone" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="openId" column="openId" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="timeQuantum" column="timeQuantum" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="isExport" column="isExport" />
+		<result property="serCode" column="ser_code" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isProxy" column="isProxy" />
+		<result property="proxypersonId" column="Wx_PROXYPERSONID"
+			javaType="Long" jdbcType="INTEGER" />
+		<result property="isCheck" column="isCheck" />
+		<result property="businessType" column="businessType" />
+	</resultMap>
+	<sql id="base_column">
+		id,cardNumber,name,deptId,appointmenttime,status,phone,createtime,openId,timeQuantum,ser_code,isProxy,Wx_PROXYPERSONID,
+		businessType
+	</sql>
+	<!-- 预约信息查询接口 -->
+	<select id="getInfo" resultMap="appointMap">
+		select
+		<include refid="base_column"></include>
+		from APPOINTME_INFO
+		where openid = #{openId} and status > 0
+	</select>
+	<!-- 根据预约信息id查询队列信息 -->
+	<select id="getSequenceByAppointId" resultType="com.jrwp.wx.entity.WXSquenceInfo">
+		select * from SQUENCE_INFO where APPOINTME_INFOID = #{appointme_infoid}
+	</select>
+	<!-- 状态更新 -->
+	<update id="updateState" parameterType="com.jrwp.wx.entity.AppointInfo">
+		update APPOINTME_INFO set status = #{status} where id = #{id}
+	</update>
+</mapper>

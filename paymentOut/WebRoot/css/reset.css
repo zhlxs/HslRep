@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei";
+}
+a{
+    text-decoration: none;
+}
+input {
+    outline: none;
+}
+.clearfix{
+    content: "";
+    display: block;
+    clear: both;
+}
+ul,li,ol{
+    list-style: none;
+}

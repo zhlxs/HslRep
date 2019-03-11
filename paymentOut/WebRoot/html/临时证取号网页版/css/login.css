@@ -1,0 +1,351 @@
+.fCLogin .ht {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    background-color: #3D7FBE;
+}
+.fCLogin .ht .logo {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 970px;
+    text-align: center;
+    color: #fff;
+    font: 30px/40px "微软雅黑";
+}
+.fCLogin .ht .logo .icon {
+    display: inline-block;
+    margin-right: 10px;
+    width: 40px;
+    background: url(../img/imgCoreLoginIcon.gif) no-repeat 0 3px;
+    vertical-align: middle;
+}
+.fCLogin .ct {
+    margin: 30px auto 10px auto;
+    width: 450px;
+}
+.fCLogin .ct .thBg {
+    width: 100%;
+    height: 10px;
+    background: url(../img/imgCoreLoginBg.gif) no-repeat 0 0;
+    font-size: 0;
+    line-height: 0;
+}
+.fCLogin .ct .bd {
+    padding: 30px 100px 50px 100px;
+    width: 250px;
+    background: url(../img/imgCoreLoginBg.gif) repeat-y -460px 0;
+    text-align: center
+}
+/*.fCLogin .list {*/
+    /*height: 88px;*/
+/*}*/
+.fCLogin .label {
+    height: 34px;
+    line-height: 34px;
+}
+.clear {
+    clear: both;
+    line-height: 0;
+    zoom: 1;
+    font-size: 0;
+}
+.clearfix{
+    clear: both;
+    content:"";
+    zoom: 1;
+}
+.fCLogin .inputLine {
+    clear: both;
+    zoom: 1;
+    overflow: hidden;
+}
+.fCLogin .verifyLine {
+    height: 24px;
+    overflow: hidden;
+}
+.fCLogin .label label {
+    display: inline;
+    float: left;
+}
+.clear:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+    line-height: 0;
+}
+.fCLogin .inputLine input {
+    padding: 2px 10px;
+    width: 228px;
+    /*height: 30px;*/
+    line-height: 24px;
+}
+.field-validation-valid {
+    display: none;
+}
+.fCLogin .verifyLine .tip {
+    display: none;
+    padding-left: 20px;
+    background: url(../img/imgValIcon.gif) no-repeat 0 -76px;
+    color: #f59942;
+    font-size: 13px;
+    vertical-align: text-bottom;
+    font-family: SimSun;
+}
+.fCLogin .ct .ftBg {
+    width: 100%;
+    height: 10px;
+    background: url(../img/imgCoreLoginBg.gif) no-repeat -920px 0;
+    font-size: 0;
+    line-height: 0;
+}
+.fCLogin .ft {
+    text-align: center;
+}
+.fCLogin .ft .grey {
+    padding-top: 5px;
+    margin-top: 5px;
+    color: #999;
+    border-top: 1px solid #e5e5e5;
+}
+input, textarea {
+    padding: 0 3px;
+    border: 1px solid #d5d5d5;
+}
+.fCLogin .submitLine {
+    margin-top: 10px;
+    float: left;
+}
+.fCLogin .submitLine a.rwpButton {
+    cursor: pointer;
+}
+.fCLogin .submitLine .rwpButton {
+    display: inline-block;
+    height: 24px;
+    background-color: rgb(66, 139, 202);
+    color: rgb(255, 255, 255);
+    vertical-align: middle;
+    padding: 0px 15px;
+    font: 500 14px/24px "微软雅黑";
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(66, 139, 202);
+    border-image: initial;
+}
+.mCLoginInfo .submitLine .login .icon {
+    margin-right: 5px;
+    background-position: -118px -40px;
+}
+.fCLogin .submitLine .icon {
+    display: inline-block;
+    width: 15px;
+    background: url(../img/imgCoreLoginIcon.gif) no-repeat -118px -45px;
+}
+.fCLogin .codeLine #checkCode {
+    display: inline;
+    float: left;
+    width: 100px;
+}
+.fCLogin .codeLine img {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    height: 30px;
+}
+body {
+    height: 100%;
+    color: #666;
+    line-height: 24px;
+    font-size: 14px;
+    font-family: 'Verdana','宋体';
+    word-break: break-all;
+}
+html, body {
+    padding: 0;
+    margin: 0;
+    font: 500 14px/24px "Verdana";
+}
+body {
+    background-color: #EDEDED;
+}
+/*.cr{*/
+    /*position: relative;*/
+    /*line-height: 30px;*/
+    /*float: left;*/
+/*}*/
+/*.cr>*{*/
+    /*vertical-align: -webkit-baseline-middle;*/
+/*}*/
+/*.cr>input[type="radio"]{*/
+    /*width: 20px;*/
+    /*height: 20px;*/
+    /*opacity: 0;*/
+/*}*/
+/*.circle{*/
+    /*position: absolute;*/
+    /*left: 5px;*/
+    /*top: 8px;*/
+    /*width: 20px;*/
+    /*height: 20px;*/
+    /*border-radius: 50%;*/
+    /*border: 1px solid #999;*/
+/*}*/
+/*.cr input:checked+label{*/
+    /*background-color: #006eb2;*/
+    /*border: 1px solid #006eb2;*/
+/*}*/
+/*.cr input:checked+label::after{*/
+    /*position: absolute;  content: "";*/
+    /*width: 5px;*/
+    /*height: 10px;*/
+    /*top: 3px;*/
+    /*left: 6px;*/
+    /*border: 2px solid #fff;*/
+    /*border-top: none;*/
+    /*border-left: none;*/
+    /*transform: rotate(45deg)*/
+/*}*/
+.box{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    /*margin-left: 10%;*/
+}
+.box>input{
+    display: none;
+}
+.box>label{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    line-height: 50px;
+    /*color: #999;*/
+}
+.box>label:active{
+    background: #EEEEEE;
+}
+.box>label:after{
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #428BCA;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 20px;
+}
+.box>input:checked+label::after{
+    background: #428BCA;
+}
+/*.line{*/
+    /*width: 100%;*/
+    /*height: 1px;*/
+    /*background: #ccc;*/
+    /*opacity: 0.2;*/
+/*}*/
+#pointContent .detail .masthead {
+    background-color: #f1f1f1;
+    border-width: 1px 0;
+    border-color: #e3e3e3;
+    border-style: solid;
+    /*color: #999;*/
+}
+.clearfix, .headerCon {
+    zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+.clearfix:after, .clearfix:before, .headerCon:after, .headerCon:before {
+    display: table;
+    content: "";
+    overflow: hidden;
+}
+#pointContent .detail .why {
+    width: 20%;
+    text-align: center;
+    line-height: 60px;
+}
+#pointContent .detail .masthead span {
+    display: block;
+    float: left;
+    border-right: 1px solid #e3e3e3;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    overflow: hidden;
+}
+#pointContent .detail .what {
+    width: 20%;
+    text-align: center;
+}
+#pointContent .detail .when {
+    width: 20%;
+}
+#pointContent .detail .notes,.type {
+    width: 15%;
+    padding-left: 15px;
+}
+/*#pointContent .detail .masthead span.right {*/
+/*border-right: 0;*/
+/*}*/
+.clearfix:after {
+    clear: both;
+}
+#pointContent .detail .item-list {
+    margin-top: 12px;
+    border-top: 1px solid #f1f1f1;
+}
+#pointContent .detail .item {
+    border-bottom: 1px solid #f1f1f1;
+    padding: 20px 0;
+}
+#pointContent .detail .item div {
+    float: left;
+    overflow: hidden;
+}
+#pointContent .detail .item .when {
+    line-height: 60px;
+    /*color: #999;*/
+}
+#pointContent .detail .item .what {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 60px;
+}
+#pointContent .detail .why .img {
+    float: left;
+    display: block;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    text-align: center;
+    margin: 0 10px 0 20px;
+}
+#pointContent .detail .why .title {
+    color: #333;
+    width: 290px;
+    height: 40px;
+    overflow: hidden;
+}
+#pointContent .detail .why .title, #pointContent .detail .why .order-number {
+    display: block;
+    /*line-height: 20px;*/
+    text-align: left;
+}
+#pointContent .content {
+    padding: 28px 8px 30px;
+    background: #fff;
+    border-top: 0;
+}
+#pointContent .detail {
+    margin-top: 28px;
+}
+#pointContent .detail .item .notes,.type {
+    line-height: 60px;
+    /*color: #999;*/
+}

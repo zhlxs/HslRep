@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.core.dao.IMenuDao">
+	<resultMap type="com.jrwp.core.entity.Core_Menu" id="menuMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<id property="parentId" column="parentId" javaType="Long" jdbcType="INTEGER" />
+		<id property="orderCode" column="orderCode" javaType="String"
+			jdbcType="VARCHAR" />
+		<id property="isSys" column="isSys" javaType="Boolean" jdbcType="INTEGER" />
+		<id property="menuName" column="menuName" javaType="String"
+			jdbcType="VARCHAR" />
+		<id property="iconCssClass" column="iconCssClass" javaType="String"
+			jdbcType="VARCHAR" />
+		<id property="menuUrl" column="menuUrl" javaType="String" jdbcType="VARCHAR" />
+		<id property="actionList" column="actionList" javaType="String"
+			jdbcType="VARCHAR" />
+		<id property="isShow" column="isShow" javaType="Boolean" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 获取菜单列表 -->
+	<select id="list" resultType="com.jrwp.core.entity.Core_Menu">
+		select * from core_menu1 order by
+		ordercode
+	</select>
+	<!-- 系统级用户的菜单 -->
+	<select id="sysList" resultType="com.jrwp.core.entity.Core_Menu">
+		select * from core_menu1 where
+		core_menu1.isshow=1 order by
+		ordercode
+	</select>
+	
+	<!-- 根据名字得到id -->
+	<select id="getDeptIdByMenuName" parameterType="String"
+		resultType="Long">
+		select id from core_menu1 where menuName=#{parentMenuName}
+	</select>
+	<!-- 根据用户查找菜单 -->
+	<select id="getListByUserId" parameterType="Long"
+		resultType="com.jrwp.core.entity.Core_Menu">
+			select distinct
+		id,core_menu1.* from core_menu1 where
+		core_menu1.isshow=1 start with id
+		in (select
+		menu.id from
+		core_menu1 menu
+		,(select aa.id
+		aaid,aa.controname,aa.actionname,aa.display from
+		core_user u
+		left join
+		core_userforrole ur on u.id=ur.userid
+		left join
+		core_role r on
+		ur.roleid=r.id
+		left join core_authforrole ar on r.id =
+		ar.roleid
+		left
+		join core_auth a on ar.authid = a.id
+		left join
+		core_actionforauth aa on
+		a.id = aa.authid
+		where u.id=#{uid}) action
+		where
+		instr(menu.actionlist,action.actionname)>0)
+		connect by prior
+		parentid=id order by core_menu1.ordercode
+	</select>
+
+	<!-- 根据id获取菜单 -->
+	<select id="getObjectById" parameterType="Long"
+		resultType="com.jrwp.core.entity.Core_Menu">
+		select * from core_menu1 where id = #{id}
+	</select>
+
+	<!-- 添加菜单 -->
+	<insert id="save" parameterType="com.jrwp.core.entity.Core_Menu">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select menu_id.nextval from dual
+		</selectKey>
+		insert into
+		core_menu1(id,parentid,ordercode,issys,menuname,iconcssclass,menuurl,actionlist,isshow)
+		values(#{id},#{parentId},#{orderCode},#{isSys},#{menuName},#{iconCssClass},#{menuUrl},#{actionList},#{isShow})
+	</insert>
+
+	<!-- 修改菜单 -->
+	<update id="update" parameterType="com.jrwp.core.entity.Core_Menu">
+		update core_menu1 set
+		parentId=#{parentId},
+		orderCode=#{orderCode},
+		isSys=#{isSys},
+		menuName=#{menuName},
+		iconCssClass=#{iconCssClass},
+		menuUrl=#{menuUrl},
+		actionList=#{actionList},
+		isShow=#{isShow}
+		where id = #{id}
+	</update>
+
+	<!-- 删除菜单 -->
+	<delete id="delete" parameterType="Long">
+		delete from core_menu1
+		where id
+		= #{id}
+	</delete>
+
+	<select id="getInsertCode" resultType="String" parameterType="Long">
+		select Max(ordercode) from core_menu1 where parentid= #{parentId}
+	</select>
+<!-- 菜单显示状态 -->
+	<update id="show">
+		update core_menu1 set isShow=#{isShow} where id =
+		#{id}
+	</update>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IMAC_PHOTODao">
+	<resultMap type="com.jrwp.payMent.entity.MAC_PHOTO" id="macPhotoMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="photoname" column="photoname"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="photosamplepath" column="photoSamplePath"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="isvalid" column="isValid" />
+		<result property="photosample" column="photoSample" />
+		<result property="describe" column="describe" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="createtime" column="createTime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="photoType" column="photoType" />
+	</resultMap>
+	<!-- 根据主键获取样图 -->
+	<select id="getPhotoSample" resultType="com.jrwp.payMent.entity.MAC_PHOTO">
+		select
+		w.id,w.photoname,w.photoSample,
+		w.photoSamplePath,w.isvalid,w.createTime,w.describe,w.phototype from
+		MAC_PHOTO w where w.id=#{samplepathid}
+	</select>
+	<!-- 列表 -->
+	<select id="list" resultType="com.jrwp.payMent.entity.MAC_PHOTO">
+		select
+		t.id,t.photoname,t.photosamplepath,t.isvalid,t.createtime,t.describe
+		from MAC_PHOTO t
+		${whereSql}
+		order by createtime desc
+	</select>
+	<!--查询有效数据 -->
+	<select id="listValid" resultType="com.jrwp.payMent.entity.MAC_PHOTO">
+		select id,photoname,
+		photoSamplePath,isValid,createTime,describe
+		from MAC_PHOTO
+		${whereSql} and isValid=1
+		<if test="photoType != 0">
+			and photoType = #{photoType}
+		</if>
+		order by createTime desc
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.MAC_PHOTO">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_MAC_PHOTO_ID.nextval as id from dual
+		</selectKey>
+		insert into
+		MAC_PHOTO(id,photoname,photosamplepath,
+		<if test="photosample!=null and photosample!='' ">
+			photosample,
+		</if>
+		isvalid,createTime,describe,photoType)
+		values(#{id},#{photoname},
+		#{photosamplepath},
+		<if test="photosample!=null and photosample!='' ">
+			#{photosample},
+		</if>
+		#{isvalid},sysdate,#{describe},#{photoType})
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.MAC_PHOTO">
+		update MAC_PHOTO set
+		photoname=#{photoname,jdbcType=VARCHAR},
+		photosamplepath=#{photosamplepath},
+		<if test="photosample!=null and photosample!='' ">
+			photosample=#{photosample},
+		</if>
+		isvalid=#{isvalid,jdbcType=INTEGER},describe=#{describe},photoType = #{photoType}
+		where id=#{id}
+	</update>
+	<!-- 更新修改 -->
+	<update id="updateIfPisnull" parameterType="com.jrwp.payMent.entity.MAC_PHOTO">
+		update MAC_PHOTO set bconfigstrcname=#{bconfigstrcname,jdbcType=VARCHAR},
+		isvalid=#{isvalid,jdbcType=INTEGER},describe=#{describe} where id=#{id}
+	</update>
+	<!-- 状态更新 -->
+	<update id="updateValid">
+		update MAC_PHOTO set isvalid=#{isvalid}
+		where
+		id=#{id}
+	</update>
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from MAC_PHOTO where id=#{id}
+	</delete>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="macPhotoMap">
+		select * from
+		MAC_PHOTO where id = #{id}
+	</select>
+	<!-- 按类型id获取样图 -->
+	<select id="listofType" resultType="com.jrwp.payMent.entity.MAC_PHOTO">
+		select t.* from MAC_PHOTO t
+		left join WX_BUSINESSCONFIGSTR b on t.id=b.sampleid
+		where 1=1 and b.id=#{id} order by createtime desc
+	</select>
+	<!-- 根据名称查询样图 -->
+	<select id="getPhotoByName" resultType="com.jrwp.payMent.entity.MAC_PHOTO">
+		select * from MAC_PHOTO where photoname = #{photoname}
+	</select>
+</mapper>

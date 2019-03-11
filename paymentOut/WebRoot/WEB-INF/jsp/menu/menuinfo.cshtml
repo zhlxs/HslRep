@@ -1,0 +1,97 @@
+﻿@model RWP.Domain.core_menu_dto
+@{
+    ViewBag.Title = "菜单信息";
+    Layout = null;
+    int isSys = (int)ViewBag.isSys;    
+}
+<script type="text/javascript">
+    rwpTemp.menuAjaxSelectColumns = [
+        { domID: "areaValue", isCombobox: true, defaultOption: { Text: "-----请选择区域-----", Value: "" }, selectVal: "@ViewBag.areaValue", url: "@Url.Action("areajson", "menu", new { @area = "Core" }) " },
+        { domID: "controlValue", isCombobox: true, queryParamName: "areaValue", defaultOption: { Text: "----请选择控制器----", Value: "" }, selectVal: "@ViewBag.controlValue", url: "@Url.Action("controljson", "menu", new { @area = "Core" }) " },
+        { domID: "actionValue", isCombobox: true, queryParamName: "controlValue", defaultOption: { Text: "-----请选择动作-----", Value: "" }, selectVal: "@ViewBag.actionValue", url: "@Url.Action("actionjson", "menu", new { @area = "Core" }) " }
+    ];
+    rwpTemp.f_selectparentmenu = function () {
+        var url = '@Url.Action("menudialog", "menu", new { @area = "Core" })?parentid=' + $("#parentID").val() + '&isall=1' + '&rnd' + Math.random();
+        return rwpPluginHelper.selectContact('选择上一级菜单', url, 'ID', 'menuName', 'parentID', 'parentMenuName');
+    }
+    rwpTemp.f_selectmenuaction = function () {
+        var url = '@Url.Action("actiontree", "auth", new { @area = "Core" })?actions=' + $("#actionList").val() + '&rnd' + Math.random();
+        return rwpPluginHelper.selectContact('选择所属动作', url, 'controllerAction', 'display', 'actionList', 'actionNames');
+    }
+    $(function () {
+        $("#parentMenuName").rwpUICombobox({
+            onBeforeOpen: rwpTemp.f_selectparentmenu
+        });
+        $("#actionNames").rwpUICombobox({
+            onBeforeOpen: rwpTemp.f_selectmenuaction
+        });
+        if ("@isSys" == 1)
+            $('#ulIsSys').show();  //系统级管理员 可设置菜单的系统级权限
+
+        $('#selectMenuIcon').rwpUIIconSelect({
+            iconClassArr: ['default', 'work', 'manage', 'user', 'system', 'config'],
+            imgSrc: "@Url.Content("~/lib/rwpUI/skins/lightblue/images/imgMenuIcon2.gif")", classFieldDomID: 'iconCssClass'
+        });
+
+        $("#ajaxform").rwpUIForm({ isAjaxSubmit: true });
+
+        $.rwpUI.AjaxSelect({ columns: rwpTemp.menuAjaxSelectColumns, defaultval: '', selectBoxHeight: 200 });
+    });
+</script>
+
+@using (Html.BeginForm("savemenu", "menu", FormMethod.Post, new { @id = "ajaxform" }))
+{ 
+    <fieldset>
+    <legend><i class="i"></i>@ViewBag.Title</legend>
+    <div class="formpanel">
+      @Html.HiddenFor(m => m.ID)
+        <div class="clear">
+          <ul class="DialabelWidth">
+            <li class="editor-label">@Html.LabelFor(m => m.parentID)</li>
+            <li style=" display: none;">@Html.HiddenFor(m => m.parentID)</li>
+            <li class="editor-field">@Html.TextBoxFor(m => m.parentMenuName)</li>
+            <li class="editor-validation">@Html.ValidationMessageFor(m => m.parentID)</li>
+          </ul>
+          <ul class="DialabelWidth">
+            <li class="editor-label">@Html.LabelFor(m => m.menuName)</li>
+            <li class="editor-field">@Html.TextBoxFor(m => m.menuName)</li>
+            <li class="editor-validation">@Html.ValidationMessageFor(m => m.menuName)</li>
+          </ul>
+      </div>      
+      <div class="clear">
+          <ul class="DialabelWidth">
+            <li class="editor-label">@Html.LabelFor(m => m.menuUrl)</li>
+            <li class="editor-field">
+                <select id="areaValue" name="areaValue" style="display:none;"></select>          
+                <select id="controlValue" name="controlValue" style="display:none;"></select>
+                <select id ="actionValue" name="actionValue" style="display:none;"></select>
+                @Html.TextBox("urlParam", (string)ViewBag.urlParam) @Html.Label("urlParam","路径参数", new { style = "margin-left:5px; color: #999;" })
+            </li>
+            <li class="editor-validation">@Html.ValidationMessageFor(m => m.menuUrl)</li>
+          </ul>          
+          <div id="selectMenuIcon" class="labelWidth"></div>
+          @Html.HiddenFor(m => m.iconCssClass)        
+      </div>  
+      <div class="clear">
+          <ul class="DialabelWidth">
+              <li class="editor-label">@Html.LabelFor(m => m.actionList)</li>
+              <li style=" display: none;">@Html.HiddenFor(m => m.actionList)</li>
+              <li class="editor-field">@Html.TextBoxFor(m => m.actionNames)</li>
+              <li class="editor-validation">@Html.ValidationMessageFor(m => m.actionList)</li>
+          </ul>
+          <ul class="DialabelWidth">
+              <li class="editor-label">@Html.LabelFor(m => m.isShow)</li>
+              <li class="editor-field">@Html.CheckBoxFor(m => m.isShow)</li>
+              <li class="editor-validation">@Html.ValidationMessageFor(m => m.isShow)</li>
+          </ul>
+      </div>
+      <div class="clear">
+          <ul class="DialabelWidth" id="ulIsSys" style="display:none;"> 
+            <li class="editor-label">@Html.LabelFor(m => m.isSys)</li>
+            <li class="editor-field">@Html.CheckBoxFor(m => m.isSys)</li>
+            <li class="editor-validation">@Html.ValidationMessageFor(m => m.isSys)</li>
+          </ul> 
+      </div>              
+    </div>
+    </fieldset>
+}

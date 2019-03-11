@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.wx.dao.AppraiseDao">
+	<resultMap type="com.jrwp.wx.entity.AppraiseInfoForAndroid" id="appraiseInfo">
+		<result property="squence_infoid" column="squence_infoid" javaType="String" jdbcType="VARCHAR"/>
+		<result property="jqm" column="jqm" javaType="String" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="getAllWaitAppraise" resultMap="appraiseInfo">
+		select a.squence_infoid,b.DEVICENUMBER as jqm
+		from WAIT_APPRAISE a left join MAC_WINDOWS b on a.ckbh=b.ckbh where a.isappraise=0 and to_char(a.createtime,'yyyy-MM-dd')=#{dateString} and ispass=0
+	</select>
+	
+	<select id="getSquenceidByCkbh" resultType="String">
+		select SQUENCE_INFOID from (select a.SQUENCE_INFOID
+		from WAIT_APPRAISE a left join MAC_WINDOWS b on a.ckbh=b.ckbh where b.DEVICENUMBER=#{jqm} and a.isappraise=0 and to_char(a.createtime,'yyyy-MM-dd')=#{dateString} order by a.createtime desc) where rownum=1
+	</select>
+	
+	<insert id="saveAppraiseInfo">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_USER_APPRAISE.nextval as id from dual
+		</selectKey>
+		insert into
+		SEQ_USER_APPRAISE(id,APPRAISEDETAILID,CREATETIME,ISDEFAULT,ISWECHAT,ISEXPORT,SQUENCE_INFOID,ISWRITE)
+		values
+		(#{id,jdbcType=INTEGER},#{appraisedetailid},sysdate#{isdefault},0,0,#{squence_infoid},0)
+	</insert>
+	
+	<update id="updateWaitStatu">
+		update WAIT_APPRAISE set isappraise=1 where SQUENCE_INFOID=#{squence_infoid}
+	</update>
+	
+	<select id="getAppraiseInfo" resultType="com.jrwp.wx.entity.AppraiseJson">
+		select id,isdefault as pjlb, APPRAISEVALUE as pjjg,SERIALNUMBER as qhxxxlh from (select a.id,a.isdefault,b.APPRAISEVALUE,c.SERIALNUMBER
+		from USER_APPRAISE a left join APPRAISE_DETAIL b on a.appraisedetailid=b.id left join SQUENCE_INFO c on a.squence_infoid=c.id where a.iswrite=0 order by a.createtime asc) where rownum=1
+	</select>
+	
+	<update id="updateIsWrite">
+		update USER_APPRAISE set iswrite=1 where id=#{id}
+	</update>
+</mapper>

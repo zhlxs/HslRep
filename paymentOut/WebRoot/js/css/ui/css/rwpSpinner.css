@@ -1,0 +1,15 @@
+﻿/*分值增减框 使用*/
+.rwpSpinner{ width:190px; height:30px; overflow:hidden; border:1px solid #e5e5e5; background-color:#fff;}
+.rwpSpinner input.rwpInputText{display:inline; float:left; width:154px; height:30px; line-height:30px; border:0px;}
+.rwpSpinnerButton{ display:inline; float:right; width:29px; height:100%; border-left:1px solid #ECEBE7;}
+.rwpSpinnerUp,.rwpSpinnerDown{display:block; padding:3px 9px; width:10px; height:10px; overflow:hidden; font-size:0; line-height:0; cursor:pointer;}
+.rwpSpinnerDown{background:url(../images/imgFormIcon.gif) no-repeat 9px -108px; }
+.rwpSpinnerDown:hover{background-position:-22px -108px;}
+
+.rwpSpinnerUp{background:url(../images/imgFormIcon.gif) no-repeat -50px -108px;}
+.rwpSpinnerUp:hover{background-position:-79px -108px;}
+
+/*禁用样式*/
+.rwpSpinnerDisabled{ background-color:#F7F6F2;}
+
+

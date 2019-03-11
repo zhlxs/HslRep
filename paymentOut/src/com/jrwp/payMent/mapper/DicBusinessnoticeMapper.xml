@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.DicBusinessnoticeDao">
+	<resultMap type="com.jrwp.payMent.entity.DicBusinessnotice"
+		id="noticeMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="name" column="noticename" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="businessNotice" column="businessNotice"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="mattersneedAttendtion" column="mattersneedAttendtion"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<!-- 列表（最新的排在前面） -->
+	<select id="list" resultMap="noticeMap">
+		select * from DIC_BUSINESSNOTICE
+		${whereSql} order by createtime Desc
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.DicBusinessnotice">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_DIC_BUSINESSNOTICE.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO DIC_BUSINESSNOTICE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				noticename,
+			</if>
+			<if test="businessNotice != null">
+				businessNotice,
+			</if>
+			<if test="mattersneedAttendtion != null">
+				mattersneedAttendtion,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="businessNotice != null">
+				#{businessNotice},
+			</if>
+			<if test="mattersneedAttendtion != null">
+				#{mattersneedAttendtion},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.DicBusinessnotice">
+		update DIC_BUSINESSNOTICE
+		<set>
+			<if test="name != null">
+				noticename = #{name},
+			</if>
+			<if test="businessNotice != null">
+				businessNotice = #{businessNotice},
+			</if>
+			<if test="mattersneedAttendtion != null">
+				mattersneedAttendtion = #{mattersneedAttendtion},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from DIC_BUSINESSNOTICE where id = #{id}
+	</delete>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="noticeMap">
+		select * from DIC_BUSINESSNOTICE where id = #{id}
+	</select>
+</mapper>
