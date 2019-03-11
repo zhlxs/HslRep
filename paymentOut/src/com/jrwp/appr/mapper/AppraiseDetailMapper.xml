@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.appr.dao.AppraiseDetailDao" >
+    <resultMap id="apprDetailMap" type="com.jrwp.appr.entity.AppraiseDetail">
+        <id property="id" column="id" javaType="Long" jdbcType="INTEGER"/>
+        <result property="appraisemodelid" column="appraisemodelid" javaType="Long"
+                jdbcType="INTEGER"/>
+        <result property="appraisename" column="appraisename" javaType="String"
+                jdbcType="VARCHAR"/>
+        <result property="appraisevalue" column="appraisevalue"/>
+        <result property="iconpath" column="iconpath" javaType="String"
+                jdbcType="VARCHAR"/>
+        <result property="icon" column="icon"/>
+        <result property="isdefault" column="isdefault" javaType="Int"
+                jdbcType="INTEGER"/>
+        <result property="iswechat" column="iswechat" javaType="Int"
+                jdbcType="INTEGER"/>
+        <result property="iswarning" column="iswarning" javaType="Int"
+                jdbcType="INTEGER"/>
+        <result property="isexport" column="isexport" javaType="Int"
+                jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="baseColumn">
+    	ID,APPRAISEMODELID,APPRAISENAME,APPRAISEVALUE,ISDEFAULT,ISWECHAT,ISWARNING
+    </sql>
+	<!-- 获取单个对象 -->
+    <select id="getObjectById" resultType="com.jrwp.appr.entity.AppraiseDetail">
+	SELECT * FROM APPRAISE_DETAIL WHERE id = #{id}
+    </select>
+	<!-- 微信评价节点列表 -->
+    <select id="list" resultType="com.jrwp.appr.entity.AppraiseDetail">
+        SELECT <include refid="baseColumn"></include> FROM APPRAISE_DETAIL WHERE appraisemodelid = #{appraisemodelid} and iswechat = 1
+        order by appraisevalue
+    </select>
+</mapper>

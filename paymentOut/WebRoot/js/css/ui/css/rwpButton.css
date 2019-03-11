@@ -1,0 +1,23 @@
+﻿.rwpButton{ display: inline-block; padding:0 15px; height:24px; font:500 14px/24px "宋体"; border:1px solid #e5e5e5;  cursor:pointer; background-color: #fff; white-space:nowrap;}
+.rwpButton:hover{ border-color: #4899D7; background-color:#5AA6E0; color:#fff;}
+
+.rwpButton .rwpButtonIcon { display:inline; float:left; margin:3px 5px 0 0; width:20px; height:20px; background:url("../images/imgFormIcon.gif") no-repeat 0 -20px;}
+.rwpButton.Add .rwpButtonIcon{ background-position:0 -20px;}
+.rwpButton.Delete .rwpButtonIcon{ background-position:-29px -20px;}
+.rwpButton.Edit .rwpButtonIcon{ background-position:-57px -20px;}
+
+/*用户*/
+.defUser .rwpButton.Add:hover .rwpButtonIcon{ background-position:0 -50px;}
+.defUser .rwpButton.Delete:hover .rwpButtonIcon{ background-position:-29px -50px;}
+.defUser .rwpButton.Edit:hover .rwpButtonIcon{ background-position:-57px -50px;}
+
+/*商户*/
+.defMerchant .rwpButton:hover .rwpButtonIcon.Add{ background-position:0 -80px;}
+.defMerchant .rwpButton:hover .rwpButtonIcon.Delete{ background-position:-29px -80px;}
+.defMerchant .rwpButton:hover .rwpButtonIcon.Edit{ background-position:-57px -80px;}
+
+/*禁用的按钮背景*/
+.rwpButtonDisabled {
+    opacity: 0.6;
+    filter: alpha(opacity=60); /*IE*/    
+}

@@ -1,0 +1,62 @@
+﻿/*
+YUI CSS Reset
+*/
+html{ background:none;}
+body{height:100%; margin:0; padding:0; font:14px/24px '微软雅黑','arial','Verdana'; color: #535353; background-color:#FAFAFA; -webkit-text-size-adjust:none; color:#535353; }
+*{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:normal;}
+ul,li{list-style-type:none;}
+caption,th{text-align:left;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+legend{color:#535353;}
+del,ins{text-decoration:none;}
+
+a{ color:#535353; text-decoration:none; cursor:pointer;}
+a:hover{ color:#F85808;}
+
+/*利用伪类:after和zoom:1清除浮动*/
+.clear{clear:both; zoom: 1; line-height:0; font-size:0; }
+.clear *{ height:auto; font-size:14px; line-height:24px;}
+.clear:after{content:'.';clear:both;display:block;height:0;visibility:hidden;line-height:0}
+.clear .rwpButtonText{line-height:24px;}
+
+.tablepanel{ display:block; margin-top:10px;}
+.rwpDialog .rwpDialogContent .tablepanel{margin-left:0; margin-right:0;}
+.pageHeader,.rwpLayoutHead.pageHeader{ height:32px; color:#5b9124; font:14px/32px '微软雅黑'; font-weight:bold; border-bottom:1px solid #BCBDBD; background:url(../images/datagrid/headTopBg.gif) repeat-x #E8EBEE; text-indent:20px; }
+
+/*
+  滚动条
+*/
+div {
+ scrollbar-base-color:#F0F0F0; /*滚动条的基色*/
+ scrollbar-track-color: #F0F0F0;/*立体滚动条背景颜色*/
+	scrollbar-darkshadow-color: #D9DADC;/*立体滚动条阴影的颜色*/
+	scrollbar-face-color: #D9DADC;/*立体滚动条的颜色（包括箭头部分的背景色）*/
+	scrollbar-shadow-color: #D9DADC;/*立体滚动条阴影的颜色*/
+	scrollbar-arrow-color: #000;/*三角箭头的颜色*/
+	scrollbar-highlight-color: #F0F0F0;/*滚动条的高亮颜色（左阴影？）*/
+	scrollbar-3dlight-color: #D9DADC;/*立体滚动条亮边的颜色*/
+}
+
+/*
+  loading
+*/
+/*小*/
+.rwpMinLoading{ display:inline-block; width:20px; height:20px; background:url(../images/loading/imgLoading3.gif) no-repeat center center !important;}
+
+/*中*/
+.rwpMidLoading{display:block; position:absolute; padding:10px; margin-top:-50px; margin-left:-130px; left:50%; top:50%; height:25px; line-height:25px; padding:5px 10px 5px 45px; border:2px solid #95B8E7; background:#fff url(../images/loading/imgLoading2.gif) no-repeat 10px center;}
+
+/*大*/
+.rwpBigLoading{display:block; position:absolute; left:0; top:0; width:100%; height:100%; background:#fff url(../images/loading/imgLoading1.gif) no-repeat center center; line-height:50px;}
+
+
+
+
+

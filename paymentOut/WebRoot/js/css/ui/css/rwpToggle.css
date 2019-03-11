@@ -1,0 +1,8 @@
+﻿.rwpToggle{ width:68px; height:22px; border:1px solid #e5e5e5; overflow:hidden;}
+.rwpToggle.rwpToggleActive{border-color:#FFA578;}
+.rwpToggle .rwpToggleWrapper {height:100%; overflow:hidden; cursor:pointer; }
+.rwpToggle .rwpToggleWrapper .rwpToggleLabel{ display:inline; float:left; margin:1px; width:30px; height:20px; overflow:hidden; font:600 14px/20px "arial"; text-align:center; text-indent:-1000px;}
+.rwpToggle .rwpToggleWrapper .rwpToggleThumb{ display:inline; float:left; width:36px;  text-align:center; font:bold 14px/22px "arial"; color:#bbb; }
+.rwpToggle.rwpToggleActive .rwpToggleWrapper .rwpToggleThumb{color:#FFA578;}
+.rwpToggle .rwpToggleWrapper .rwpToggleOn { color:#fff; background:#FFA578 url(../images/imgFormIcon.gif) no-repeat 7px -202px;}
+.rwpToggle .rwpToggleWrapper .rwpToggleOff{ color:#fff; background:#bbb url(../images/imgFormIcon.gif) no-repeat -15px -202px;}

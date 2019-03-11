@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.appr.dao.UserHotwordsDao" >
+	<insert id="save" parameterType="com.jrwp.appr.entity.UserHotwords">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_USER_HOTWORDS_ID.nextval as id from dual
+		</selectKey>
+		insert into USER_HOTWORDS (id,userapprid,hotword,isexport) values (#{id},#{userapprid},#{hotword},0)
+	</insert>
+</mapper>

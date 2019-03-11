@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.CallMachineDao">
+	<resultMap type="com.jrwp.payMent.entity.CallMachine" id="machineMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="deviceNumber" column="deviceNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="deptId" column="deptId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="machineIp" column="IP" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="modelId" column="modelId"
+			javaType="Long" jdbcType="INTEGER" />
+		<result property="createtime" column="createtime"
+			javaType="java.util.Date" jdbcType="TIMESTAMP" />
+		<association property="dept" javaType="com.jrwp.core.entity.Core_Dept">
+			<id property="id" column="did" javaType="Long" jdbcType="INTEGER" />
+			<result property="deptName" column="deptname" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+		<association property="model" javaType="com.jrwp.payMent.entity.CallConfigModel">
+			<id property="id" column="mid" javaType="Long" jdbcType="INTEGER" />
+			<result property="modelName" column="modelName" javaType="String"
+			jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!-- 列表展示 -->
+	<select id="list" resultMap="machineMap">
+		select m.*,cd.deptname,c.modelname from CALLMANAGER m
+		left join core_dept cd on cd.id = m.deptid
+		left join CALLCONFIGMODEL c on c.id = m.modelid
+		${whereSql}
+		order by m.createtime desc
+	</select>
+	<!-- 保存新设备 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.CallMachine">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_CALLMANAGER.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO CALLMANAGER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="deviceNumber != null">
+				deviceNumber,
+			</if>
+			<if test="deptId != null">
+				deptId,
+			</if>
+			<if test="machineIp != null">
+				IP,
+			</if>
+			<if test="modelId != null">
+				modelId,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="deviceNumber != null">
+				#{deviceNumber},
+			</if>
+			<if test="deptId != null">
+				#{deptId},
+			</if>
+			<if test="machineIp != null">
+				#{machineIp},
+			</if>
+			<if test="modelId != null">
+				#{modelId},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+		</trim>
+	</insert>
+	<!-- 修改设备 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.CallMachine">
+		update CALLMANAGER
+		<set>
+			<if test="deviceNumber != null">
+				deviceNumber = #{deviceNumber},
+			</if>
+			<if test="deptId != null">
+				deptId = #{deptId},
+			</if>
+			<if test="machineIp != null">
+				IP = #{machineIp},
+			</if>
+			<if test="modelId != null">
+				modelId = #{modelId},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="machineMap">
+		select m.*,cd.deptname,c.modelname from CALLMANAGER m
+		left join core_dept cd on cd.id = m.deptid
+		left join CALLCONFIGMODEL c on c.id = m.modelid
+		where m.id = #{id}
+	</select>
+	<!-- 删除设备 -->
+	<delete id="delete">
+		delete from CALLMANAGER where id = #{id}
+	</delete>
+</mapper>

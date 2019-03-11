@@ -1,0 +1,27 @@
+﻿.rwpButton { display:inline-block; padding:0 15px; height:22px; font:500 14px/22px "宋体"; background-color:#6FB3E0; border:3px solid #6FB3E0; color:#fff; cursor: pointer;}
+.rwpButton:hover, .rwpButtonBorder:hover{background-color:#549DCA; color:#fff;}
+.rwpButtonBorder {display:inline-block; border:1px solid #E4E5E5; border-width: 0px 1px;}
+
+/*图标*/
+.rwpButton .rwpButtonIcon { display:inline; float:left; width: 20px; height:24px; background:url(../images/imgIcon.gif) no-repeat 0 -157px;}
+
+.rwpButton.Add{border-color:#88B75B; background-color:#88B75B; }
+.rwpButton.Add .rwpButtonIcon{ background-position:2px -154px;}
+.rwpButton.Add:hover{background-color:#659D5B;}
+.rwpButton.Add:hover .rwpButtonIcon{ background-position:-28px -154px;}
+
+.rwpButton.Delete{border-color:#A0A0A0; background-color:#A0A0A0;}
+.rwpButton.Delete .rwpButtonIcon{ background-position:-53px -154px;}
+.rwpButton.Delete:hover{background-color:#888;}
+.rwpButton.Delete:hover .rwpButtonIcon{ background-position:-82px -154px;}
+
+.rwpButton.Edit{border-color:#FFB752; background-color:#FFB752;}
+.rwpButton.Edit .rwpButtonIcon{ background-position:-108px -154px;}
+.rwpButton.Edit:hover{background-color:#E59729;}
+.rwpButton.Edit:hover .rwpButtonIcon{ background-position:-134px -154px;}
+
+.rwpButtonDisabled /*禁用的按钮背景*/ {
+    opacity: 0.6;
+    filter: alpha(opacity=60); /*IE*/    
+}
+.rwpButtonDisabled:hover,.rwpButtonDisabled:hover .rwpButtonBorder{ background-color:#fff; border-color:#D3D3D3;}

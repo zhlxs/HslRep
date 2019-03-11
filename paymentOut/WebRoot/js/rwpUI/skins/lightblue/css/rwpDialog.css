@@ -1,0 +1,39 @@
+﻿.rwpDialog{ position:absolute; height:auto; overflow:hidden; z-index:9999; border:1px solid #ddd; }
+
+/*内容*/
+.rwpDialogHeader{ width:100%; height:38px; line-height:38px; background:url(../images/datagrid/imgDgHdBg2.gif) repeat-x 0 0; border-bottom:1px solid #ddd;}
+.rwpDialogHeader .rwpDialogIcon{ display:none; float:left; margin-left:5px; width:20px; height:30px;}
+.rwpDialogHeader .rwpDialogTitle{display:inline; float:left; padding:0 10px; font:bold 15px/30px "微软雅黑"; color:#669FC7;}
+.rwpDialogBody{ background-color:#fff;}
+.rwpDialogTable{ background-color:#fff;}
+
+.rwpDialogContent{padding:10px; overflow:auto;}
+.rwpDialogContent .rwpDialogLabel{}
+.rwpDialogContent .rwpDialogTextarea{  width:260px; height:50px;}
+.rwpDialogContent .rwpDialogInput{ width:260px; height:26px; margin-top:3px; border:1px solid #969696;}
+.rwpDialogContent iframe{ width:100%; height:100%;}
+.rwpDialogContent .readUnReadMsg{ font-weight:bold; color:#0275C2;}
+.rwpDialogContent .readUnReadMsg:hover{text-decoration:underline;}
+
+.rwpDialogButtons{width:100%; height:40px; background-color: #EFF3F8;  border-top:1px dotted #D6E1EA;}
+.rwpDialogButtonsInner{display:inline; float:right; margin:10px; width:200px;}
+.rwpDialogButtonsInner .rwpButton{ display:inline; float:right; margin-left:5px; height:24px; line-height:24px;}
+.rwpDialogWinbtns .rwpDialogClose{display:inline; float:right; width:12px; height:12px; margin:8px 10px 0px 0px; background:url(../images/imgDialogIcon.gif) no-repeat 0 0; cursor:pointer;}
+.rwpDialogWinbtns .rwpDialogClose:hover{ background-position:-16px 0;}
+
+/*dialogIcon*/
+.rwpDialogImage{position:absolute; margin-top:12px; margin-left:15px; width:40px; height:40px; background:url(../images/imgDialogIcon.gif) no-repeat 0 -20px;}
+.rwpDialogImageDone{background-position:-45px -20px;}
+.rwpDialogImageWarn{background-position:0 -65px;}
+.rwpDialogImageQuestion{background-position:-45px -65px;}
+.rwpDialogImageError{background-position:0 -20px}
+
+/*IE6 fixed*/
+.rwpDialogMask{position:fixed; top:0px; left:0px; width:100%;  height:100%;  background-color:#000;
+    filter:alpha(opacity=25);/*IE专用透明设置*/
+    -khtml-opacity:0.25;/*旧版本webkit渲染 Firefox和Safari旧版本*/
+    -moz-opacity:0.25;
+    opacity:0.25;/*非IE透明设置*/    
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);/* 在IE6, IE7和IE8下有效 */ 
+   _position: absolute; _left: expression(documentElement.scrollLeft + documentElement.clientWidth - this.offsetWidth); _top: expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight); 
+}

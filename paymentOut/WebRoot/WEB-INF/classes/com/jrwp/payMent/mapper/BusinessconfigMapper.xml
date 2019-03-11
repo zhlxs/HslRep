@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.BusinessconfigDao">
+	<resultMap type="com.jrwp.payMent.entity.Businessconfig" id="businessMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="serCode" column="ser_Code" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="updatetime" column="updatetime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="icon" column="icon" />
+		<result property="iconpathstr" column="iconpathstr" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="sqtj" column="sqtj" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="sqcl" column="sqcl" javaType="String"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 保存业务配置 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.Businessconfig">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_WX_BUSINESSCONFIG.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO WX_BUSINESSCONFIG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="serCode != null">
+				ser_Code,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="updatetime != null">
+				updatetime,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="iconpathstr != null">
+				iconpathstr,
+			</if>
+			<if test="sqtj != null">
+				sqtj,
+			</if>
+			<if test="sqcl != null">
+				sqcl,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="serCode != null">
+				#{serCode},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+			<if test="updatetime != null">
+				#{updatetime},
+			</if>
+			<if test="icon != null">
+				#{icon},
+			</if>
+			<if test="iconpathstr != null">
+				#{iconpathstr},
+			</if>
+			<if test="sqtj != null">
+				#{sqtj},
+			</if>
+			<if test="sqcl != null">
+				#{sqcl},
+			</if>
+		</trim>
+	</insert>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.Businessconfig">
+		update WX_BUSINESSCONFIG
+        <set>
+            <if test="updatetime != null">
+                updatetime = #{updatetime},
+            </if>
+            <if test="icon != null">
+                icon = #{icon},
+            </if>
+            <if test="iconpathstr != null">
+                iconpathstr = #{iconpathstr},
+            </if>
+            <if test="sqtj != null">
+                sqtj = #{sqtj},
+            </if>
+            <if test="sqcl != null">
+                sqcl = #{sqcl},
+            </if>
+        </set>
+        where id = #{id}
+	</update>
+	<!-- 获取单个对象 -->
+	<select id="getObjectByCode" resultMap="businessMap">
+			select * from WX_BUSINESSCONFIG where ser_code = #{serCode}
+	</select>
+	
+	<select id="getObjectById" resultMap="businessMap">
+			select * from WX_BUSINESSCONFIG where id = #{id}
+	</select>
+</mapper>

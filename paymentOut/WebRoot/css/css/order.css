@@ -1,0 +1,68 @@
+body{
+    background: #FFF;
+}
+.header{
+    margin-top: 1.0em;
+    /*padding: 10px 15px;*/
+    line-height: 1.41176471;
+    font-size: 20px;
+    overflow: hidden;
+    /*position: relative;*/
+    text-indent: 15px;
+}
+.form {
+    width: 192px;
+    height: 36px;
+    float: right;
+    margin-right: 4px;
+}
+.wrap{
+    margin-top: 20px;
+    background: #FEFCED;
+    color: #F86B24;
+}
+.text{
+    padding: 0 15px 5px;
+    font-size: 18px;
+    text-indent: 36px;
+}
+.wrap_left{
+    padding-left: 15px;
+    margin-top: 15px;
+    position: relative;
+}
+.wrap_right{
+    position: absolute;
+    right: -7px;
+    top:8px;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    background: #217AB6;
+    padding: 5px 0;
+    transform: scale(0.9);
+}
+.wrap_right>img{
+    transform: scale(0.8);
+    position: relative;
+    float: left;
+    vertical-align: middle;
+}
+.check{
+    color: #108EE8;
+    font-size: 16px;
+    float: right;
+    vertical-align: middle;
+}
+.example{
+    width: 50px;
+    transform: scale(0.8);
+    margin-right: 5px;
+    vertical-align: middle;
+    float: right;
+}
+.number{
+    color: #E29D36;
+}
+.number>span{
+    font-weight: bold;
+}

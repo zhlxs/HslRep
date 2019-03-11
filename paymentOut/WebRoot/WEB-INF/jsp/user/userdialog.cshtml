@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "选择用户";
+    Layout = null;
+}
+<script type="text/javascript">    
+    $(function () {
+        $("#userdialoggrid").rwpUIDatagrid({
+            columns: [
+            { display: '主键', name: 'ID', isHide: true, primarykey: true },
+            { display: '姓名', name: 'fullName', width: 120 },
+            { display: '用户名', name: 'userName', width: 180 },
+            { display: '所属部门', name: 'deptName', width: 200 }
+            ],            
+            pageSize: 15,
+            url: '@Url.Action("userdialogjson")',     
+            height: '79%',
+            checkbox: true,
+            usePager:false
+        });                
+    });
+</script>
+
+<div id="userdialoggrid"></div>
+

@@ -1,0 +1,79 @@
+﻿.rwpDateRoot{ position: absolute; z-index: 10000; padding-bottom:10px; width:256px; background-color: #FFF; border:1px solid #e5e5e5; font-size: 12px; font-family:Tahoma,Helvetica,Arial,sans-serif;
+	/*圆角属性*/
+	-moz-border-radius: 5px; -webkit-border-radius: 5px;
+	/*阴影效果*/
+	-moz-box-shadow: 0 0 15px #666; -webkit-box-shadow: 0 0 15px #666;
+}
+.rwpDateRoot a{outline-style: none; outline-color: inherit; outline-width:medium; color:#535353; }
+
+/*top*/
+.rwpDateRoot .rwpDateTop{ clear:both; position: relative; margin-top:5px; height:32px; width: 100%; font-family:"微软雅黑"; zoom:1;}
+.rwpDateRoot .rwpDateTop a {display:inline; float:left; margin:0 2px; width: 40px; height: 32px; line-height: 32px; text-align: center;	color: #535353; font-size:16px; cursor:pointer;}
+.rwpDateRoot .rwpDateTop a:hover {background-color:#eee;}
+.rwpDateRoot .rwpDateTop .rwpDateOk{ padding:0 50px; margin-left:15px;}
+.rwpDateRoot .rwpDateTop .rwpDateToday{display:inline;	float:right;}
+
+/*head*/
+.rwpDateRoot .rwpDateHead{ clear:both; position: relative; margin: 5px; width: 245px; height:30px; zoom:1;}
+.rwpDateRoot .rwpDateHead .rwpDatePrev{width:30px; display:inline; float: left; height: 100%; background: url(../images/imgFormIcon.gif) no-repeat 7px -153px; cursor: pointer;}
+.rwpDateRoot .rwpDateHead .rwpDatePrev:hover{background-color:#eee; background-position:-53px -153px;}
+.rwpDateRoot .rwpDateHead .rwpDateNext{ width:30px; display:inline; float: right; height: 100%; background: url(../images/imgFormIcon.gif) no-repeat -18px -153px; cursor: pointer;}
+.rwpDateRoot .rwpDateHead .rwpDateNext:hover{background-color:#eee; background-position:-78px -153px;}
+.rwpDateRoot .rwpDateHead .rwpDateTitle{ float: left; text-align: center; width: 180px; height: 100%; line-height:30px;}
+.rwpDateRoot .rwpDateHead .rwpDateTitle a:hover{ text-decoration: underline;}
+
+/*body*/
+.rwpDateRoot .rwpDateBody{padding:2px; width:252px; font-family: sans-serif;}
+
+/*行*/
+.rwpDateRoot .rwpDateBody .rwpDateRow{ width:100%; height: 26px;}
+.rwpDateRoot .rwpDateBody .rwpDateRow li{display:inline; float: left; height: 26px;}
+.rwpDateRoot .rwpDateBody .rwpDateRow li a{	display: block; height: 26px; line-height: 26px; text-align: center; font-size:14px;}
+.rwpDateRoot .rwpDateBody .rwpDateRow li a:hover{background-color:#eee;}
+.rwpDateRoot .rwpDateBody .rwpDateRow li a.rwpDateOff{color: #999;}
+.rwpDateRoot .rwpDateBody .rwpDateRow li a.rwpDateFocus{background-color: #2283C5; color: #FFF;}
+.rwpDateRoot .rwpDateBody .rwpDateRow li a.rwpDateToday{background-color: #D5E5EF;}
+
+/*caldays*/
+.rwpDateRoot .rwpDateBody .rwpDateDays{height: 20px; width:100%;}
+.rwpDateRoot .rwpDateBody .rwpDateDays li{display:inline;	float: left; width: 36px; text-align: center; height: 20px; line-height: 20px;	color: #535353; font-weight: bold; font-size:14px;}
+
+/*calyears*/
+.rwpDateYears li{width: 126px;}
+.rwpDateYears li a{width:100%;}
+
+/*calyear*/
+.rwpDateYear li{width:63px;}
+.rwpDateYear li a{width:100%;}
+
+/*rwpDateMonth*/
+.rwpDateMonth li{width:62px;}
+.rwpDateMonth li a{width:100%;}
+
+/*rwpDateWeek*/
+.rwpDateWeek li{width: 36px;}
+.rwpDateWeek li a{width: 100%;}
+
+/*rwpDateHour*/
+.rwpDateHour li{width: 48px;}
+.rwpDateHour li a{width: 47px;}
+
+/*rwpDateMinute*/
+.rwpDateMinute li{width: 31px;}
+.rwpDateMinute li a{width: 30px;}
+
+
+.rwpDateTime .ffl{display:inline; float:left; line-height:90px;}
+.rwpDateTime .rwpSpinner{display:inline; float:left; position:relative; left:0; top:0; margin:0 25px; width:72px; height:95px; border:0; overflow:hidden;}
+.rwpDateTime .rwpSpinner .rwpInputText{float:none; margin-top:32px; width:62px; height:30px; line-height:30px; border:1px solid #e5e5e5; text-align:center;}
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerUp,
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerDown{display:block; position:absolute; left:15px; padding:0; width:40px; height:30px; background:#fff url(../images/imgFormIcon.gif) no-repeat 0 0;}
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerUp:hover,
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerDown:hover{background-color:#eee;}
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerUp{top:0; background-position:14px -175px;}
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerUp:hover{background-position:-16px -175px; }
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerDown{top:65px; background-position:-43px -175px; background-color:#fff;}
+.rwpDateTime .rwpSpinner .rwpSpinnerButton .rwpSpinnerDown:hover{background-position:-74px -175px; }
+
+.rwpTime{padding-right:20px; width:168px; background:#fff url(../images/imgFormIcon.gif) no-repeat right -220px;}
+.rwpTime.ymd{width: 110px;}

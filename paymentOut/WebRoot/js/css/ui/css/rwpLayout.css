@@ -1,0 +1,26 @@
+﻿.rwpLayout{ position:relative;}
+.rwpLayoutLeft,.rwpLayoutRight,.rwpLayoutCenter,.rwpLayoutBottom{position:absolute; z-index:10; overflow:hidden;} 
+.rwpLayoutTop{width:100%; }
+.rwpLayoutBottom{width:100%}
+
+.rwpLayoutHead{ height:30px; border:1px solid #bcbdbd; background:url("../images/datagrid/headTopBg.gif") repeat-x 0 0; font:600 12px/30px "微软雅黑","宋体"; text-indent:20px; color:#344a53;}
+.rwpLayoutContent{ border: 1px solid #bcbdbd; border-width: 0 1px 1px 1px; overflow:hidden;}
+
+/*Accordion*/
+.rwpAccordion{ border: 1px #e8e8e8 solid;}
+.rwpAccordionHeader{border-bottom: 1px #e8e8e8 solid; background: rgb(245, 245, 245); height: 32px; cursor: pointer;} 
+.rwpAccordionHeader .rwpAccordionHeaderTitle{float: left; height: 32px; font:600 12px/32px "微软雅黑","宋体"; color: #135794; text-indent:10px;}
+.rwpAccordionHeaderSelected .rwpAccordionHeaderTitle{border-left: #284463 3px solid;}
+.rwpAccordionHeader .rwpAccordionHeaderTool{height: 32px; line-height: 32px; float: right;width: 18px; background: url(../images/accordion/off.gif) no-repeat center center;}
+.rwpAccordionHeaderSelected .rwpAccordionHeaderTool{background-image: url(../images/accordion/open.gif);}
+.rwpAccordionBody{border-bottom: 1px #e8e8e8 solid; overflow: auto;}
+
+/*SimpleTree*/
+.rwpSimpleTree a{display: block; padding: 7px 5px 7px 25px; line-height: 14px; font-size: 12px; color: #fff; font-family: "微软雅黑", "宋体";text-decoration: none; cursor: pointer;}
+.rwpSimpleTree a:hover{	background-color:#2A8AC9; color:#fff;}
+.rwpSimpleTree a.selected{background-color:#0265AE;}
+.rwpSimpleTree a.menuTool{display:inline; padding:0; color:#f85808; font-family:Tahoma;}
+.rwpSimpleTree a.menuTool:hover{ background:none;}
+a.rwpSimpleTreeItem{padding-left: 10px;}
+a.rwpSimpleTreeItem span{ display:block; padding-left: 15px; height:14px; background: url(../images/accordion/f.gif) no-repeat 5px 3px;}
+a.rwpSimpleTreeItem span.open{background: url(../images/accordion/o.gif) no-repeat 3px 5px;	}

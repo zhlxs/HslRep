@@ -1,0 +1,42 @@
+﻿.rwpDialog{ position:absolute; height:auto; overflow:hidden; z-index:9999;}
+
+.rwpDialog .rwpDialogTable{ color:#535353; text-decoration:none; background-color:#fff;}
+.rwpDialog .rwpDialogHeader{ padding-left:10px; height:40px; background-color:#F85808;}
+.rwpDialog .rwpDialogHeader .rwpDialogIcon{ display:none; float:left; margin-top:5px;  margin-right:5px; width:20px; height:30px; background:url(../images/imgDialogIcon.gif) no-repeat 0 -87px;}
+.rwpDialog .rwpDialogHeader .rwpDialogTitle{display:inline;  float:left; font:600 16px/40px "微软雅黑"; color:#fff; }
+.rwpDialog .rwpDialogHeader .rwpDialogWinbtns{display:inline; float:right;}
+.rwpDialog .rwpDialogHeader .rwpDialogWinbtns .rwpDialogClose{ width:9px; height:9px; margin:15px 10px 0px 0px; cursor:pointer; background:url(../images/imgDialogClose.gif) no-repeat 0 0;}
+.rwpDialog .rwpDialogHeader .rwpDialogWinbtns .rwpDialogClose:hover{ background-position:right 0;}
+
+/*button公共样式*/
+.rwpDialog .rwpDialogTable .rwpDialogContent{ width:auto;}
+.rwpDialog .rwpDialogTable .rwpDialogContent iframe{ width:100%; height:100%;}
+.rwpDialog .rwpDialogTable .rwpDialogContent{ padding:10px;}
+.rwpDialog .rwpDialogTable .rwpDialogContent .readUnReadMsg{ font-weight:bold; color:#5CB0DF;}
+.rwpDialog .rwpDialogTable .rwpDialogContent .readUnReadMsg:hover{text-decoration:underline;}
+
+/*内容*/
+.rwpDialogBody{ background-color:#fff;}
+.rwpDialog .rwpDialogContent .rwpDialogLabel{display:block; margin:5px 0; font-size:14px;}
+.rwpDialog .rwpDialogContent .rwpDialogTextarea{ width:260px; height:50px; resize:none;}
+.rwpDialog .rwpDialogContent .rwpDialogInput{ width:260px; height:26px; margin-top:3px; border:1px solid #e5e5e5;}
+.rwpDialog .rwpDialogButtons{ height:40px; width:100%; border-top:1px solid #ddd;}
+.rwpDialog .rwpDialogButtonsInner{display:inline; float:right; margin:10px; width:200px;}
+.rwpDialog .rwpDialogButtonsInner .rwpButton{ display:inline; float:right; margin-left:10px; height:28px; line-height:28px;}
+.rwpDialog .rwpDialogButtonsInner .rwpButton:hover{background-color:#F85808; border-color:#FF4200;}
+
+.rwpDialogMask{position:fixed; top:0px; left:0px; width:100%;  height:100%;  background-color:#000;
+    filter:alpha(opacity=25);/*IE专用透明设置*/
+    -khtml-opacity:0.25;/*旧版本webkit渲染 Firefox和Safari旧版本*/
+    -moz-opacity:0.25;
+    opacity:0.25;/*非IE透明设置*/    
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);/* 在IE6, IE7和IE8下有效 */ 
+   _position: absolute; _left: expression(documentElement.scrollLeft + documentElement.clientWidth - this.offsetWidth); _top: expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight);
+}
+
+/*dialog-icon*/
+.rwpDialogImage{display:inline; float:left; margin-top:10px; margin-left:15px; width:45px; height:45px; background:url(../images/imgDialogIcon.gif) no-repeat 0 0;}
+.rwpDialogImageDone{background-position:-45px 0;}
+.rwpDialogImageWarn{background-position:1 -45px;}
+.rwpDialogImageQuestion{background-position:-45px -45px;}
+.rwpDialogImageError{background-position: 0 0;}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.payMent.dao.DeptServiceMapper" >
+  <resultMap id="BaseResultMap" type="com.jrwp.payMent.entity.UserService" >
+    <id column="US_CODE" property="usCode" jdbcType="VARCHAR" />
+    <result column="UI_CODE" property="uiCode" jdbcType="VARCHAR" />
+    <result column="SER_CODE" property="serCode" jdbcType="VARCHAR" />
+    <result column="CHARGE_MODE" property="chargeMode" jdbcType="CHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="AUTHTYPE" property="authType" jdbcType="INTEGER" />
+    <result column="ISDEL" property="isDel" jdbcType="CHAR" />
+    <result column="WRITEBACKURL" property="writebackUrl" jdbcType="VARCHAR" />
+    <result column="PAYCODE" property="payCode" jdbcType="VARCHAR" />
+    <result column="ORDERDESCRIBE" property="orderDescribe" jdbcType="VARCHAR" />
+  </resultMap>
+
+	<!-- 查询已开通的业务 -->
+  <select id="getByUsCode" resultType="com.jrwp.payMent.entity.UserService">
+      select U.us_code as usCode,U.ui_code as uiCode,S.SER_NAME as serName
+        from USERSERVICE U
+        left join POLICECLASS_SERVICE S ON S.SER_CODE = U.SER_CODE where U.ui_code=#{uiCode} and U.authtype='1' and U.isdel='0'
+  </select>
+
+  
+  <!-- 假删除（将isdel修改为1） -->
+  <update id="updateisdel" parameterType="java.lang.String" >
+  	update USERSERVICE set isdel = '1' where US_CODE=#{usCode,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 新增业务 -->
+  <insert id="insert" parameterType="com.jrwp.payMent.entity.UserService" >
+    insert into USERSERVICE (US_CODE, UI_CODE, SER_CODE, 
+      AUTHTYPE
+      )
+    values (#{usCode,jdbcType=VARCHAR}, #{uiCode,jdbcType=VARCHAR}, #{serCode,jdbcType=VARCHAR}, 
+      '1'
+      )
+  </insert>
+  
+</mapper>

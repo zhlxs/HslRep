@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.SequenceInfoRecordDao">
+	<resultMap type="com.jrwp.wx.entity.Sequence_Info" id="sequenceInfoMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="isAppointment" column="isAppointment" />
+		<result property="isEarly" column="isEarly" />
+		<result property="appointmenttime" column="appointmenttime"
+			javaType="java.util.Date" jdbcType="TIMESTAMP" />
+		<result property="squence" column="squence" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="deptId" column="deptId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="status" column="status" />
+		<result property="openid" column="openid" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="cardNumber" column="cardNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="timequantum" column="timequantum" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="isExport" column="isExport" />
+		<result property="name" column="name" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="wicketNumber" column="wicketNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="callTime" column="callTime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="passTime" column="passTime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="finshTime" column="finshTime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="isProxy" column="isProxy" />
+		<result property="proxyName" column="proxyName" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="proxyCardNumber" column="proxyCardNumber"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="serialNumber" column="serialNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="getNumberType" column="getNumberType" />
+		<result property="ser_Code" column="ser_Code" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="appointme_infoid" column="appointme_infoid"
+			javaType="Long" jdbcType="INTEGER" />
+		<result property="isCall" column="isCall" />
+		<result property="businessType" column="businessType" />
+		<result property="issend" column="issend" />
+	</resultMap>
+	<!-- 队列信息备份 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.SequenceInfoRecord">
+		<!-- <selectKey resultType="Long" order="BEFORE" keyProperty="id"> SELECT 
+			SEQ_SQUENCE_INFORECORD.nextval AS id FROM dual </selectKey> -->
+		INSERT INTO SQUENCE_INFORECORD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="isAppointment != null">
+				isAppointment,
+			</if>
+			<if test="isEarly != null">
+				isEarly,
+			</if>
+			<if test="appointmenttime != null">
+				appointmenttime,
+			</if>
+			<if test="squence != null">
+				squence,
+			</if>
+			<if test="deptId != null">
+				deptId,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="openid != null">
+				openid,
+			</if>
+			<if test="cardNumber != null">
+				cardNumber,
+			</if>
+			<if test="timequantum != null">
+				timequantum,
+			</if>
+			<if test="isExport != null">
+				isExport,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="wicketNumber != null">
+				wicketNumber,
+			</if>
+			<if test="callTime != null">
+				callTime,
+			</if>
+			<if test="passTime != null">
+				passTime,
+			</if>
+			<if test="finshTime != null">
+				finshTime,
+			</if>
+			<if test="isProxy != null">
+				isProxy,
+			</if>
+			<if test="proxyName != null">
+				proxyName,
+			</if>
+			<if test="proxyCardNumber != null">
+				proxyCardNumber,
+			</if>
+			<if test="serialNumber != null">
+				serialNumber,
+			</if>
+			<if test="getNumberType != null">
+				getNumberType,
+			</if>
+			<if test="ser_Code != null">
+				ser_Code,
+			</if>
+			<if test="appointme_infoid != null">
+				appointme_infoid,
+			</if>
+			<if test="isCall != null">
+				isCall,
+			</if>
+			<if test="businessType != null">
+				businessType,
+			</if>
+			<if test="issend != null">
+				issend,
+			</if>
+			<if test="importtime != null">
+				importtime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="isAppointment != null">
+				#{isAppointment},
+			</if>
+			<if test="isEarly != null">
+				#{isEarly},
+			</if>
+			<if test="appointmenttime != null">
+				#{appointmenttime},
+			</if>
+			<if test="squence != null">
+				#{squence},
+			</if>
+			<if test="deptId != null">
+				#{deptId},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="openid != null">
+				#{openid},
+			</if>
+			<if test="cardNumber != null">
+				#{cardNumber},
+			</if>
+			<if test="timequantum != null">
+				#{timequantum},
+			</if>
+			<if test="isExport != null">
+				#{isExport},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="wicketNumber != null">
+				#{wicketNumber},
+			</if>
+			<if test="callTime != null">
+				#{callTime},
+			</if>
+			<if test="passTime != null">
+				#{passTime},
+			</if>
+			<if test="finshTime != null">
+				#{finshTime},
+			</if>
+			<if test="isProxy != null">
+				#{isProxy},
+			</if>
+			<if test="proxyName != null">
+				#{proxyName},
+			</if>
+			<if test="proxyCardNumber != null">
+				#{proxyCardNumber},
+			</if>
+			<if test="serialNumber != null">
+				#{serialNumber},
+			</if>
+			<if test="getNumberType != null">
+				#{getNumberType},
+			</if>
+			<if test="ser_Code != null">
+				#{ser_Code},
+			</if>
+			<if test="appointme_infoid != null">
+				#{appointme_infoid},
+			</if>
+			<if test="isCall != null">
+				#{isCall},
+			</if>
+			<if test="businessType != null">
+				#{businessType},
+			</if>
+			<if test="issend != null">
+				#{issend},
+			</if>
+			<if test="importtime != null">
+				#{importtime},
+			</if>
+		</trim>
+	</insert>
+	<!-- 原纪录列表 -->
+	<select id="list" resultMap="sequenceInfoMap">
+		select * from SQUENCE_INFO where
+		issend = 0
+	</select>
+	<select id="list1" resultMap="sequenceInfoMap">
+		select * from SQUENCE_INFO where 1=1
+		<if test="begintime !=null and begintime!=''">
+			and to_date(to_char(createtime,'yyyy-mm-dd'),'yyyy-mm-dd') &gt;=
+			to_date(#{begintime},'yyyy-mm-dd')
+		</if>
+		<if test="endtime !=null and endtime!=''">
+			and to_date(to_char(createtime,'yyyy-mm-dd'),'yyyy-mm-dd') &lt;=
+			to_date(#{endtime},'yyyy-mm-dd')
+		</if>
+	</select>
+	<!-- 清空原纪录 -->
+	<delete id="delete">
+		delete from SQUENCE_INFO where id = #{id}
+	</delete>
+	<!--根据主键获取队列信息 -->
+	<select id="getObjectById" resultMap="sequenceInfoMap">
+		select * from SQUENCE_INFO
+		where id = #{id}
+	</select>
+</mapper>

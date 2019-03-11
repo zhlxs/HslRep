@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.wx.dao.WxSquenceDao">
+   <select id="getZhWaitCount" resultType="int">
+    	select count(1) from SQUENCE_INFO where status=1 and deptid=#{deptid} and to_char(createtime,'yyyy-MM-dd')=#{dateString} and businessType in(1,2)
+    </select>
+    
+    <select id="getSquenceNumber" resultType="com.jrwp.wx.entity.WxPmVistor">
+        select t.squence as queueNumber from SQUENCE_INFO t where
+        to_char(t.createtime,'yyyy-MM-dd')=#{dateString} and t.deptid=#{deptid}
+        and t.status in(2,5) and businessType in(1,2)
+        order by squence asc
+    </select>
+    
+     <select id="getDbWaitCount" resultType="int">
+    	select count(1) from SQUENCE_INFO where status=1 and deptid=#{deptid} and to_char(createtime,'yyyy-MM-dd')=#{dateString} and businessType=4
+    </select>
+    
+    <select id="getDbSquenceNumber" resultType="com.jrwp.wx.entity.WxPmVistor">
+        select t.squence as queueNumber from SQUENCE_INFO t where
+        to_char(t.createtime,'yyyy-MM-dd')=#{dateString} and t.deptid=#{deptid}
+        and t.status in(2,5) and businessType=4
+        order by squence asc
+    </select>
+    
+    <select id="getAllSquenceInfo" resultType="com.jrwp.wx.entity.WxPmVistor">
+         select t.squence as queueNumber ,t.appointme_infoid,t.businessType,t.name,t.cardNumber,t.deptid,t.WICKETNUMBER as windowNumber,t.status state from SQUENCE_INFO t where
+        to_char(t.createtime,'yyyy-MM-dd')=#{dateString}
+        and t.deptid=#{deptid}
+        order by squence asc
+    </select>
+</mapper>

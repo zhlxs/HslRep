@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="com.jrwp.payMent" />
+	<!--<context:component-scan base-package="com.jrwp.core.dao" /> -->
+	<!--<context:component-scan base-package="com.jrwp.core.service" /> <context:component-scan 
+		base-package="com.jrwp.core.utils" /> -->
+	<context:component-scan base-package="com.jrwp.wx" />
+	<context:component-scan base-package="com.jrwp.core" />
+	<context:component-scan base-package="com.jrwp.follow" />
+	<context:component-scan base-package="com.jrwp.appr" />
+	<context:component-scan base-package="com.jrwp.JSPay" />
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.jrwp.JSPay.action" />
+	<context:component-scan base-package="com.jrwp.wx.action" />
+	<context:component-scan base-package="com.jrwp.payMent.task" />
+
+	<context:component-scan base-package="com.jrwp.webservice.service" />
+	<context:component-scan base-package="com.jrwp.webservice.dao" />
+	<context:component-scan base-package="com.jrwp.webservice.help" />
+	<!--正式部署时放开注释 -->
+	<!-- <task:annotation-driven scheduler="qbScheduler" mode="proxy" /> <task:scheduler 
+		id="qbScheduler" pool-size="10" /> -->
+	<!-- 六合一接口客户端 -->
+	<bean id="tmriOutAccessClient" class="com.jrwp.webservice.client.TmriJaxRpcOutNewAccessProxy" />
+	<!-- 引入并加载jdbc配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!-- 在src目录下查找 -->
+				<value>classpath*:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- Oracle数据库的驱动 -->
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<!-- 数据库的URL -->
+		<property name="url" value="${jdbc.url}" />
+		<!-- 指定数据库的用户名 -->
+		<property name="username" value="${jdbc.username}" />
+		<!-- 指定数据库的密码 -->
+		<property name="password" value="${jdbc.pwd}" />
+		<!--maxActive: 最大连接数量 -->
+		<property name="maxActive" value="20" />
+		<!--minIdle: 最小空闲连接 -->
+		<property name="minIdle" value="3" />
+		<!--maxIdle: 最大空闲连接 -->
+		<property name="maxIdle" value="5" />
+		<!--initialSize: 初始化连接 -->
+		<property name="initialSize" value="3" />
+		<!-- 连接被泄露时是否打印：与removeAbandoned，removeAbandonedTimeout一起设置 -->
+		<property name="logAbandoned" value="true" />
+		<!--removeAbandoned: 是否自动回收超时连接 -->
+		<property name="removeAbandoned" value="false" />
+		<!-- &lt;!&ndash;removeAbandonedTimeout: 当一个连接活动的时间超过多久被认定为是泄露的或不正常的&ndash;&gt; 
+			<property name="removeAbandonedTimeout" value="10"/> -->
+
+		<!--maxWait: 最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。-> <property name="maxWait" 
+			value="1000"/> 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. -->
+		<property name="timeBetweenEvictionRunsMillis" value="10000" />
+		<!-- 在每次空闲连接回收器线程(如果有)运行时检查的连接数量 -->
+		<property name="numTestsPerEvictionRun" value="10" />
+		<!-- 1000 * 60 * 30 连接在池中保持空闲而不被空闲连接回收器线程 -->
+		<property name="minEvictableIdleTimeMillis" value="10000" />
+		<property name="validationQuery" value="SELECT 1 FROM DUAL" />
+	</bean>
+	<!-- 使用JDBC事务 -->
+	<bean id="myTxManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		scope="singleton">
+		<property name="mapperInterface" value="com.jrwp.core.dao.IUserDao" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<!-- spring加载MyBatis映射文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描mapping.xml文件 -->
+		<property name="mapperLocations" value="classpath*:com/jrwp/**/mapper/*.xml"></property>
+		<property name="typeAliasesPackage" value="com.jrwp.*.entity" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=oracle
+							reasonable=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+	<!-- Dao接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.jrwp.*.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	<!-- 事务方法切面 -->
+	<tx:advice id="txAdvice" transaction-manager="myTxManager">
+		<tx:attributes>
+			<tx:method name="list*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="paging*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="isExist*" propagation="REQUIRED"
+				read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="getByHQL*" propagation="REQUIRED"
+				read-only="true" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="all*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="pagingList*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 将事务切入具体方法 -->
+	<aop:config>
+		<aop:pointcut id="productServiceMethods"
+			expression="execution(* com.jrwp..service.impl.*.*(..))" />
+		<!-- 引用方法切面和类包的切面，引用切面 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="productServiceMethods" />
+	</aop:config>
+	<!-- 获得控制器的集合 -->
+	<bean id="loadPackageClasses" class="com.jrwp.core.utils.LoadPackageClasses">
+		<constructor-arg
+			value="com.jrwp.core.action,com.jrwp.payMent.action,com.jrwp.JSPay.action" />
+		<constructor-arg>
+			<list>
+				<value>org.springframework.stereotype.Controller</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	<!--<task:scheduled-tasks> <task:scheduled ref="deptAddressServiceImpl" 
+		method="job" cron="0/5 * * * * ?"/> </task:scheduled-tasks> -->
+	<!-- 支持上传文件 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="2048000" />
+		<!-- <property name="maxInMemorySize" value="2048" /> -->
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+</beans>

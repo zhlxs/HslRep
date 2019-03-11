@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.wx.dao.Sequence_InfoDao">
+	<!-- 查询当前预约时间点之前的所有人数(预约号) -->
+	<select id="peopleCount" resultType="int">
+		select count(1) from
+		SQUENCE_INFO where 1=1
+		and
+		to_date(to_char(createtime,'yyyy-mm-dd'),'yyyy-mm-dd') &lt;=
+		to_date(substr(#{appointtime},1,19),'yyyy-mm-dd hh24:mi:ss')
+		and status
+		= 1 and businessType in (1,2) and isappointment = 1
+		and CARDNUMBER =
+		#{cardNumber}
+	</select>
+	<select id="peopleCountPlus" resultType="int">
+		select count(1) from
+		SQUENCE_INFO where 1=1
+		and
+		to_date(to_char(createtime,'yyyy-mm-dd'),'yyyy-mm-dd') &lt;=
+		to_date(substr(#{appointtime},1,19),'yyyy-mm-dd hh24:mi:ss')
+		and status
+		= 1 and businessType = 4 and isappointment = 1
+		and CARDNUMBER =
+		#{cardNumber}
+	</select>
+	<!-- 查询当前预约时间点之前的所有人数(现场号) -->
+	<select id="peopleCountById" resultType="int">
+		select count(1) from
+		SQUENCE_INFO where 1=1 and
+		to_date(to_char(createtime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss') &lt;=
+		to_date(substr(#{appointtime},1,19),'yyyy-mm-dd hh24:mi:ss')
+		and status
+		= 1 and businessType in (1,2)
+		<if test="id != null">
+			and id = #{id}
+		</if>
+	</select>
+	<select id="peopleCountByIdPlus" resultType="int">
+		select count(1) from
+		SQUENCE_INFO where 1=1 and
+		to_date(to_char(createtime,'yyyy-mm-dd
+		hh24:mi:ss'),'yyyy-mm-dd hh24:mi:ss') &lt;=
+		to_date(substr(#{appointtime},1,19),'yyyy-mm-dd hh24:mi:ss')
+		and status
+		= 1 and businessType = 4
+		<if test="id != null">
+			and id = #{id}
+		</if>
+	</select>
+	<!-- 根据身份证查询排队信息 -->
+	<select id="listforSeqence" resultType="com.jrwp.wx.entity.SequenceInfoJson">
+		select a.id aid, a.name
+		name,a.appointmenttime
+		day,dt.time
+		timeInter,s.status status,a.businesstype
+		businessType,s.createtime
+		createtime from APPOINTME_INFO a
+		<!-- left join POLICECLASS_SERVICE ps on ps.ser_code = a.ser_code -->
+		left join time_table
+		tt on tt.id =
+		a.timequantum
+		left join dic_time dt on
+		dt.id = tt.time
+		left join
+		SQUENCE_INFO s on s.appointme_infoid = a.id
+		where a.cardnumber =
+		#{card}
+		and s.status = 1
+	</select>
+	<!--根据主键查询排队信息 -->
+	<select id="listforSequenceById" resultType="com.jrwp.wx.entity.SequenceInfoJson">
+		select s.name
+		name,s.status status,s.businessType
+		businessType,s.createtime
+		createtime from SQUENCE_INFO s
+		where s.id = #{id}
+	</select>
+	<!-- 根据预约信息主键获取队列记录 -->
+	<select id="getSequenceByAppointId" resultType="com.jrwp.wx.entity.Sequence_Info">
+		select * from
+		SQUENCE_INFO where appointme_infoid = #{appointme_infoid}
+	</select>
+	<!-- 更新发送消息状态 -->
+	<update id="updateSend" parameterType="com.jrwp.wx.entity.Sequence_Info">
+		update SQUENCE_INFO set
+		issend = #{issend} where id = #{id}
+	</update>
+	<!-- 更新状态 -->
+	<update id="updateStatus" parameterType="com.jrwp.wx.entity.Sequence_Info">
+		<!-- update SQUENCE_INFO set status = #{status}, wicketNumber = ${winnumber} 
+			where id = #{id} -->
+		update SQUENCE_INFO
+		<set>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="winnumber != null">
+				wicketNumber = ${winnumber},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultType="com.jrwp.wx.entity.Sequence_Info">
+		select * from SQUENCE_INFO
+		where id = #{id}
+	</select>
+</mapper>

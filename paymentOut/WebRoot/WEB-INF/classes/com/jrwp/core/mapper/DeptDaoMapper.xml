@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.core.dao.IDeptDao">
+    <resultMap type="com.jrwp.core.entity.Core_Dept" id="deptMap">
+        <id property="id" column="id" javaType="Long" jdbcType="INTEGER"/>
+        <result property="parentId" column="parentid" javaType="Integer"
+                jdbcType="INTEGER"/>
+        <result property="orderCode" column="orderCode" javaType="String"
+                jdbcType="VARCHAR"/>
+        <result property="roleName" column="rolename" javaType="String"
+                jdbcType="VARCHAR"/>
+        <result property="isSys" column="issys" javaType="boolean"
+                jdbcType="INTEGER"/>
+        <result property="deptName" column="deptname" javaType="String"
+                jdbcType="VARCHAR"/>
+        <result property="isShow" column="isshow" javaType="boolean"
+                jdbcType="INTEGER"/>
+        <result property="remark" column="remark" javaType="String"
+                jdbcType="VARCHAR"/>
+        <result property="deptCode" column="deptcode" javaType="String"
+                jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--根据deptcode获取部门-->
+    <select id="getBydeptCode" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from core_dept where deptcode=#{deptcode}
+	</select>
+
+    <select id="countchild" resultType="Integer">
+		select count(*) from core_dept where parentid=#{parentid}
+	</select>
+    <select id="getchildsid" resultType="Integer">
+		select m.id from core_dept m start with m.id=#{deptid} connect by m.parentid=prior m.id
+	</select>
+    <!-- 获取部门列表 -->
+    <select id="getAllchild" resultType="String">
+		select id from Core_Dept where ordercode like #{code}
+	</select>
+    <!--获取size-->
+    <select id="getsize" resultType="Integer">
+		select count(*) from Core_Dept where parentid=#{parentid}
+	</select>
+    <select id="getTopServices" resultType="com.jrwp.core.entity.Core_Dept">
+		select *
+		from (select tmp_page.*, rownum row_id
+		from (select * from core_dept where parentid=#{parentid} order by ordercode asc) tmp_page
+		where rownum &lt; = #{end})
+		where row_id &gt; #{star}
+	</select>
+    <select id="getNextLevel" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from core_dept where parentid=#{parentid} order by ordercode asc
+	</select>
+
+    <select id="getDeptsBycode" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from Core_Dept where deptcode like #{code}
+	</select>
+    <select id="list" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from core_dept ${whereSql}
+		order by
+		ordercode
+	</select>
+    <select id="getDepts" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from core_dept 
+		order by
+		ordercode
+	</select>
+    <select id="getDeptByname" resultType="com.jrwp.core.entity.Core_Dept">
+        select * from core_dept z where 1=1
+        <if test="deptname !=null and deptname!=''">
+            and z.deptname like #{deptname}
+        </if>
+
+    </select>
+    <select id="listByLevel" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from CORE_DEPT t where  length(t.ordercode) between 0 and #{length}
+	</select>
+    <!-- 通过父节点查询所有子节点 -->
+    <select id="list1" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from core_dept start with
+		id =#{id}
+		connect by prior id=parentid
+	</select>
+
+    <!-- 系统级用户的部门 -->
+    <select id="sysList" resultType="com.jrwp.core.entity.Core_Dept">
+		select * from core_dept where
+		core_dept.isshow=1 order by
+		ordercode
+	</select>
+    <!-- 根据名字得到id -->
+    <select id="getDeptIdByDeptName" parameterType="String"
+            resultType="Long">
+		select id from core_dept where deptName=#{parentDeptName}
+	</select>
+    <!-- 根据名字得到部门编号 -->
+    <select id="getDeptCode" parameterType="String"
+            resultType="String">
+		select deptcode from core_dept where deptName=#{parentDeptName}
+	</select>
+    <select id="getObjectById" parameterType="Long"
+            resultType="com.jrwp.core.entity.Core_Dept">
+		select * from core_dept where id = #{id}
+	</select>
+    <insert id="add" parameterType="com.jrwp.core.entity.Core_Dept">
+        <selectKey resultType="int" order="BEFORE" keyProperty="id">
+            select SEQ_CORE_DEPT.nextval as id from dual
+        </selectKey>
+        insert into core_dept(id, rolename,iconcssclass,issys)
+        values(#{id},#{roleName},#{iconCssClass},#{isSys})
+    </insert>
+
+    <!-- 修改部门 -->
+    <update id="update" parameterType="com.jrwp.core.entity.Core_Dept">
+		update core_dept set
+		parentId=#{parentId,jdbcType=INTEGER},
+		orderCode=#{orderCode,jdbcType=VARCHAR},
+		isSys=#{isSys,jdbcType=INTEGER},
+		deptName=#{deptName,jdbcType=VARCHAR},
+		isShow=#{isShow,jdbcType=INTEGER},
+		remark=#{remark,jdbcType=VARCHAR},
+		deptCode=#{deptCode,jdbcType=VARCHAR}
+		where id=${id}
+	</update>
+    <!-- 删除部门 -->
+    <delete id="delete" parameterType="Long">
+		delete from core_dept
+		where id
+		= #{id}
+	</delete>
+    <!-- 增加部门 -->
+    <insert id="save" parameterType="com.jrwp.core.entity.Core_Dept">
+        <selectKey resultType="Long" order="BEFORE" keyProperty="id">
+            select dept_id.nextval from dual
+        </selectKey>
+        insert into
+        core_dept(id,parentId,orderCode,isSys,deptName,isShow,remark,deptCode)
+        values(#{id,jdbcType=INTEGER},#{parentId,jdbcType=INTEGER},
+        #{orderCode,jdbcType=VARCHAR},#{isSys,jdbcType=INTEGER},
+        #{deptName,jdbcType=VARCHAR},#{isShow,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR},#{deptCode,jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 状态显示语句 -->
+    <update id="show">
+		update core_dept set isShow=#{isShow} where id=#{id}
+	</update>
+
+    <!-- 获得插入数据的orderCode -->
+    <select id="getInsertCode" resultType="String" parameterType="Long">
+		select Max(ordercode) from core_dept where parentid= #{parentId}
+	</select>
+
+    <!-- 根据部门id找到部门的排序号 -->
+    <select id="getOrderCodeById" parameterType="Long" resultType="String">
+		select orderCode from core_dept where id=#{id}
+	</select>
+
+    <select id="findById" parameterType="Long" resultType="String">
+		select id
+		from core_dept where id=#{id}
+	</select>
+
+    <select id="findByPid" parameterType="Long" resultType="String">
+		select
+		parentid from core_dept where id=#{parentid}
+	</select>
+	<select id="findAlldept" resultType="com.jrwp.core.entity.Core_Dept">
+	select * from core_dept
+    start with
+    id = #{id}
+    connect by prior id = parentid order by
+    ordercode
+	</select>
+    <update id="updateOtherName">
+	
+		UPDATE core_dept SET OTHERNAME =#{newName} WHERE id = #{deptid}
+	
+	</update>
+</mapper>

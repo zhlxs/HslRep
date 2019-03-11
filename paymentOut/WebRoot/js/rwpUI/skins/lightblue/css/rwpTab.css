@@ -1,0 +1,11 @@
+﻿.rwpTab{overflow:hidden;}
+.rwpTabNavList{ padding:10px 0px 0px 10px; height:35px; border-bottom:1px solid #DCE8F1; }
+.rwpTabNavList .rwpTabNavItem{ display:inline; float:left; padding:0 15px; height:100%; font:14px/35px "微软雅黑"; cursor:pointer;}
+.rwpTabNavList .rwpTabNavItem:hover{ height:34px; border:1px solid #C5D0DC; border-width:2px 1px 0 1px; border-top-color:#4C8FBD;}
+.rwpTabNavList .rwpTabNavItem.rwpTabCurrent{position:relative; margin:0 -1px -1px -1px; height:34px; border:1px solid #C5D0DC; border-width:2px 1px 0 1px; border-top-color:#4C8FBD; background-color:#fff;}
+.rwpTabNavList .rwpTabNavItem.rwpTabCurrent:hover{position:relative;}
+
+.rwpTabContent{ position:relative; zoom:1; overflow:hidden;}
+.rwpTabContentItem{ height:100%; overflow-x:hidden; overflow-y:auto;}
+.rwpTabContentItem iframe{ height: 100%; width: 100%; }
+.rwpTabContentItem { height:100%;}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.follow.dao.UserPayParmsDao">
+
+
+    <!-- 根据部门找出支付信息 -->
+    <select id="getByopenid" resultType="com.jrwp.follow.entity.QrCodeParms">
+      select * from (
+      select t.* from USER_PAYPARMS t where openid =#{openid} order by t.createtime desc
+      ) t1 where rownum=1
+	</select>
+    <!-- <insert id="save">
+         <selectKey resultType="Integer" order="BEFORE" keyProperty="tid">
+             select SEQ_USER_PAYPARMS_TID.nextval as tid from dual
+         </selectKey>
+         insert into USER_PAYPARMS
+         (tid,id,openid,workid,machineID,machineType,payType,deptCode,orderDescribe,payMoney,s,
+         userID,apprseq,apprtype,evluateID,orderid)
+         VALUES
+         (#{tid},#{id},#{openid},#{workID,jdbcType=VARCHAR},#{machineID},#{machineType},#{payType},#{deptCode},#{orderDescribe},#{payMoney},#{s},
+         #{userID,jdbcType=DECIMAL},#{apprseq,jdbcType=DECIMAL},#{apprtype,jdbcType=DECIMAL},#{evluateID,jdbcType=DECIMAL},#{orderid,jdbcType=VARCHAR})
+     </insert>-->
+
+    <update id="updateStatus">
+        UPDATE   USER_PAYPARMS set paystatus = 1 ,ORDERNUMBER=#{ordernumber},updatetime =#{sysdate}
+    </update>
+    <select id="findWordIDSYNC" resultType="Long">
+        SELECT id from pay_sync where id = #{wordid}
+    </select>
+    <select id="isPay" resultType="com.jrwp.payMent.entity.PayWan">
+        SELECT * from pay_sync where id = #{id}
+    </select>
+    <select id="findWordIDRECORD" resultType="Long">
+        SELECT id from PAY_RECORD where id = #{wordid}
+    </select>
+    <insert id="saveSync" parameterType="com.jrwp.follow.entity.QrCodeParms">
+
+        insert into pay_sync
+        (id,workid,machineID,machineType,payType,deptCode,orderDescribe,payMoney,PAYSTATUS,
+       createtime,PAYTIME,ISEXPORT,PAYID,ONLYIN)
+        VALUES
+        (#{id},#{workID,jdbcType=VARCHAR},#{machineID},#{machineType},#{payType},#{deptCode},#{orderDescribe},#{payMoney},
+      1,sysdate,to_date('0001/1/1','yyyy/mm/dd'),0,#{payid},1)
+    </insert>
+    <insert id="saveRecord" parameterType="com.jrwp.follow.entity.QrCodeParms">
+        <selectKey resultType="Long" order="BEFORE" keyProperty="payid">
+            select SEQ_PAY_RECORD.nextval as payid from dual
+        </selectKey>
+        INSERT into PAY_RECORD (id,WORKID,DEPTID,SUBJECT,AMOUNT,PAYSTATUS,PAYTYPE,CREATTIME,PAYTIME,PAYCONFIGID,NETWORKTYPE)
+        VALUES
+        (#{payid},#{workID},#{deptid},#{orderDescribe},#{payMoney},1,#{payType},sysdate,to_date('0001/1/1','yyyy/mm/dd'),#{configid},0)
+    </insert>
+    <update id="updatesyncPayid" parameterType="com.jrwp.follow.entity.QrCodeParms">
+        UPDATE   pay_sync set payid = #{payid} where id = #{id}
+    </update>
+    <update id="updatePayid">
+        UPDATE   PAY_RECORD set LOCALORDERS = #{localorders} where id = #{id}
+    </update>
+</mapper>

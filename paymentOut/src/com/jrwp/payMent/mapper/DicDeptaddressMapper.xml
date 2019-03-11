@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.DicDeptaddressDao">
+	<resultMap type="com.jrwp.payMent.entity.DicDeptaddress" id="addressMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="deptId" column="deptId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="address" column="address" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="longitude" column="longitude" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="latitude" column="latitude" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="photoNumber" column="photoNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="modelId" column="modelId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="tmodelId" column="tmodelId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="ableacceptcount" column="ableacceptcount"
+			javaType="int" jdbcType="INTEGER" />
+		<result property="qrCode" column="qrCode" />
+		<result property="isopen" column="isopen" />
+		<result property="minutes" column="minutes" />
+		<result property="personcount" column="personcount" />
+		<association property="dept" javaType="com.jrwp.core.entity.Core_Dept">
+			<id property="id" column="did" javaType="Long" jdbcType="INTEGER" />
+			<result property="deptName" column="deptname" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+		<association property="model"
+			javaType="com.jrwp.payMent.entity.AppraiseModel">
+			<id property="id" column="mid" javaType="Long" jdbcType="INTEGER" />
+			<result column="MODELNAME" jdbcType="VARCHAR" property="modelname" />
+		</association>
+		<association property="tModel" javaType="com.jrwp.payMent.entity.Time_Model">
+			<id property="id" column="tid" javaType="Long" jdbcType="INTEGER" />
+			<result property="modelName" column="modName" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!-- 列表 -->
+	<select id="list" resultMap="addressMap">
+		select
+		a.*,cd.deptname,m.modelname,t.modelname modName
+		from DEPT_ADDRESS a
+		left join core_dept cd on cd.id = a.deptid
+		left join
+		APPRAISE_MODEL m on
+		m.id = a.modelid
+		left join time_model t on t.id = a.tmodelid
+		${whereSql} order by a.createtime
+		desc
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.DicDeptaddress">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_DEPT_ADDRESS.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO DEPT_ADDRESS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="deptId != null">
+				deptId,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="photoNumber != null">
+				photoNumber,
+			</if>
+			<if test="modelId != null">
+				modelId,
+			</if>
+			<if test="tmodelId != null">
+				tmodelId,
+			</if>
+			<if test="ableacceptcount != null">
+				ableacceptcount,
+			</if>
+			<if test="qrCode != null">
+				qrCode,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="deptId != null">
+				#{deptId},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="longitude != null">
+				#{longitude},
+			</if>
+			<if test="latitude != null">
+				#{latitude},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+			<if test="photoNumber != null">
+				#{photoNumber},
+			</if>
+			<if test="modelId != null">
+				#{modelId},
+			</if>
+			<if test="tmodelId != null">
+				#{tmodelId},
+			</if>
+			<if test="ableacceptcount != null">
+				#{ableacceptcount},
+			</if>
+			<if test="qrCode != null">
+				#{qrCode},
+			</if>
+		</trim>
+	</insert>
+	<!-- 修改 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.DicDeptaddress">
+		update DEPT_ADDRESS
+		<set>
+			<if test="address != null">
+				address = #{address},
+			</if>
+			<if test="longitude != null">
+				longitude = #{longitude},
+			</if>
+			<if test="latitude != null">
+				latitude = #{latitude},
+			</if>
+			<if test="photoNumber != null">
+				photoNumber = #{photoNumber},
+			</if>
+			<if test="deptId != null">
+				deptId = #{deptId},
+			</if>
+			<if test="modelId != null">
+				modelId = #{modelId},
+			</if>
+			<if test="tmodelId != null">
+				tmodelId = #{tmodelId},
+			</if>
+			<if test="ableacceptcount != null">
+				ableacceptcount = #{ableacceptcount},
+			</if>
+			<if test="qrCode != null">
+				qrCode = #{qrCode},
+			</if>
+			<if test="isopen != null">
+				isopen = #{isopen},
+			</if>
+			<if test="minutes != null">
+				minutes = #{minutes},
+			</if>
+			<if test="personcount != null">
+				personcount = #{personcount},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="addressMap">
+		select
+		a.*,cd.deptname,m.modelname from DEPT_ADDRESS a
+		left join core_dept cd
+		on cd.id = a.deptid
+		left join APPRAISE_MODEL m on m.id = a.modelid
+		where a.id = #{id}
+	</select>
+	<!-- 获取单个对象 -->
+	<select id="getObjectByDeptId" resultMap="addressMap">
+		select
+		a.*,cd.deptname,m.modelname from DEPT_ADDRESS a
+		left join core_dept cd
+		on cd.id = a.deptid
+		left join APPRAISE_MODEL m on m.id = a.modelid
+		where a.deptid = #{deptId}
+	</select>
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from DEPT_ADDRESS where id = #{id}
+	</delete>
+</mapper>

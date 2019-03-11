@@ -1,0 +1,25 @@
+﻿/*
+  头部
+*/
+.rwpGridTableHead .drgHdCol{display:inline; float:left; padding:10px; height:20px; border-right:1px solid #DAE2EA; text-align:center; font:bold 12px/20px "微软雅黑","宋体"; color:#307ECE;}
+
+/*行*/
+.rwpGridTableBody .drgBdRow{clear:both; margin-top:-1px; overflow:hidden; zoom:1; border:1px solid #e5e5e5; border-width:1px 0; cursor:pointer;}
+.rwpGridTableBody .drgBdRow:hover{background-color:#EFF4F7;}
+.rwpGridTableBody .rwpGridTableTrFocus .drgBdCol{border-right-color:#C7D3A9;}
+.rwpGridTableBody .drgBdRow.rwpGridTableTrFocus:hover{background-color:#E4EFC9;}
+.rwpGridTableBody .drgBdRowDrag{margin:5px; height:35px; background-color:#F0F9FF; border:2px dashed #BED2DB;}
+
+
+/*列*/
+.rwpGridTableBody .drgBdCol{display:inline; float:left; padding:10px; height:18px; border-right:1px solid #DAE2EA; word-break:break-all; white-space:normal; overflow:hidden;}
+.rwpGridTableBody .drgBdCol .rwpDia{ display:inline-block; text-align:center;}
+.rwpGridTableBody .drgBdCol .rwpButton {display:inline-block; margin-left:5px; width:18px; height:18px;}
+.rwpGridTableBody .drgBdCol input{ margin-top:6px;}
+.rwpGridTableBody .drgContent{display:inline-block; vertical-align:middle;}
+
+
+/*
+  图标
+*/
+.rwpDragBody .drgBdRow .rwpTreeIcon{vertical-align:middle;}

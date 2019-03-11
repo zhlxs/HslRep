@@ -1,0 +1,79 @@
+﻿html, body{padding:0; margin:0; font:500 14px/24px "Verdana";}
+body{background-color:#EDEDED;}
+html{background:none;}
+
+/*
+  登录信息
+*/
+.fCLogin .ht{padding-top:50px; padding-bottom:30px; background-color:#3D7FBE; }
+.fCLogin .ht .logo {margin-left:auto; margin-right:auto; max-width:970px; text-align:center; color:#fff; font:30px/40px "微软雅黑";}
+.fCLogin .ht .logo .icon{display:inline-block; margin-right:10px; width:40px; background:url(imgCoreLoginIcon.gif) no-repeat 0 3px; vertical-align:middle;}
+
+.fCLogin .ct{margin:30px auto 10px auto; width:450px; }
+.fCLogin .ct .thBg{width:100%; height:10px; background: url(imgCoreLoginBg.gif) no-repeat 0 0; font-size:0; line-height:0;}
+.fCLogin .ct .ftBg{width:100%; height:10px; background: url(imgCoreLoginBg.gif) no-repeat -920px 0; font-size:0; line-height:0;}
+.fCLogin .ct .bd{ padding:30px 100px 50px 100px; width: 250px; background:url(imgCoreLoginBg.gif) repeat-y -460px 0; }
+
+/*框架标题*/
+.fCLogin .headLighter{margin: -10px  -92px 10px  -92px; font:16px/30px "微软雅黑"; color:#3d7fbe; border-bottom:1px solid #3D7FBE;}
+.fCLogin .headLighter .icon{display:inline-block; margin-left:92px; margin-right:5px; width:25px; background:url(imgCoreLoginIcon.gif) no-repeat 0 -74px; }
+.fCLogin .headLighter .toolbar{display:inline; float:right;  margin-right:92px; color:#87B87F; font-size:14px;}
+.fCLogin .backLink{display:block; padding-top: 5px; padding-bottom: 5px; margin-top: 30px; margin-left: -92px; margin-right: -92px; height: 30px; border-top: 2px solid #759759; background-color: #76B774; color: #fff; font-family: 微软雅黑; text-align: center; }
+.fCLogin .backLink .icon{display:inline-block; margin-right: 5px; width:15px; background:url(imgCoreLoginIcon.gif) no-repeat -95px -74px;  vertical-align:middle;}
+.fCLogin .backLink:hover{background-color:#639C59;}
+.fCLogin .backLink:hover .icon{background-position:-124px -74px;}
+
+.fCLogin .list{height:88px;}
+.fCLogin .label{height:34px; line-height:34px;}
+.fCLogin .label label{display:inline; float:left; }
+.fCLogin .inputLine{clear: both; zoom: 1; overflow: hidden;}
+.fCLogin .inputLine input{padding: 2px 10px; width: 228px; height: 24px; line-height:24px;}
+
+.fCLogin .verifyLine{height:24px; overflow:hidden;}
+.fCLogin .verifyLine .tip{display:none; padding-left: 20px; background: url(../lightblue/images/imgValIcon.gif) no-repeat 0 -76px; color: #f59942; font-size: 13px; vertical-align: text-bottom; font-family: SimSun;}
+
+
+.fCLogin .codeLine #checkCode{ display: inline; float: left; width:100px;}
+.fCLogin .codeLine img{display: inline; float: left; margin-left: 5px; height: 30px; }
+.fCLogin .submitLine {margin-top:10px;}
+.fCLogin .submitLine .rwpButton{display:inline-block; padding:0 15px; height:24px; font:500 14px/24px "宋体"; background-color:#428BCA; border:3px solid #428BCA; color:#fff; vertical-align:middle;}
+.fCLogin .submitLine a.rwpButton{ cursor: pointer;}
+.fCLogin .submitLine a.rwpButton:hover{background-color:#1B6AAA;}
+.fCLogin .submitLine .icon{display:inline-block; width:15px; background:url(imgCoreLoginIcon.gif) no-repeat -118px -45px; }
+
+.fCLogin .ft{text-align:center;}
+.fCLogin .ft .grey{padding-top: 5px; margin-top: 5px; color:#999; border-top: 1px solid #e5e5e5; }
+
+/*选项卡*/
+.mCLoginInfo .loginStyle .menu {margin-bottom: 10px; width:100%; height: 40px; border-bottom:2px solid #e5e5e5;}
+.mCLoginInfo .loginStyle .menu .tab{display:inline; float:left; margin-bottom:-2px; padding: 0 22px; height:40px; border-bottom: 2px solid #e5e5e5; font: 15px/40px "微软雅黑"; cursor: pointer;}
+.mCLoginInfo .loginStyle .menu .tab.focus{position: relative; border-bottom-color: #428BCA; color:#428BCA;}
+.mCLoginInfo .loginStyle .menu .tab .icon{display:inline-block; width:20px; background:url(imgCoreLoginIcon.gif) no-repeat -27px -45px; vertical-align:middle; }
+.mCLoginInfo .loginStyle .menu .tab .user{background-position:-88px -35px;}
+.mCLoginInfo .loginStyle .menu .tab.focus .user{background-position:-56px -35px;}
+
+.mCLoginInfo .loginStyle .menu .tab .phone{background-position:-22px -35px;}
+.mCLoginInfo .loginStyle .menu .tab.focus .phone{background-position:5px -35px;}
+
+.mCLoginInfo .loginStyle .content .tab{display:none;}
+.mCLoginInfo .loginStyle .content .tab.focus{display:block;}
+
+/*按钮*/ 
+.mCLoginInfo .submitLine .register{display:inline; float:right; background-color:#9585BF; border-color:#9585BF;}
+.mCLoginInfo .submitLine .register:hover{background-color:#7461AA;}
+
+.mCLoginInfo .submitLine .login .icon{margin-right: 5px;  background-position:-118px -40px;}
+.mCLoginInfo .submitLine .login:hover .icon{background-position:-147px -40px;}
+.mCLoginInfo .submitLine .register .icon{ margin-left: 5px; background-position:-181px -40px;}
+.mCLoginInfo .submitLine .register:hover .icon{background-position:-206px -40px;}
+
+.mCLoginInfo .submitLine .disable{display:inline; float:right; background-color:#ABBAC3; border-color:#ABBAC3;}
+.mCLoginInfo .submitLine .disable .icon{ margin-right: 5px; background-position:-147px -73px;}
+
+/*
+  注册
+*/
+.mCRegisterInfo .ct .bd{padding-bottom:0;}
+.mCRegisterInfo .submitLine .rwpButton{display:block; text-align:center;}
+.mCRegisterInfo .submitLine .rwpButton .icon{margin-left:5px; margin-right:0; background-position:-35px -74px;}
+.mCRegisterInfo .submitLine .rwpButton:hover .icon{background-position:-64px -74px;}

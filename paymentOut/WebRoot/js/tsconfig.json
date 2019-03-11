@@ -1,0 +1,67 @@
+{
+  "weGuest": {
+    "id": 1,
+    "guestname": "徐恩勇",
+    "phone": "18311295104"
+  },
+  "types": [
+    {
+      "id": 1,
+      "businessconfigid": 2,
+      "bconfigstrcname": "婚生子女出生户口登记（持出生证）"
+    },
+    {
+      "id": 2,
+      "businessconfigid": 2,
+      "bconfigstrcname": "父母已离婚随有抚养权一方申报出生户口登记（持出生证）"
+    },
+    {
+      "id": 3,
+      "businessconfigid": 2,
+      "bconfigstrcname": "非婚生子女随母亲（持出生证）"
+    },
+    {
+      "id": 4,
+      "businessconfigid": 2,
+      "bconfigstrcname": "非婚生子女随父亲（持出生证）"
+    }
+  ],
+  "configstrs": [
+    {
+      "id": 9,
+      "bconfigstrname": "《出生医学证明》",
+      "ismustfill": true,
+      "ordercode": "00009"
+    },
+    {
+      "id": 10,
+      "bconfigstrname": "落户方《户口簿》",
+      "ismustfill": true,
+      "ordercode": "00010"
+    },
+    {
+      "id": 11,
+      "bconfigstrname": "落户方《居民身份证》",
+      "ismustfill": true,
+      "ordercode": "00011"
+    },
+    {
+      "id": 12,
+      "bconfigstrname": "父母《离婚证》",
+      "ismustfill": false,
+      "ordercode": "00012"
+    },
+    {
+      "id": 13,
+      "bconfigstrname": "确定子女抚养方的离婚协议书，法院判决书或调解书",
+      "ismustfill": false,
+      "ordercode": "00013"
+    },
+    {
+      "id": 278,
+      "bconfigstrname": "申请人自主补充材料",
+      "ismustfill": false,
+      "ordercode": "00278"
+    }
+  ]
+}

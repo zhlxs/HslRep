@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.JSPay.dao.PayRefundDao">
+
+
+    <insert id="saveRefund" parameterType="com.jrwp.JSPay.entity.PayRefund">
+        <selectKey resultType="Long" order="BEFORE" keyProperty="id">
+            select seq_pay_refund_id.nextval as id from dual
+        </selectKey>
+        INSERT INTO pay_refund
+        (id,ORDERNUMBER,REFUNDSTATUS,REFUNDMONEY,userid,refundtype,outrefundno)
+        VALUES
+        (#{id},#{ordernumber},0,#{refundmoney},#{userid},#{refundtype},#{outrefundno})
+    </insert>
+
+    <insert id="saveBillRefund" parameterType="com.jrwp.JSPay.entity.PayRefund">
+        <selectKey resultType="Long" order="BEFORE" keyProperty="id">
+            select seq_pay_refund_id.nextval as id from dual
+        </selectKey>
+        INSERT INTO pay_refund
+        (id,ORDERNUMBER,REFUNDSTATUS,REFUNDMONEY,outrefundno,createtime,refundtime,refundnumber,isexport,isbill)
+        VALUES
+        (#{id},#{ordernumber},#{refundstatus},#{refundmoney},#{outrefundno},#{createtime},#{refundtime},#{refundnumber},#{isexport]},#{isbill})
+    </insert>
+    <update id="updateStatus" parameterType="com.jrwp.JSPay.entity.PayRefund">
+        UPDATE  pay_refund set REFUNDSTATUS=1 ,isexport=0 ,refundnumber=#{refundnumber},REFUNDTIME=sysdate where outrefundno=#{outrefundno}
+    </update>
+
+    <select id="selectApplyByordernumber" resultType="com.jrwp.JSPay.entity.RefundApply">
+        SELECT  ra.* from REFUND_APPLY ra
+
+        where ra.ordernumber=#{ordernumber}
+    </select>
+    <select id="selectApplyById" resultType="com.jrwp.JSPay.entity.RefundApply">
+        SELECT  ra.* from REFUND_APPLY ra
+
+        where ra.id=#{id}
+    </select>
+    <select id="selectApplyByUserId" resultType="com.jrwp.JSPay.entity.RefundApply">
+        SELECT  ra.* ,s.paymoney ,u.fullname as checkusername from REFUND_APPLY  ra
+          left join pay_sync s on s.ordernumber = ra.ordernumber
+        left join core_user u on u.id = ra.checkuser
+
+          ${whereSql}
+          and
+        ra.applyuser=#{userid}
+        order by ra.id desc
+    </select>
+    <!--获取待审核的退款记录-->
+    <select id="selectWaitApply" resultType="com.jrwp.JSPay.entity.RefundApply">
+        SELECT  ra.* ,s.paymoney ,u.fullname as applyusername from REFUND_APPLY  ra
+        left join pay_sync s on s.ordernumber = ra.ordernumber
+        left join core_user u on u.id = ra.applyuser
+        left join core_dept d on d.id = u.deptid
+        ${whereSql}
+             order by ra.id desc
+    </select>
+
+    <!--退款信息-->
+    <select id="getRefundInfo" resultType="com.jrwp.JSPay.entity.RefundApply">
+        SELECT  ra.* ,s.paymoney ,u.fullname as applyusername,u1.fullname as checkusername from REFUND_APPLY  ra
+        left join pay_sync s on s.ordernumber = ra.ordernumber
+        left join core_user u on u.id = ra.applyuser
+        left join core_user u1 on u1.id = ra.checkuser
+        left join core_dept d on d.id = u.deptid
+        where ra.id=#{id}
+    </select>
+    <insert id="savaApplySelective" parameterType="com.jrwp.JSPay.entity.RefundApply">
+        <selectKey resultType="Integer" order="BEFORE" keyProperty="id">
+            select SEQ_REFUND_APPLU_ID.nextval as id from dual
+        </selectKey>
+        insert into REFUND_APPLY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="ordernumber != null">
+                ORDERNUMBER,
+            </if>
+            <if test="applyuser != null">
+                APPLYUSER,
+            </if>
+            <if test="checkstatus != null">
+                CHECKSTATUS,
+            </if>
+            <if test="checktime != null">
+                CHECKTIME,
+            </if>
+            <if test="checkuser != null">
+                CHECKUSER,
+            </if>
+            <if test="refundreson != null">
+                REFUNDRESON,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=DECIMAL},
+            </if>
+            <if test="ordernumber != null">
+                #{ordernumber,jdbcType=VARCHAR},
+            </if>
+
+            <if test="applyuser != null">
+                #{applyuser,jdbcType=DECIMAL},
+            </if>
+            <if test="checkstatus != null">
+                #{checkstatus,jdbcType=DECIMAL},
+            </if>
+            <if test="checktime != null">
+                #{checktime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkuser != null">
+                #{checkuser,jdbcType=DECIMAL},
+            </if>
+            <if test="refundreson != null">
+                #{refundreson,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateApplyByid" parameterType="com.jrwp.JSPay.entity.RefundApply">
+        update REFUND_APPLY
+        <set>
+            <if test="applyuser != null">
+                APPLYUSER = #{applyuser,jdbcType=DECIMAL},
+            </if>
+            <if test="checkstatus != null">
+                CHECKSTATUS = #{checkstatus,jdbcType=DECIMAL},
+            </if>
+            <if test="checktime != null">
+                CHECKTIME = #{checktime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkuser != null">
+                CHECKUSER = #{checkuser,jdbcType=DECIMAL},
+            </if>
+            <if test="refundreson != null">
+                REFUNDRESON = #{refundreson,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--查询提交退款 状态未改的-->
+    <select id="getPayRefund" resultType="com.jrwp.JSPay.entity.PayRefund">
+        select * from  pay_refund where REFUNDSTATUS = 0 and createtime &lt;= #{adate} and outrefundno is not null
+    </select>
+
+    <!--查询提交退款 状态未改的-->
+    <select id="getPayRefundByRefundNumber" resultType="com.jrwp.JSPay.entity.PayRefund">
+        select * from  pay_refund where RefundNumber=#{refundnumber}
+    </select>
+
+    <!--保存退款详情-->
+    <insert id="saveRefundDetails" parameterType="com.jrwp.JSPay.entity.PayRefund">
+        <selectKey resultType="Long" order="BEFORE" keyProperty="id">
+            select SEQ_REFUND_DETAILS_ID.nextval as id from dual
+        </selectKey>
+        INSERT INTO REFUND_DETAILS
+        (id,refundid,worknumber,REFUNDMONEY,workcode,isexport)
+        VALUES
+        (#{id},#{refundid},#{workNumber},#{refundMoney},#{workCode},1)
+    </insert>
+</mapper>

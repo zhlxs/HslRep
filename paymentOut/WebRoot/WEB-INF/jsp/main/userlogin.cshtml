@@ -1,0 +1,149 @@
+﻿@using RWP.Util;
+@model RWP.FrameworkForWeb.UserBaseInfo
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript">
+        if (window.top != self) {
+            window.top.location = self.location;
+        }
+    </script>
+    <link href="@Url.Content("~/lib/rwpUI/skins/lightblue/css/rwpReset.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/lib/rwpUI/skins/login/rwpLogin.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/lib/rwpUI/skins/lightblue/css/rwpForm.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/lib/jquery-1.11.0.min.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/lib/rwpUI/js/core/rwpInit.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/lib/jquery.validate.min.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/lib/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/lib/rwpUI/js/ui/rwpDialog.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/lib/rwpUI/js/ui/rwpDialog.plugin.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/lib/rwpUI/js/ui/rwpForm.js")" type="text/javascript" ></script>
+    <script type="text/javascript">
+        //提交前
+        function beforeSubmit() {
+            var subbtn = $('#btnLogin');
+            subbtn.attr("disabled", true);
+            subbtn.val("登录中");
+        }
+        //提交后
+        function afterSubmit(data) {
+            var subbtn = $('#btnLogin');
+            subbtn.attr("disabled", false);
+            subbtn.val("登录");
+            if (data && data.stateType == 2) {
+                $.each(data.validationResults, function (i, item) {
+                    $.each(item.MemberNames, function (j, name) {
+                        if (name == 'checkCode') {
+                            var $input = $("#checkCode", $("#ajaxform"));
+                            $input.next('img').click();  //刷新验证码
+                            return false;
+                        }
+                    });
+                });
+            }
+        }
+
+        $(function () {
+            $("#ajaxform").rwpUIForm({
+                isAutoPlugin: false,
+                isAjaxSubmit: true,
+                ajaxSubmitAttrs: {
+                    isDialog: false,
+                    isRedirect: true,
+                    beforeSubmit: beforeSubmit,
+                    afterSubmit: afterSubmit
+                }
+            });
+
+            $('.fCLogin .inputLine input').focus(function () {/*获取焦点 文本框错误提示验证*/
+                $(this).parents('.list').find('.tip').css("display", "inline-block");
+            });
+
+            $('.fCLogin .inputLine input').blur(function () {/*失去焦点 文本框错误提示验证*/
+                $(this).parents('.list').find(".tip").css("display", "none");
+            });
+
+            $('#btnLogin').click(function (e) {
+                e.preventDefault();
+                $("#ajaxform").data('rwpUIForm').ajaxSubmit();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="mCLoginInfo fCLogin">
+        <div class="ht">
+            <h1 class="logo"><i class="icon">&nbsp;</i>@Html.Raw(ViewBag.Title)</h1>
+        </div><!--//ht结束-->
+        <div class="loginStyle ct">
+            <p class="thBg"></p>
+            <div class="bd">
+                <div class="content">
+                    <form id="ajaxform" method="post" action="@Url.Action("checkuserlogin", "main")">
+                        <ul class="list">
+                            <li class="label">
+                                <label for="userName">用户名：</label>
+                            </li>
+                            <li class="clear"></li>
+                            <li class="inputLine">
+                                @Html.TextBoxFor(m => m.userName)
+                            </li>
+                            <li class="verifyLine">
+                                @Html.ValidationMessageFor(m => m.userName)
+                                <span class="tip">请输入用户名</span>
+                            </li>
+                        </ul>
+                        <ul class="list">
+                            <li class="label">
+                                <label for="userName">密&nbsp;&nbsp;码：</label>
+                            </li>
+                            <li class="clear"></li>
+                            <li class="inputLine">
+                                @Html.PasswordFor(m => m.passWord)
+                            </li>
+                            <li class="verifyLine">
+                                @Html.ValidationMessageFor(m => m.passWord)
+                                <span class="tip">请输入密码</span>
+                            </li>
+                        </ul>
+                        <ul class="list">
+                            <li class="label">
+                                <label for="checkCode">验证码：</label>
+                            </li>
+                            <li class="clear"></li>
+                            <li class="codeLine inputLine">
+                                @Html.TextBox("checkCode", string.Empty)
+                                <img alt="点击刷新验证码" src="@Url.Action("validatecode", "main") " onclick="javascript:this.src=this.src+'?rnd='+Math.random();" />
+                            </li>
+                            <li class="verifyLine">
+                                @Html.ValidationMessage("checkCode")
+                                <span class="tip">请输入验证码</span>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="submitLine">
+                                <a id="btnLogin" href="javascript:void(0);" class="login rwpButton"><i class="icon">&nbsp;</i>登录</a>
+                                <p class="clear"></p>
+                            </li> 
+                            
+                                <p class="clear"></p>
+                            <li>
+
+                            </li>
+                        </ul>
+                    </form>
+                </div><!--//content结束-->
+            </div><!--//bd结束-->
+            <p class="ftBg"></p>
+        </div><!--//ct结束-->  
+        <div class="ft">
+            <p>建议使用浏览器：IE7-11,Google Chrome</p>
+            <p class="grey">@Html.Raw(ViewBag.CopyRight)</p>
+        </div><!--//ft结束-->
+    </div><!--//mCLoginInfo结束-->  
+</body>
+</html>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.core.dao.IUserDao">
+	<resultMap type="com.jrwp.core.entity.Core_User" id="userMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="userName" column="username" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="password" column="password" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="fullName" column="fullname" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="deptId" column="deptid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="phone" column="phone" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isStart" column="isstart" />
+		<result property="isSys" column="issys" />
+		<result property="createTime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="isDel" column="isdel" />
+		<result property="lastLoginTime" column="lastlogintime"
+			javaType="java.util.Date" jdbcType="TIMESTAMP" />
+		<result property="lastLoginIP" column="lastloginip" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="pcCode" column="pc_Code" javaType="String"
+			jdbcType="VARCHAR" />
+		<!--<result property="createBy" column="createby" javaType="String" jdbcType="VARCHAR" 
+			/> <result property="machineIp" column="machineip" javaType="String" jdbcType="VARCHAR" 
+			/> <result property="machineCode" column="machineCode" javaType="String" 
+			jdbcType="VARCHAR" /> <result property="payType" column="paytype" javaType="Long" 
+			jdbcType="INTEGER" /> <result property="isAdmin" column="isadmin" javaType="Integer" 
+			jdbcType="CHAR" /> -->
+		<association property="dept" javaType="com.jrwp.core.entity.Core_Dept">
+			<id property="id" column="did" javaType="Long" jdbcType="INTEGER" />
+			<result property="parentId" column="parentid" javaType="Long"
+				jdbcType="INTEGER" />
+			<result property="orderCode" column="ordercode" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="isSys" column="issys" />
+			<result property="deptName" column="deptname" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="isShow" column="isshow" />
+			<result property="remark" column="remark" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="deptCode" column="deptcode" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+		<collection property="roles" ofType="com.jrwp.core.entity.Core_Role"
+			javaType="ArrayList">
+			<id property="id" column="rid" javaType="Long" jdbcType="INTEGER" />
+			<result property="roleName" column="rolename" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="iconCssClass" column="iconcssclass"
+				javaType="String" jdbcType="VARCHAR" />
+			<result property="isSys" column="issys" javaType="Integer"
+				jdbcType="INTEGER" />
+			<collection property="auths" ofType="com.jrwp.core.entity.Core_Auth"
+				javaType="ArrayList">
+				<id property="id" column="aid" javaType="Long" jdbcType="INTEGER" />
+				<result property="authName" column="authName" javaType="java.lang.String"
+					jdbcType="VARCHAR" />
+				<collection property="actions"
+					ofType="com.jrwp.core.entity.Core_ActionForAuth" javaType="ArrayList">
+					<id property="id" column="aaid" javaType="Long" jdbcType="INTEGER"></id>
+					<result property="controlName" column="controName" javaType="String"
+						jdbcType="VARCHAR"></result>
+					<result property="actionName" column="actionName" javaType="String"
+						jdbcType="VARCHAR"></result>
+					<result property="display" column="display" javaType="String"
+						jdbcType="VARCHAR"></result>
+				</collection>
+			</collection>
+		</collection>
+	</resultMap>
+	<select id="list" resultMap="userMap">
+		select cd.deptName,cu.* from
+		core_user cu join core_dept cd on cu.deptid=cd.id ${whereSql}
+	</select>
+
+	<select id="list1" resultMap="userMap">
+		select cd.deptName,cu.* from
+		core_user cu join core_dept cd on cu.deptid=cd.id ${whereSql} and
+		cd.deptcode like #{dept2}
+
+	</select>
+	<!-- 部门ID查找用户 <select id="getDeptId" resultMap="userMap"> select cd.deptName,cu.* 
+		from core_user cu join core_dept cd on cu.deptid=cd.id where deptId=#{deptId} 
+		</select> -->
+	<!-- 部门ID查找用户 -->
+	<select id="getDeptId" resultMap="userMap">
+		select cd.deptName,cu.* from
+		core_user cu join core_dept cd on
+		cu.deptid=cd.id where cu.deptid in
+		(select id from core_dept start
+		with id =#{deptId} connect by prior
+		id=parentid)
+	</select>
+
+	<select id="getObjectById" parameterType="Long" resultMap="userMap">
+		select
+		cd.deptName,
+		cu.*,
+		cr.id as rid,
+		cr.rolename
+		from
+		core_user cu,
+		core_dept cd,
+		core_role cr,
+		core_userforrole cufr
+		where
+		cu.deptid=cd.id
+		and cu.id=#{id}
+		and cu.id=cufr.userid
+		and cr.id in (select
+		core_userforrole.roleid from core_userforrole where
+		core_userforrole.userid=#{id})
+	</select>
+	<select id="getByUserName" parameterType="String" resultMap="userMap">
+		select u.id,u.username,u.password,u.fullname,u.issys,r.id
+		rid,u.pc_code pccode,r.rolename,a.id
+		aid,a.authname,aa.id
+		aaid,aa.controname,aa.actionname,aa.display,cd.id
+		did,cd.deptname,cd.deptcode from
+		core_user u
+		left join
+		core_userforrole
+		ur on u.id=ur.userid
+		left join
+		core_role r on
+		ur.roleid=r.id
+		left join
+		core_authforrole ar on r.id =
+		ar.roleid
+		left
+		join core_auth a on
+		ar.authid = a.id
+		left join
+		core_actionforauth aa on
+		a.id = aa.authid
+		left
+		join core_dept cd on
+		u.deptid = cd.id
+		where u.username=#{name} and
+		u.isstart=1
+	</select>
+	<insert id="save" parameterType="com.jrwp.core.entity.Core_User">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_CORE_USER.nextval as id from dual
+		</selectKey>
+		insert into
+		core_user(id,deptid,username,password,fullname,phone,isstart,issys,createTime,isdel)
+		values(#{id,jdbcType=INTEGER},#{deptId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},#{fullName,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},
+		#{isStart,jdbcType=INTEGER},#{isSys,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},0)
+	</insert>
+	<update id="update" parameterType="com.jrwp.core.entity.Core_User">
+		update core_user set
+		deptid=#{deptId,jdbcType=INTEGER},username=#{userName,jdbcType=VARCHAR},password=#{password,jdbcType=VARCHAR},
+		fullname=#{fullName,jdbcType=VARCHAR},phone=#{phone,jdbcType=VARCHAR},isstart=#{isStart,jdbcType=INTEGER},
+		issys=#{isSys,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+
+	<update id="updateForLogin" parameterType="com.jrwp.core.entity.Core_User">
+		update core_user set
+		lastlogintime=#{lastLoginTime},lastloginip=#{lastLoginIP} where
+		id=#{id}
+	</update>
+	<delete id="delete" parameterType="Long">
+		delete from core_user
+		where id
+		= #{id}
+	</delete>
+	<!-- 移除用户角色 -->
+	<delete id="removeRolesById" parameterType="Long">
+		delete from
+		core_userforrole where userid=#{userid}
+	</delete>
+	<!-- 储存用户角色 -->
+	<insert id="addRoles" parameterType="com.jrwp.core.entity.Core_Role">
+		insert into core_userforrole
+		values(#{userid},#{roleid})
+	</insert>
+	<!-- 根据角色名字查询角色id -->
+	<select id="getRoleIdByRoleName" parameterType="String"
+		resultType="Long">
+		select id from core_role where rolename=#{rolename}
+	</select>
+	<select id="count">
+		select count(*) from core_dept c where
+		c.parentid=#{id}
+	</select>
+	<!-- 设置用户的启动状态 -->
+	<update id="setStart">
+		update core_user set isstart=#{isstart} where
+		id=#{id}
+	</update>
+
+	<select id="getdeptid" resultType="Long">
+		select deptid from CORE_USER t
+		where username=#{username}
+	</select>
+	<!-- 胡山林 -->
+	<select id="getObjectByName" resultMap="userMap">
+		select
+		t.id,t.username,t.password,t.fullname,t.deptid,t.phone,t.isstart,
+		t.issys,t.createtime,t.isdel,t.lastlogintime,t.lastloginip,t.paycode,t.pc_code
+		from core_user t where username = #{username}
+	</select>
+</mapper>

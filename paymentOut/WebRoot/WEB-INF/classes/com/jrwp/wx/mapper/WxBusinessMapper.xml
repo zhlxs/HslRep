@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.wx.dao.WxBusinessDao">
+	<resultMap type="com.jrwp.wx.entity.WxBusiness" id="businessMap">
+		<result property="serCode" column="SER_CODE" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="serName" column="SER_NAME" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="pcCode" column="PC_CODE" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="parentCode" column="parentcode" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="orderCode" column="orderCode" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isValid" column="isvalid"/>
+		<result property="businessType" column="businessType"/>
+		<result property="isproxy" column="isproxy"/>
+		<association property="config"
+			javaType="com.jrwp.payMent.entity.Businessconfig">
+			<result property="icon" column="icon" />
+			<result property="iconpathstr" column="iconpathstr" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="sqtj" column="sqtj" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="sqcl" column="sqcl" javaType="String"
+				jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<!-- 业务列表 -->
+	<select id="list" resultMap="businessMap">
+		select t.ser_code,t.ser_name,t.pc_code,t.ordercode,t.businesstype,t.isproxy,b.icon,b.iconpathstr,b.sqtj,b.sqcl
+		from POLICECLASS_SERVICE t
+		left join WX_BUSINESSCONFIG b on b.ser_Code = t.ser_code
+		where t.isvalid = 1 and t.ordercode like #{code}
+		order by t.ordercode
+	</select>
+</mapper>

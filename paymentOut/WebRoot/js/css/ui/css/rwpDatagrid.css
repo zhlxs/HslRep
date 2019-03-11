@@ -1,0 +1,61 @@
+﻿.rwpGridTable { position:relative; zoom:1;}
+.rwpGridTable #checkid ,.rwpGridTable #checkall{ display:block; padding:0px; border:0;}
+.rwpGridTable .ftal{text-align:left;}
+.rwpGridTable .line{display:inline-block; margin:0 2px; color:#999;}
+
+
+/*工具栏*/
+.rwpGridTable .rwpGridToolbar{clear:both; margin-top:0px; margin-bottom:-1px; position:relative; height:38px; border:1px solid #ddd; background-color:#F9F9F9; zoom:1;width:99%;}
+/*.rwpGridTable .rwpGridToolbar{clear:both; margin-top:-1px; margin-bottom:-1px; position:relative; height:38px; border:1px solid #ddd; background-color:#F9F9F9; zoom:1;width:99%;}*/
+.rwpGridTable .rwpGridToolbar .rwpButton{ padding:7px 20px; margin-left:-1px; background-color:#fff; border-width:0 1px; border-color:#e5e5e5; }
+.rwpGridTable .rwpGridToolbar .rwpButton:hover{color:#535353;}
+
+/*用户、商户按钮类型*/
+.defUser .rwpGridTable .rwpGridToolbar{ background-color:#F9F9F9;}
+.defUser .rwpGridTable .rwpGridToolbar .rwpButton:hover{color:#f85808; background-color:#FCF0E6;}
+.defMerchant .rwpGridTable .rwpGridToolbar{ background-color:#EEF4F9;}
+.defMerchant .rwpGridTable .rwpGridToolbar .rwpButton:hover{color:#70C5EE; background-color:#DEF2FB;}
+
+/*表格头部  单元格文本 */
+.rwpGridTableHead{clear:both; height:auto; background:#ECECEC url(../images/imgDgHdBg.gif) repeat-x 0 0; border:1px solid #ddd; border-width:1px 1px 1px 0; overflow:hidden; zoom:1; width:99%;}
+.rwpGridTableHead table{table-layout:fixed; text-align:center;}
+.rwpGridTableHead tr{height:18px;}
+.rwpGridTableHead th{display:table-cell; padding:7px 5px; height:20px; border-left:1px solid #ddd; text-align:center; font:bold 13px/20px "微软雅黑";}
+
+.rwpGridTableBody {border-right:1px solid #ddd; overflow:hidden;width:99%; height: auto !important;}
+.rwpGridTableBody table{table-layout:fixed;width:100%;}
+.rwpGridTableBody tr td{display:table-cell; border:1px solid #ddd;padding:9px 5px; border-width:0 0 1px 1px; word-break:break-all; white-space:normal; text-align:center;}/**/ 
+.rwpGridTableBody tr td .rwpDia{ display:inline-block; text-align:center;}
+.rwpGridTableBody tr td .ftal{display:block; text-align:left;}
+.rwpGridTableBody td .rwpButton { width:18px; height:18px; display:inline-block;  margin-left:5px; }
+.rwpGridTableBody td input{ margin-top:6px;}
+.rwpGridTableBody td a{ color:#428bca;}
+.rwpGridTableBody td a:hover{color:#2a6496;}
+.rwpGridTableBody .rwpTreeExpandOpen{ background-position: -98px -73px;}
+.rwpGridTableBody .rwpTreeExpandClose{ background-position: -80px -73px;}
+.rwpGridTableBody .rwpGridEvenTr{ background-color:#F9F9F9;}
+.rwpGridTableBody tr:hover{background-color:#EFF4F7; cursor:pointer; }
+.rwpGridTableBody .rwpGridTableTrFocus,.rwpGridTableBody .rwpGridTableTrFocus:hover{ background-color:#E4EFC9; border-color:#C7D3A9;}
+.rwpGridTableBody .rwpGridTableTrFocus td{border-right-color:#C7D3A9;}
+
+
+/*全选*/
+.rwpGridTable .ckbAll{ display:inline; float:left; margin:10px 7px 0 7px;}
+.rwpGridTable .ckbAll input{display:inline; float:left; margin-right:5px; border:0;}
+.rwpGridTable .ckbAll cite{display:inline; float:left;}
+
+.rwpGridTreeSpace{ width:18px;height:18px; line-height:20px; display:inline-block;  vertical-align:middle;}
+
+/*分页*/
+.rwpGridPage{padding-top:10px; padding-bottom:10px; height:24px;width:99%;}
+.rwpGridPage .rwpPageCount{display:inline; float:left;}
+.rwpGridPage .rwpGridPaging{ display:inline; float:right;}
+.rwpGridPage .rwpGridPaging a,.rwpGridPage .rwpGridPaging span{float:left; line-height:22px;}
+.rwpGridPage .rwpGridPaging .rwpGridPageLink,.rwpGridPage .rwpGridPaging .rwpButton{ display:inline-block; padding:3px 8px; margin-left:5px;	color:#fff; font:12px/16px "Arial"; text-align:center; background-color:#fff; border:1px solid #ABBAC3; background-color:#ABBAC3; }
+.rwpGridPage .rwpGridPaging .rwpGridPageLink:hover,.rwpGridPage .rwpGridPaging .rwpButton:hover{background-color:#8C9BA4; background-image:none; border-color: #8C9BA4; color:#fff;}
+.rwpGridPage .rwpGridPaging .rwpGridPageLink.rwpGridPageCurrent{background-color:#FF8900;border-color:#FF8900; color:#fff;}
+
+.rwpGridPage .rwpGridPaging .rwpGridInputPage{padding:0 2px; height:22px; border:1px solid #C6C6C6; background-color:#fff;border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px;}
+.rwpGridPage .rwpGridPaging .rwpGridInputPage input{ float:left; height:22px; line-height:22px; border:0; text-align:center;}
+.rwpGridPage .rwpGridPaging .rwpButton{ height:auto;}
+.rwpGridPage .rwpGridPaging a.rwpButton span{ height:16px; line-height:16px;}

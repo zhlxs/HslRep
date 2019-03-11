@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IAuthLogDao">
+	<resultMap type="com.jrwp.payMent.entity.AuthLog" id="authLogMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="deptid" column="deptid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="operator" column="operator" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="logType" column="logType" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="operatvalue" column="operatvalue" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="operatname" column="operatname" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="operattime" column="operattime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="isAccess" column="isAccess" />
+	</resultMap>
+	<!-- 保存授权日志 -->
+	<insert id="saveAuthLog" parameterType="com.jrwp.payMent.entity.AuthLog">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_AUTH_LOG_ID.nextval AS id FROM dual
+		</selectKey>
+		insert into AUTH_LOG (ID,DEPTID,OPERATOR,LOGTYPE,OPERATVALUE,OPERATNAME,OPERATTIME,ISACCESS)
+		values (#{id},#{deptid},#{operator},#{logType},#{operatvalue},#{operatname},#{operattime},#{isAccess})
+	</insert>
+	<!-- 列表 -->
+	<select id="list" resultMap="authLogMap">
+		select * from AUTH_LOG
+	</select>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="authLogMap">
+		select * from AUTH_LOG where id = #{id}
+	</select>
+</mapper>

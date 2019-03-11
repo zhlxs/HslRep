@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.wx.dao.WXSquenceInfoDao">
+	<resultMap type="com.jrwp.wx.entity.WaitCountJson" id="waitCountJson">
+		<result property="businesstype" column="businesstype" javaType="int" jdbcType="INTEGER"/>
+		<result property="waitCount" column="waitCount" javaType="int" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<resultMap type="com.jrwp.wx.entity.AppointmeInfoJson" id="appointmeInfoJson">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER"/>
+		<result property="cardNumber" column="cardNumber" javaType="String" jdbcType="VARCHAR"/>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+		<result property="deptid" column="deptid" javaType="Long" jdbcType="INTEGER"/>
+		<result property="appointmenttime" column="appointmenttime" javaType="String" jdbcType="VARCHAR"/>
+		<result property="status" column="status" javaType="int" jdbcType="INTEGER"/>
+		<result property="phone" column="phone" javaType="String" jdbcType="VARCHAR"/>
+		<result property="time" column="time" javaType="String" jdbcType="VARCHAR"/>
+		<result property="timequantum" column="timequantum" javaType="Long" jdbcType="INTEGER"/>
+		<result property="business" column="business" javaType="String" jdbcType="INTEGER"/>
+	</resultMap>
+		
+	
+	
+	<resultMap type="com.jrwp.wx.entity.AppointmeInfoJsonForMachine" id="appointmeInfoJsonformachine">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER"/>
+		<result property="cardNumber" column="cardNumber" javaType="String" jdbcType="VARCHAR"/>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+		<result property="appointmenttime" column="appointmenttime" javaType="String" jdbcType="VARCHAR"/>
+		<result property="time" column="time" javaType="String" jdbcType="VARCHAR"/>
+		<result property="business" column="business" javaType="String" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<resultMap type="com.jrwp.wx.entity.MachineConfigJson" id="machineConfigJson">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER"/>
+		<result property="modelid" column="modelid" javaType="Long" jdbcType="INTEGER"/>
+		<result property="devicenumber" column="devicenumber" javaType="String" jdbcType="VARCHAR"/>
+		<result property="ip" column="ip" javaType="String" jdbcType="VARCHAR"/>
+		<result property="deptid" column="deptid" javaType="Long" jdbcType="INTEGER"/>
+		<result property="updatetime" column="updatetime" javaType="String" jdbcType="VARCHAR"/>
+		<collection property="callBusinessJson" ofType="com.jrwp.wx.entity.CallBusinessJson">
+			<result property="parentid" column="parentid" javaType="Long" jdbcType="INTEGER"/>
+			<result property="ser_code" column="ser_code" javaType="String" jdbcType="VARCHAR"/>
+			<result property="ordercode" column="ordercode" javaType="String" jdbcType="VARCHAR"/>
+			<result property="topcoord" column="topcoord" javaType="String" jdbcType="VARCHAR"/>
+			<result property="leftcoord" column="leftcoord" javaType="String" jdbcType="VARCHAR"/>
+			<result property="businesstype" column="businesstype" javaType="int" jdbcType="INTEGER"/>
+			<result property="width" column="width" javaType="String" jdbcType="VARCHAR"/>
+			<result property="height" column="height" javaType="String" jdbcType="VARCHAR"/>
+			<result property="icon" column="icon"/>
+        </collection>
+	</resultMap>
+	
+	<resultMap type="com.jrwp.wx.entity.LedShow" id="showJson">
+		<result property="winnumber" column="winnumber" javaType="String" jdbcType="VARCHAR"/>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="getShow" resultMap="showJson">
+		select winnumber,content from LEDSHOW where deptid=#{deptid} and status=#{status}
+	</select> 
+	
+	<select id="getAppointmeByCardNumber" resultMap="appointmeInfoJsonformachine">
+		select a.id,a.cardNumber,a.name,to_char(a.appointmenttime,'yyyy-MM-dd') as appointmenttime,a.businesstype as business,b.time from APPOINTME_INFO a left join Dic_Time b on a.timequantum=b.id where a.appointmenttime = to_date(#{date},'yyyy-mm-dd') and a.STATUS=1 and a.cardnumber=#{cardNumber} and a.deptid=#{deptid} order by b.id asc
+	</select>
+	
+	<select id="getSquence" resultType="String">
+        select max(i.squence) from SQUENCE_INFO i where i.isappointment=#{isappointment}
+        and to_char(i.createtime,'yyyy-MM-dd')=#{nowdate} and businessType in(1,2)
+        and i.deptid = #{deptid}
+        <if test="isearly != null">
+            and i.isearly = #{isearly}
+        </if>
+    </select>
+    
+    <select id="getYNSquence" resultType="String">
+        select max(i.squence) from SQUENCE_INFO i where i.isappointment=#{isappointment}
+        and to_char(i.createtime,'yyyy-MM-dd')=#{nowdate} and businessType=4
+        and i.deptid = #{deptid}
+        <if test="isearly != null">
+            and i.isearly = #{isearly}
+        </if>
+    </select>
+    
+     <insert id="insertSquenceInfo" parameterType="com.jrwp.wx.entity.WXSquenceInfo">
+     	<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_SEQENCE_INFO_ID.nextval as id from dual
+		</selectKey>
+        insert into SQUENCE_INFO (ID,ISAPPOINTMENT, ISEARLY,APPOINTMENTTIME, SQUENCE, DEPTID,createtime,status,openid,cardnumber,
+        timequantum,name,isproxy,getnumbertype,ser_code,appointme_infoid,iscall,businessType,serialnumber,callcount)
+        values (#{id,jdbcType=INTEGER},#{isappointment,jdbcType=DECIMAL}, #{isearly,jdbcType=DECIMAL},to_date(#{appointmenttime},'yyyy-mm-dd'),#{squence},#{deptid},sysdate,#{status},#{openid},#{cardnumber},
+        #{timeQuantum}, #{name},0,1,#{ser_code},#{appointme_infoid},#{iscall},#{businessType},#{serialnumber},0)
+    </insert>
+    
+    <update id="updateStates">
+    	update APPOINTME_INFO set status=2 where id=#{appointme_infoid}
+    </update>
+    
+    <insert id="insertXcSquenceInfo" parameterType="com.jrwp.wx.entity.WXSquenceInfo">
+    	<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_SEQENCE_INFO_ID.nextval as id from dual
+		</selectKey>
+        insert into SQUENCE_INFO(ID, ISAPPOINTMENT, SQUENCE, DEPTID,createtime,status,cardnumber,
+        name,isproxy,getnumbertype,businessType,ser_code,serialnumber,callcount)
+        values (#{id,jdbcType=INTEGER}, #{isappointment,jdbcType=DECIMAL},#{squence},#{deptid},sysdate,#{status},#{cardnumber},
+         #{name},0,1,#{businessType},#{ser_code},#{serialnumber},0)
+    </insert>
+    
+    <insert id="insertDlSquenceInfo" parameterType="com.jrwp.wx.entity.WXSquenceInfo">
+    	<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_SEQENCE_INFO_ID.nextval as id from dual
+		</selectKey>
+        insert into SQUENCE_INFO(ID, ISAPPOINTMENT, SQUENCE, DEPTID,createtime,status,cardnumber,
+        name,isproxy,getnumbertype,businessType,ser_code,serialnumber,proxyname,proxycardnumber,callcount)
+        values (#{id,jdbcType=INTEGER}, #{isappointment,jdbcType=DECIMAL},#{squence},#{deptid},sysdate,#{status},#{cardnumber},
+         #{name},#{isproxy},#{getNumberType},#{businessType},#{ser_code},#{serialnumber},#{proxyname},#{proxycardnumber},0)
+    </insert>
+    
+    <select id="getWaitCount" resultMap="waitCountJson">
+    	select count(1) as waitCount,businesstype from SQUENCE_INFO where status=1 and deptid=#{deptid} and to_char(createtime,'yyyy-MM-dd')=#{date} group by businesstype
+    </select>
+    
+    <select id="getWaitCountOne" resultType="int">
+    	select count(1) from SQUENCE_INFO where status=1 and deptid=#{deptid} and to_char(createtime,'yyyy-MM-dd')=to_char(#{date},'yyyy-MM-dd') and businessType=#{businessType}
+    </select>
+    
+    <select id="getWaitCountWXZS" resultType="int">
+    	select count(1) from SQUENCE_INFO where status=1 and deptid=#{deptid} and to_char(createtime,'yyyy-MM-dd')=#{date} and businessType=#{businessType}
+    </select>
+    
+    <select id="getXcCount" resultType="int">
+    	select count(1) from SQUENCE_INFO where status=1 and deptid=#{deptid} and businessType=#{businessType} and ISAPPOINTMENT=0 and createtime > to_date(#{date},'yyyy-mm-dd hh24:mi:ss')
+    </select>
+    
+    
+    
+    <insert id="insertCheckResult">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_Mac_PhotoMatch.nextval as id from dual
+		</selectKey>
+		insert into
+		Mac_PhotoMatch(id,IFACEMATCHRESULT,cardnumber,name,IFACETIME,xsd,photo,cardphoto,createtime,ischeck)
+		values
+		(#{id,jdbcType=INTEGER},#{checkResult},#{cardNumber},#{name},sysdate,#{xsd},#{b},#{cardb},sysdate,0)
+	</insert>
+	
+	
+    
+    <select id="getAppointmeInfoJson" resultType="com.jrwp.wx.entity.AppointmeInfoJson">
+		select id,cardNumber,name,phone from (select id,cardNumber,name,phone from APPOINTME_INFO where ischeck=0 order by createtime asc) where rownum=1
+	</select>
+	
+	<select id="getWarmingInfoJson" resultType="com.jrwp.wx.entity.WarmingInfoJson">
+		select id,cardNumber,name from (select id,cardNumber,name from Mac_PHOTOMATCH where ischeck=0 order by createtime asc) where rownum=1
+	</select>
+	
+	<update id="updateIsCheck">
+    	update APPOINTME_INFO set ischeck=1 where id=#{id}
+    </update>
+    
+    <update id="updateXCIsCheck">
+    	update Mac_PHOTOMATCH set ischeck=1 where id=#{id}
+    </update>
+    
+    <!--被叫人员-->
+    <select id="getCalledVisitor" resultType="com.jrwp.wx.entity.PmVisitor">
+        select t.squence as queueNumber ,t.name,t.deptid,t.WICKETNUMBER as windowNumber,t.status state from SQUENCE_INFO t where
+        to_char(t.createtime,'yyyy-MM-dd')=to_char(#{nowdate},'yyyy-MM-dd')
+        <if test="deptid != null">
+            and t.deptid=#{deptid}
+        </if>
+        and t.status=2
+        order by squence asc
+    </select>
+
+    <!--电视等待人员-->
+    <select id="getVisitor" resultType="com.jrwp.wx.entity.PmVisitor">
+        select t.squence as queueNumber ,t.name,t.callcount,t.WICKETNUMBER as windowNumber,t.deptid,t.status state from SQUENCE_INFO t where
+        to_char(t.createtime,'yyyy-MM-dd')=to_char(#{nowdate},'yyyy-MM-dd')
+        <if test="deptid != null">
+            and t.deptid=#{deptid}
+        </if>
+        and t.status=#{status}
+        <if test="seq == 1">
+            order by squence desc
+        </if>
+        <if test="seq == 2">
+            order by squence asc
+        </if>
+    </select>
+    
+    <select id="getConfigIdByDeviceNumber" resultType="Integer">
+		select id from CALLMANAGER where devicenumber=#{deviceNumber}
+	</select>
+	
+	<insert id="insertDeviceNumber">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_CALLMANAGER.nextval as id from dual
+		</selectKey>
+		insert into
+		CALLMANAGER(id,devicenumber,modelid,)
+		values
+		(#{id,jdbcType=INTEGER},#{deviceNumber},0)
+	</insert>
+	
+	<select id="getMachineConfigJsonByDeviceNumber" resultType="com.jrwp.wx.entity.MachineConfigJson">
+		select a.modelid,to_char(b.createtime,'yyyy-mm-dd hh24:mi:ss')as updatetime from CALLMANAGER a left join CALLCONFIGMODEL b on a.modelid=b.id where a.devicenumber=#{deviceNumber}
+	</select>
+	
+	<select id="getMachineConfig" resultMap="machineConfigJson">
+    	select a.devicenumber,a.modelid,a.deptid,to_char(b.createtime,'yyyy-mm-dd hh24:mi:ss')as updatetime,c.id as ser_code,c.ordercode,c.icon,c.topcoord,c.leftcoord,c.businesstype,c.parentid,c.width,c.height from CALLMANAGER a left join CALLCONFIGMODEL b on a.modelid=b.id left join CALLCONFIGPARAM c on b.id=c.modelid where a.devicenumber=#{deviceNumber}
+    	order by c.ordercode asc
+    </select> 
+    
+    <select id="getgzhpic" resultType="com.jrwp.wx.entity.DeptGZHPic">
+		select a.qrcode as pic from DEPT_ADDRESS a left join CALLMANAGER b on a.deptid=b.deptid where b.devicenumber=#{deviceNumber}
+	</select>
+	
+	
+	
+	<select id="getAbleAcceptCount" resultType="int">
+		select ableacceptcount from DEPT_ADDRESS where deptid=#{deptid}
+	</select>
+		<!-- select count(1) from Squence_info t where
+        to_char(t.createtime,'yyyy-MM-dd')='2018-11-23' and t.cardnumber in ('360122199309154232'
+        ) or (to_char(t.createtime,'yyyy-MM-dd')='2018-11-23' and t.proxycardnumber in ('360122199309154232'
+        )) -->
+	<select id="getAlreadyAcceptCount" resultType="int">
+        select count(1) from Squence_info t where
+        to_char(t.createtime,'yyyy-MM-dd')=#{dateString} and t.cardnumber in (#{cardNumber}
+        <if test="proxyCardNumber != null">
+            ,#{proxyCardNumber}
+        </if>
+        ) or (to_char(t.createtime,'yyyy-MM-dd')=#{dateString} and t.proxycardnumber in (#{cardNumber}
+        <if test="proxyCardNumber != null">
+            ,#{proxyCardNumber}
+        </if>
+        ))
+    </select>
+    
+    <select id="getBlackCardNumber" resultType="String">
+        select cardnumber from (select cardnumber from BLACKLIST where cardnumber in (#{cardNumber}
+        <if test="proxyCardNumber != null">
+            ,#{proxyCardNumber}
+        </if>
+        ) order by id desc) where rownum=1
+    </select>
+    
+    <insert id="insertSquenceSync">
+		insert into
+		SQUENCE_SYNC(id,STATUS,ISEXPORT)
+		values
+		(#{squence_id},#{status},#{isexport})
+	</insert>
+	
+	<insert id="insertWarmInfo">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_WX_WARNINGINFO.nextval as id from dual
+		</selectKey>
+		insert into
+		WX_WARNINGINFO(id,createtime,warninginfo,mac_photomatchid,name,cardnumber)
+		values
+		(#{id,jdbcType=INTEGER},sysdate,#{warmingInfo},#{mac_photomatchid},#{name},#{cardnumber})
+	</insert>
+	
+	<insert id="insertAppointWarmInfo">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+		 	select SEQ_WX_WARNINGINFO.nextval as id from dual
+		</selectKey>
+		insert into
+		WX_WARNINGINFO(id,createtime,warninginfo,wx_appointmeinfoid,name,cardnumber,phone)
+		values
+		(#{id,jdbcType=INTEGER},sysdate,#{warmingInfo},#{wx_appointmeinfoid},#{name},#{cardNumber},#{phone})
+	</insert>
+	
+	<select id="getWxAppintStatus" resultType="com.jrwp.wx.entity.Appointme_sync">
+		select * from APPOINTME_SYNC t where  t.isexport = 0  and t.id = (select max(t1.id) from APPOINTME_SYNC t1 where t1.isexport = 0)
+	</select>
+	
+	<update id="updateAppointStatus">
+    	update APPOINTME_INFO set status=#{status} where id=#{id}
+    </update>
+    
+    <update id="updateAppointIsExport">
+    	update APPOINTME_SYNC set isexport=1 where id=#{id}
+    </update>
+</mapper>

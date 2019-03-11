@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jrwp.appr.dao.TestCountDao">
+
+    <insert id="insertSelective" parameterType="com.jrwp.appr.entity.TestCount">
+        <selectKey resultType="Long" order="BEFORE" keyProperty="id">
+            select SEQ_TESTCOUNT.nextval as id from dual
+        </selectKey>
+        INSERT INTO TESTCOUNT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="userid != null">
+                USERID,
+            </if>
+            <if test="testid != null">
+                testid,
+            </if>
+            <if test="createtime == null">
+                createtime,
+            </if>
+            <if test="orderid != null">
+                orderid,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="userid != null">
+                #{userid},
+            </if>
+            <if test="testid != null">
+                #{testid},
+            </if>
+            <if test="createtime == null">
+                sysdate,
+            </if>
+            <if test="orderid != null">
+                #{orderid},
+            </if>
+            <if test="answer != null">
+                #{answer},
+            </if>
+        </trim>
+    </insert>
+</mapper>

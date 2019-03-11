@@ -1,0 +1,19 @@
+.rwpCombobox{ width:184px; height:26px; border:1px solid #D5D5D5; background-color:#fff;}
+.rwpCombobox #detectName{ width:160px; }
+.rwpCombobox:hover{border-color:#bbb;}
+.rwpCombobox .rwpInputText{display:inline; float:left; width:148px; border:0; cursor:pointer;}
+.rwpComboboxButton{ display:inline; float:left; width:20px; height:100%; cursor:pointer;}
+.rwpComboboxDown{display:block; width:100%; height:100%; background:url(../images/imgIcon.gif) no-repeat -58px -32px;}
+
+.rwpComboboxSelect{ display:none; margin-top:-1px; position:absolute; width:184px; overflow:auto; border:1px solid #d5d5d5; background-color:#fff;}
+.rwpComboboxSelect table{border-collapse:separate;}
+.rwpComboboxSelectTable{ margin-top:-1px; width:100%;}
+.rwpComboboxSelectTable tr td{ padding:5px 10px; border-top:1px solid #eee; cursor:pointer;}
+.rwpComboboxSelectTable tr td:hover{ background-color:#EFF4F7;}
+.rwpComboboxSelectTable tr.rwpComboboxItemSelected td{ background-color:#E4EFC9; }
+.rwpComboboxSelectTable tr.rwpComboboxItemSelected td:hover{ background-color:#E4EFC9;}
+.rwpComboboxCheckboxWrap{ padding-left:5px; width:13px; height:13px;}
+
+/*禁用样式*/
+.rwpComboboxDisabled{background-color:#F5F5F5; }
+.rwpComboboxDisabled .rwpInputText{background-color:#F5F5F5; color:#999;}

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.wx.dao.RegisterUserDao">
+	<resultMap type="com.jrwp.wx.entity.RegisterUser" id="reguserMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="wxOpenId" column="wxOpenId" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="username" column="username" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="idCardNumber" column="idCardNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="phoneNumber" column="phoneNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="status" column="status" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="isappoint" column="isappoint" />
+		<result property="seqid" column="seqid" javaType="Long"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<!-- 用户注册 -->
+	<insert id="save" parameterType="com.jrwp.wx.entity.RegisterUser">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_WX_REGISTERUSER.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO WX_REGISTERUSER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="wxOpenId != null">
+				wxOpenId,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="idCardNumber != null">
+				idCardNumber,
+			</if>
+			<if test="phoneNumber != null">
+				phoneNumber,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="isappoint != null">
+				isappoint,
+			</if>
+			<if test="seqid != null">
+				seqid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="wxOpenId != null">
+				#{wxOpenId},
+			</if>
+			<if test="username != null">
+				#{username},
+			</if>
+			<if test="idCardNumber != null">
+				#{idCardNumber},
+			</if>
+			<if test="phoneNumber != null">
+				#{phoneNumber},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="createtime != null">
+				#{createtime},
+			</if>
+			<if test="isappoint != null">
+				#{isappoint},
+			</if>
+			<if test="seqid != null">
+				#{seqid},
+			</if>
+		</trim>
+	</insert>
+	<!-- 用户更新 -->
+	<update id="updateUser" parameterType="com.jrwp.wx.entity.RegisterUser">
+		update WX_REGISTERUSER
+		<set>
+			<if test="username != null">
+				username = #{username},
+			</if>
+			<if test="idCardNumber != null">
+				idCardNumber = #{idCardNumber},
+			</if>
+			<if test="phoneNumber != null">
+				phoneNumber = #{phoneNumber},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="isappoint != null">
+				isappoint = #{isappoint},
+			</if>
+			<if test="seqid != null">
+				seqid = #{seqid},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 根据openid获取用户信息 -->
+	<select id="getObjectByOpenId" resultMap="reguserMap">
+		select * from
+		WX_REGISTERUSER where wxopenid = #{wxOpenId}
+	</select>
+	<!-- 根据用户id获取用户信息 -->
+	<select id="getObjectById" resultMap="reguserMap">
+		select * from
+		WX_REGISTERUSER where id = #{id}
+	</select>
+	<!-- 根据身份证号获取用户信息 -->
+	<select id="checkObjectByCard" resultMap="reguserMap">
+		select * from
+		WX_REGISTERUSER where idcardnumber = #{idCardNumber}
+	</select>
+	<!--根据openid获取身份证号码 -->
+	<select id="getCardByOpenId" resultType="String">
+		select idCardNumber from
+		WX_REGISTERUSER where wxOpenId = #{wxOpenId}
+	</select>
+</mapper>

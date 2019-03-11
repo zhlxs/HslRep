@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.wx.dao.WxAppointmeDao">
+	<resultMap type="com.jrwp.wx.entity.OrderCount" id="orderCountJson">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="time" column="time" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="orderCount" column="orderCount" javaType="int"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap type="com.jrwp.wx.entity.CallSquenceJson" id="callSquenceMap">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="openid" column="openid" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isappointment" column="isappointment"
+			javaType="int" jdbcType="INTEGER" />
+		<result property="iscall" column="iscall" javaType="int"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap type="com.jrwp.wx.entity.AppointmeInfoJson" id="appointmeInfoJson">
+		<result property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="cardNumber" column="cardNumber" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="name" column="name" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="deptid" column="deptid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="appointmenttime" column="appointmenttime"
+			javaType="String" jdbcType="VARCHAR" />
+		<result property="status" column="status" javaType="int"
+			jdbcType="INTEGER" />
+		<result property="phone" column="phone" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="time" column="time" javaType="String"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 取消预约 -->
+	<update id="cancelAppointme">
+		update APPOINTME_INFO
+		set status=0
+		where
+		id=#{appointmeId}
+	</update>
+	<!-- 获取预约时间段 -->
+	<select id="getOrderCount" resultMap="orderCountJson">
+		select
+		b.orderCount,c.time,b.id as id from TIME_MODEL a
+		left join Time_Table b
+		on a.id=b.modelid
+		left join Dic_Time c on b.time=c.id
+		where
+		a.businessType=#{businessType}
+		and a.id = #{modelId}
+	</select>
+
+	<select id="getAppointmeCount" resultMap="orderCountJson">
+		select count(1) as
+		orderCount,timequantum as id from APPOINTME_INFO where appointmenttime
+		= to_date(#{day},'yyyy-mm-dd') and STATUS=1 and deptid=#{deptid} and
+		businessType=#{businessType} group by timequantum
+	</select>
+
+	<select id="getAppointmeByCardnumber" resultType="com.jrwp.wx.entity.AppointmeInfoJson">
+		select id from
+		APPOINTME_INFO where appointmenttime =
+		to_date(#{appointmenttime},'yyyy-mm-dd') and STATUS=1 and
+		deptid=#{deptid} and businessType=#{businessType} and
+		cardnumber=#{cardNumber} and timequantum = #{timequantum}
+	</select>
+
+	<insert id="insertAppointmeInfo" parameterType="com.jrwp.wx.entity.AppointmeInfoJson">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_appointme_info_ID.nextval as id from dual
+		</selectKey>
+		insert into APPOINTME_INFO (ID, CARDNUMBER, NAME,
+		DEPTID,
+		APPOINTMENTTIME, STATUS,
+		PHONE,timeQuantum,openid,createtime,isexport,ser_code,isproxy,businessType,ischeck)
+		values (#{id,jdbcType=INTEGER}, #{cardNumber,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{deptid},
+		to_date(#{appointmenttime,jdbcType=VARCHAR},'yyyy-mm-dd'), #{status},
+		#{phone,jdbcType=VARCHAR},
+		#{timequantum},#{openid,jdbcType=VARCHAR},sysdate,#{isexport},#{ser_code},#{isproxy},#{businessType},0)
+	</insert>
+
+	<select id="getAppointmeById" resultType="com.jrwp.wx.entity.AppointmeInfoJson">
+		select
+		a.id,a.cardnumber,a.name,a.deptid,a.appointmenttime,a.status,a.phone,a.openid,a.timequantum,a.ser_code,a.isproxy,a.businessType,b.time
+		from APPOINTME_INFO a left join DIC_TIME b on a.timequantum=b.id where
+		a.id=#{id}
+	</select>
+	
+	<insert id="insertAppointmeSync">
+		insert into APPOINTME_SYNC (ID, STATUS, ISEXPORT)
+		values (#{id,jdbcType=INTEGER}, #{status},
+		#{isexport})
+	</insert>
+	
+</mapper>

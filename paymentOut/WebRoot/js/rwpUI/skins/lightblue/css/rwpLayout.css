@@ -1,0 +1,59 @@
+﻿.rwpLayout{ position:relative;}
+.rwpLayoutHead{ height:30px; border:1px solid #E5E5E5; background-color:#FAFAFA; font:600 14px/32px "微软雅黑","宋体"; text-indent:20px;}
+.rwpLayoutContent{ border:1px solid #E5E5E5; border-width: 0 1px 1px 1px; overflow:hidden;}
+
+.rwpLayoutTop{width:100%; }
+.rwpLayoutBottom{width:100%; position:absolute; z-index:10; overflow:hidden;}
+.rwpLayoutLeft{position:absolute; z-index:10; overflow:hidden;} 
+.rwpLayoutRight{position:absolute; z-index:10; overflow:hidden;}
+.rwpLayoutCenter{position:absolute; z-index:10; overflow:hidden;}
+
+/*Accordion*/
+.rwpAccordion{background-color:#f9f9f9; border-right:1px solid #e5e5e5;}
+.rwpAccordion .rwpAccordionNum{display:inline; float:right; padding-right:9px; margin-top:10px; font-weight:normal; line-height:20px; color:#fff; background:url(../images/imgDropNumBg.gif) no-repeat right -196px;}
+.rwpAccordion .rwpAccordionNum .numBg{display:inline-block; width:9px; height:20px; background:url(../images/imgDropNumBg.gif) no-repeat 0 -176px;}
+
+.rwpAccordionPanel{width:100%;}
+.rwpAccordionBody{ border-bottom: 1px solid #e5e5e5; overflow:auto;}
+
+.rwpAccordionHeader{height:40px; background-color:#f9f9f9; cursor:pointer;} 
+.rwpAccordionHeader:hover{background:#fff url(../images/layout/imgDot5.gif) repeat-y 0 0;}
+.rwpAccordionHeader .headBox{display:block; height:100%; background:url(../images/layout/imgDot6.gif) repeat-x 0 bottom;}
+.rwpAccordionHeaderTitle{display:inline; float:left; height:100%; font:bold 15px/40px "微软雅黑"; color: #585858;}
+.rwpAccordionHeaderIcon{display:inline; float:left; margin:9px 5px 0 10px; width:20px; height:20px; background: url(../images/imgIcon.gif) no-repeat 0 -128px;}
+.rwpAccordionHeaderSel{background-color:#fff; border-right:2px solid #2B7DBC; width:99%;}
+.rwpAccordionHeaderSel:hover{background-image:none;}
+.rwpAccordionHeaderSel .rwpAccordionHeaderTitle{color:#2b7dbc;}
+.rwpAccordionHeaderSel .rwpAccordionHeaderIcon{background-position:-34px -128px;}
+
+/*SimpleTree*/
+.rwpSimpleTree{margin-top:-1px; background-color:#fff;}
+.rwpSimpleTree.rwpTreeSel{border-right:2px solid #2b7dbc;}
+.rwpSimpleTree .rwpSpace{display:inline; float:left; margin-right:10px; height:100%; background:url(../images/layout/imgDot2.gif) repeat-x center center;}
+
+.rwpSimpleTree li{ padding-left:20px; background:url(../images/layout/imgDot3.gif) repeat-x 0 bottom;}
+.rwpSimpleTree .rwpIcon{ display:block; position:relative; margin-left:-2px; margin-top:14px; width:8px; height:8px; background:url(../images/layout/imgDot1.gif) repeat-y 2px 0; line-height:0; font-size:0;}
+.rwpSimpleTree a{display:block; height:36px; background:url(../images/layout/imgDot1.gif) repeat-y 0 0; font:500 14px/36px "宋体"; cursor: pointer;}
+.rwpSimpleTree a .rwpAccordionNum{font-family:Verdana;}
+.rwpSimpleTree a:hover{ overflow:visible;	color:#4b88b7;}
+.rwpSimpleTree a:hover .rwpIcon{background:#fff url(../images/layout/imgDot4.gif) no-repeat 0 -14px ;}
+.rwpSimpleTree a .rwpSelIcon{display:none; width:10px; height:100%; background:url(../images/layout/imgSel.gif) no-repeat right 3px;}
+.rwpSimpleTree a.selected{color:#4b88b7;}
+.rwpSimpleTree a.selected .rwpIcon{display:block; background:#fff url(../images/layout/imgDot4.gif) no-repeat 0 0 ;}
+.rwpSimpleTree a.selected .rwpSelIcon{display:inline; float:right;}
+
+.rwpSimpleTree .rwpSimpleTreeChildren a .rwpIcon{background:none;}
+.rwpSimpleTree .rwpSimpleTreeChildren a:hover .rwpIcon{background:#fff url(../images/layout/imgDot4.gif) no-repeat 0 -13px ;}
+.rwpSimpleTree .rwpSimpleTreeChildren a.selected .rwpIcon{display:block; background:#fff url(../images/layout/imgDot4.gif) no-repeat 0 1px ;}
+
+.rwpSimpleTree .rwpSimpleTreeChildren li{ background:url(../images/layout/imgDot3_2.gif) no-repeat 0 bottom;}
+
+.rwpSimpleTree .rwpSimpleTreeItem .rwpDropIcon{display:inline; float:right; margin:15px 10px 0 5px; width:15px; height:10px; background:url(../images/imgIcon.gif) no-repeat -44px -40px;}
+.rwpSimpleTree .rwpSimpleTreeItem .rwpDropIcon.open{background-position:-308px -40px;}
+
+
+.tablepanel{ display:block; margin:10px 10px 0 10px;}
+
+/*页面标题*/
+.pageHeader{ height:39px; border-bottom:1px solid #e5e5e5; background-color:#f9f9f9; font:bold 15px/39px "微软雅黑"; }
+.pageHeader .i{display:inline; float:left; margin:10px 5px 10px 10px; width:22px; height:20px; background:url(../images/imgIcon.gif) no-repeat -88px -103px}

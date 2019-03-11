@@ -1,0 +1,95 @@
+﻿@model RWP.Domain.core_user_dto
+@{ 
+    ViewBag.Title = "用户信息";
+    Layout = null;
+    int isSys = (int)ViewBag.isSys;    
+}
+<script type="text/javascript">
+    rwpTemp.f_selectuserrole = function () {
+        var url = '@Url.Action("roledialog", "role", new { @area = "Core" })?actiontype=selectrole&roleids=' + $("#roleIDs").val() + '&rnd=' + Math.random();
+        return rwpPluginHelper.selectContact('选择所属角色', url, 'ID', 'roleName', 'roleIDs', 'roleNames');
+    };
+
+    rwpTemp.f_selectuserdeptok = function (node, value, text) {
+        value = value || 0;   //没选择部门时赋值为0
+        $('#deptID').val(value);
+        $('#deptName').val(text);
+    };
+
+    rwpTemp.f_selectuserdept = function () {
+        var url = '@Url.Action("deptdialog", "dept", new { @area = "Core" })?isall=1&deptid=' + $("#deptID").val() + '&rnd=' + Math.random();
+        return rwpPluginHelper.selectContact('选择所属部门', url, 'ID', 'deptName', 'deptID', 'deptName', null, rwpTemp.f_selectuserdeptok);
+    };
+
+    $(function () {
+        $("#passWord").val('@Model.passWord');
+        $("#roleNames").rwpUICombobox({
+            onBeforeOpen: rwpTemp.f_selectuserrole
+        });
+        $("#deptName").rwpUICombobox({
+            onBeforeOpen: rwpTemp.f_selectuserdept
+        });
+        if ("@isSys" == 1)
+            $('#ulIsSys').show();  //系统级管理员 可设置用户的系统级权限        
+        $("#ajaxform").rwpUIForm({ isAjaxSubmit: true });
+    });    
+</script>
+@using (Html.BeginForm("saveuser", "user", FormMethod.Post, new { @id = "ajaxform" }))
+{ 
+    <fieldset>
+        <legend><i class="i"></i>@ViewBag.Title</legend>
+        @Html.HiddenFor(m => m.ID)
+        <div class="formpanel">
+            <div class="clear">
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.userName)</li>
+                    <li class="editor-field">@Html.TextBoxFor(m => m.userName)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.userName)</li>
+                </ul>
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.passWord)</li>
+                    <li class="editor-field">@Html.PasswordFor(m => m.passWord)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.passWord)</li>
+                </ul>
+            </div>
+            <div class="clear">
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.fullName)</li>
+                    <li class="editor-field">@Html.TextBoxFor(m => m.fullName)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.fullName)</li>
+                </ul>
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.phone)</li>
+                    <li class="editor-field">@Html.TextBoxFor(m => m.phone)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.phone)</li>
+                </ul>
+            </div>
+            <div class="clear">
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.deptID)</li>
+                    <li style="display: none;">@Html.HiddenFor(m => m.deptID)</li>
+                    <li class="editor-field">@Html.TextBoxFor(m => m.deptName)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.deptID)</li>
+                </ul>
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.roles)</li>
+                    <li style="display: none;">@Html.HiddenFor(m => m.roleIDs)</li>
+                    <li class="editor-field">@Html.TextBoxFor(m => m.roleNames)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.roleIDs)</li>
+                </ul>
+            </div>
+            <div class="clear">
+                <ul class="DialabelWidth">
+                    <li class="editor-label">@Html.LabelFor(m => m.isStart)</li>
+                    <li class="editor-field">@Html.CheckBoxFor(m => m.isStart)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.isStart)</li>
+                </ul>
+                <ul id="ulIsSys" class="DialabelWidth" style="display: none;">
+                    <li class="editor-label">@Html.LabelFor(m => m.isSys)</li>
+                    <li class="editor-field">@Html.CheckBoxFor(m => m.isSys)</li>
+                    <li class="editor-validation">@Html.ValidationMessageFor(m => m.isSys)</li>
+                </ul>
+            </div>
+        </div>
+    </fieldset>
+}

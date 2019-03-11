@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IMAC_PHOTO_CONFIGDao">
+	<resultMap type="com.jrwp.payMent.entity.MAC_PHOTO_CONFIG"
+		id="photoConfigMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="relationId" column="relationId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="relationType" column="relationType" />
+		<result property="photoId" column="photoId" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="dataType" column="dataType" />
+		<association property="macPhoto" javaType="com.jrwp.payMent.entity.MAC_PHOTO">
+			<result property="photoname" column="photoname" javaType="String"
+				jdbcType="VARCHAR" />
+			<result property="createtime" column="createTime" javaType="java.util.Date"
+				jdbcType="TIMESTAMP" />
+		</association>
+	</resultMap>
+	<!-- 列表 -->
+	<select id="list" resultMap="photoConfigMap">
+		select mpc.*,mc.photoname,mc.createtime from MAC_PHOTO_CONFIG mpc
+		left join MAC_PHOTO mc on mc.id = mpc.photoid
+		where mpc.relationid = #{deptId} order by mpc.id desc
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.MAC_PHOTO_CONFIG">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_MAC_PHOTO_CONFIG_ID.nextval AS id FROM dual
+		</selectKey>
+		insert into MAC_PHOTO_CONFIG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="relationId != null">
+				relationId,
+			</if>
+			<if test="relationType != null">
+				relationType,
+			</if>
+			<if test="photoId != null">
+				photoId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="relationId != null">
+				#{relationId},
+			</if>
+			<if test="relationType != null">
+				#{relationType},
+			</if>
+			<if test="photoId != null">
+				#{photoId},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.jrwp.payMent.entity.MAC_PHOTO_CONFIG">
+		update MAC_PHOTO_CONFIG set relationId = #{relationId} where id = #{id}
+	</update>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="photoConfigMap">
+		select mpc.*,mc.photoname,mc.createtime from MAC_PHOTO_CONFIG mpc
+		left join MAC_PHOTO mc on mc.id = mpc.photoid
+		where mpc.id = #{id}
+	</select>
+	<!-- 根据配置ID获取单个对象 -->
+	<select id="getObjectByOtherId" resultMap="photoConfigMap">
+		select * from MAC_PHOTO_CONFIG where relationId = #{relationId} and photoId = #{photoId}
+	</select>
+	<!-- 删查对象 -->
+	<delete id="deleteById">
+		delete from MAC_PHOTO_CONFIG where id = #{id}
+	</delete>
+</mapper>

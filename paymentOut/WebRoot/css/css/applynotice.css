@@ -1,0 +1,44 @@
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.hzdb {
+    width: 100%;
+    height: 46px;
+    line-height: 46px;
+    background-color: #2185de;
+    font-size: 17px;
+    color: white;
+}
+.hzdb-left {
+    width: 15px;
+    float: left;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+.hzdb-right {
+    width: 80%;
+    float: left;
+    text-align: center;
+}
+.blbt {
+    padding: 5px 11px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px;
+}
+.blbt a {
+    color: #2185df;
+}
+.s_count1 {
+    color: #fff;
+    background: #217AB6;
+    float: right;
+    /*right: 0;*/
+    width: 20%;
+    padding: 8px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-bottom: 1em;
+    /*position: fixed;*/
+}

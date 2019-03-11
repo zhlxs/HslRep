@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.payMent.dao.IDeptTimesAuthDao">
+	<resultMap type="com.jrwp.payMent.entity.DeptTimesAuth" id="timesAuthMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="deptid" column="deptid" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="idCard" column="idCard" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="userName" column="userName" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="createtime" column="createtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="operator" column="operator" javaType="Long"
+			jdbcType="INTEGER" />
+		<result property="authtime" column="authtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="times" column="times" javaType="Integer"
+			jdbcType="INTEGER" />
+		<result property="starttime" column="starttime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+		<result property="endtime" column="endtime" javaType="java.util.Date"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<!-- 列表 -->
+	<select id="list" resultMap="timesAuthMap">
+		select * from DEPT_TIMES_AUTH
+	</select>
+	<!-- 获取单个对象 -->
+	<select id="getObjectById" resultMap="timesAuthMap">
+		select * from DEPT_TIMES_AUTH where id = #{id}
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.jrwp.payMent.entity.DeptTimesAuth">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_DEPT_TIMES_AUTH_ID.nextval AS id FROM dual
+		</selectKey>
+		insert into DEPT_TIMES_AUTH (id,deptid,idcard,username,createtime,status)
+		values (#{id},#{deptid},#{idCard},#{userName},#{createtime},#{status})
+	</insert>
+	<!-- 更新 -->
+	<update id="updateById" parameterType="com.jrwp.payMent.entity.DeptTimesAuth">
+		update DEPT_TIMES_AUTH set operator = #{operator},authtime = #{authtime},
+		times = #{times},starttime = #{starttime},endtime = #{endtime},status = #{status} where id = #{id}
+	</update>
+	<!-- 删除单个对象 -->
+	<delete id="delete">
+		delete from DEPT_TIMES_AUTH where id = #{id}
+	</delete>
+</mapper>

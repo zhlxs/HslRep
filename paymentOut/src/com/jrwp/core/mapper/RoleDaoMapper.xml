@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jrwp.core.dao.IRoleDao">
+	<resultMap type="com.jrwp.core.entity.Core_Role" id="roleMap">
+		<id property="id" column="id" javaType="Long" jdbcType="INTEGER" />
+		<result property="roleName" column="rolename" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="iconCssClass" column="iconcssclass" javaType="String"
+			jdbcType="VARCHAR" />
+		<result property="isSys" column="issys" javaType="Integer"
+			jdbcType="INTEGER" />
+		<collection property="auths" ofType="com.jrwp.core.entity.Core_Auth"
+			javaType="ArrayList">
+			<result property="id" column="authid" javaType="Long"
+				jdbcType="INTEGER" />
+			<result property="authName" column="authname" javaType="String"
+				jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+	<select id="list" resultType="com.jrwp.core.entity.Core_Role">
+		select * from core_role ${whereSql}
+	</select>
+	<select id="getObjectById" parameterType="Long" resultMap="roleMap">
+		select * from core_role left join core_authforrole on
+		core_role.id=core_authforrole.roleid where id = #{id}
+	</select>
+	<select id="getRoleListByIds" resultMap="roleMap">
+		select * from core_role
+		${ids}
+	</select>
+	<delete id="removeAuth" parameterType="Long">
+		delete core_authforrole
+		where roleId=#{id}
+	</delete>
+	<insert id="addAuth">
+		insert into
+		core_authforrole(roleid,authid,authname)
+		values(#{roleId,jdbcType=INTEGER},#{authId,jdbcType=VARCHAR},#{authName,jdbcType=VARCHAR})
+	</insert>
+	<insert id="add" parameterType="com.jrwp.core.entity.Core_Role">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			select SEQ_CORE_ROLE.nextval from dual
+		</selectKey>
+		insert into core_role(id, rolename,
+		<if test="iconCssClass!=null and iconCssClass!='' ">
+			iconcssclass,
+		</if>
+		issys)
+		values(#{id},#{roleName},
+		<if test="iconCssClass!=null and iconCssClass!='' ">#{iconCssClass},
+		</if>
+		#{isSys})
+	</insert>
+	<update id="update" parameterType="com.jrwp.core.entity.Core_Role">
+		update core_role
+		<set>
+			<if test="roleName!=null and roleName!='' ">
+				rolename = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="iconCssClass!=null and iconCssClass!='' ">
+				iconcssclass = #{iconCssClass,jdbcType=VARCHAR},
+			</if>
+			issys = #{isSys,jdbcType=INTEGER}
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<delete id="delete" parameterType="Long">
+		delete from core_role
+		where id
+		= #{id}
+	</delete>
+</mapper>

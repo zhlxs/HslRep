@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>临时证取号</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/msgbox.css">
+    <link rel="stylesheet" href="css/myAlert.min.css">
+    <script src="js/jquery-2.1.4.js"></script>
+    <script src="js/loading_PC.js"></script>
+    <!--<script src="js/msgbox.js"></script>-->
+    <script src="js/myAlert.min.js"></script>
+</head>
+<body>
+<div class="mCLoginInfo fCLogin">
+    <div class="ht">
+        <h1 class="logo">
+            <i class="icon">&nbsp;</i>临时证取号
+        </h1>
+    </div>
+    <!--//ht结束-->
+
+
+    <div id="formChild1" style="display: none" class="loginStyle ct">
+        <p class="thBg"></p>
+        <div class="bd">
+            <div class="content">
+                <form id="ajaxform1" action="" method="post" novalidate="novalidate">
+                    <ul class="list">
+                        <li class="label"><label for="userName">姓&nbsp;&nbsp;名：</label></li>
+                        <li class="clear"></li>
+                        <li class="inputLine"><input data-val="true" data-val-length="用户名不能超过20字符" data-val-length-max="20" data-val-required="请输入用户名" id="userName0" name="userName" type="text" value=""></li>
+                        <li class="verifyLine"><span class="field-validation-valid" data-valmsg-for="userName" data-valmsg-replace="true"></span> <span class="tip">请输入用户名</span></li>
+                    </ul>
+                    <ul class="list">
+                        <li class="label"><label for="password">身份证号码：</label>
+                        </li>
+                        <li class="clear"></li>
+                        <li class="inputLine"><input data-val="true" data-val-length="密码长度必须是6到32个字符" data-val-length-max="32" data-val-length-min="6" data-val-required="请输入密码" id="password0" name="password" type="text"></li>
+                        <li class="verifyLine"><span class="field-validation-valid" data-valmsg-replace="true"></span><span class="tip">请输入密码</span></li>
+                    </ul>
+                    <ul>
+                        <!-- <li><input id="remeberMe" type="checkbox" value="RemeberMe"
+                            name="remeberMe" /><label for="remeberMe"><span style="margin-left:10px">记住我</span></label>
+                        </li> -->
+                        <li class="submitLine">
+                            <a id="checkbt" href="javascript:void(0);" class="login rwpButton">
+                                查&nbsp;询
+                            </a>
+                            <!--<p class="clear"></p>-->
+                        </li>
+                        <!--<p class="clear"></p>-->
+                        <li class="submitLine" style="float: right">
+                            <a href="javascript:void(0);" class="login rwpButton" onclick="backLogin()">
+                                返&nbsp;回
+                            </a>
+                            <!--<p class="clear"></p>-->
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <!--//content结束-->
+        </div>
+        <!--//bd结束-->
+        <p class="ftBg"></p>
+    </div>
+
+
+
+    <div id="formChild2" style="display: none" class="loginStyle ct">
+        <p class="thBg"></p>
+        <div class="bd">
+            <div class="content">
+                <form id="ajaxform" action="" method="post" novalidate="novalidate">
+                    <ul class="list">
+                        <li class="label"><label for="userName">姓&nbsp;&nbsp;名：</label></li>
+                        <li class="clear"></li>
+                        <li class="inputLine"><input data-val="true" data-val-length="用户名不能超过20字符" data-val-length-max="20" data-val-required="请输入用户名" id="userName" name="userName" type="text" value=""></li>
+                        <li class="verifyLine"><span class="field-validation-valid" data-valmsg-for="userName" data-valmsg-replace="true"></span> <span class="tip">请输入用户名</span></li>
+                    </ul>
+                    <ul class="list">
+                        <li class="label"><label for="password">身份证号码：</label>
+                        </li>
+                        <li class="clear"></li>
+                        <li class="inputLine"><input data-val="true" data-val-length="密码长度必须是6到32个字符" data-val-length-max="32" data-val-length-min="6" data-val-required="请输入密码" id="password" name="password" type="text"></li>
+                        <li class="verifyLine"><span class="field-validation-valid" data-valmsg-for="password" data-valmsg-replace="true"></span><span class="tip">请输入密码</span></li>
+                    </ul>
+                    <ul class="list" style="width: 280px;">
+                        <li class="label"><label>业务类型： </label></li>
+                        <li class="clear"></li>
+                        <li class="codeLine" style="margin-left: -10px">
+                            <!--<input id="checkCode" name="checkCode" type="text" value="">-->
+                            <!--<img alt="点击刷新验证码" src="/hgtwxhz/validateCode" id="imgs">-->
+                            <ul class="clearfix">
+                                <li class="cr">
+                                    <div class="box" onclick="bt(this)">
+                                        <input businessType="1" type="radio"  id="radio1"  name="radio"/>
+                                        <label for="radio1">
+                                            <span style="margin-left: -40%">综合业务</span>
+                                        </label>
+                                    </div>
+                                    <!--<div class="line"></div>-->
+                                </li>
+                                <li class="cr">
+                                    <div class="box" onclick="bt(this)">
+                                        <input businessType="2" type="radio"  id="radio2"  name="radio"/>
+                                        <label for="radio2">
+                                            <span style="margin-left: -40%">代办业务</span>
+                                        </label>
+                                    </div>
+                                    <!--<div class="line"></div>-->
+                                </li>
+                                <li class="cr">
+                                    <div class="box" onclick="bt(this)">
+                                        <input businessType="4" type="radio"  id="radio3"  name="radio"/>
+                                        <label for="radio3">
+                                            <span style="margin-left: -40%">疑难窗口</span>
+                                        </label>
+                                    </div>
+                                    <!--<div class="line"></div>-->
+                                </li>
+                            </ul>
+                        </li>
+                        <!--<li class="verifyLine">-->
+                            <!--<span class="field-validation-valid" data-valmsg-for="checkCode" data-valmsg-replace="true"></span>-->
+                            <!--<span class="tip">请输入验证码</span>-->
+                        <!--</li>-->
+                    </ul>
+                    <ul>
+                        <!-- <li><input id="remeberMe" type="checkbox" value="RemeberMe"
+                            name="remeberMe" /><label for="remeberMe"><span style="margin-left:10px">记住我</span></label>
+                        </li> -->
+                        <li class="submitLine">
+                            <a id="btnLogin" href="javascript:void(0);" class="login rwpButton">
+                                取&nbsp;号
+                            </a>
+                            <p class="clear"></p>
+                        </li>
+                        <li class="submitLine" style="float: right">
+                            <a href="javascript:void(0);" class="login rwpButton" onclick="backLogin()">
+                                返&nbsp;回
+                            </a>
+                            <!--<p class="clear"></p>-->
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <!--//content结束-->
+        </div>
+        <!--//bd结束-->
+        <p class="ftBg"></p>
+    </div>
+
+
+    <div class="loginStyle ct" style="display: block" id="formChoice">
+        <p class="thBg"></p>
+        <div class="bd">
+            <div class="content">
+                <form id="ajaxform2" action="" method="post" novalidate="novalidate">
+                    <ul>
+                        <!-- <li><input id="remeberMe" type="checkbox" value="RemeberMe"
+                            name="remeberMe" /><label for="remeberMe"><span style="margin-left:10px">记住我</span></label>
+                        </li> -->
+                        <!--<li class="submitLine"><a id="finishChoice" href="javascript:void(0);" class="login rwpButton"><i class="icon">&nbsp;</i>取&nbsp;号</a>-->
+                            <!--<p class="clear"></p>-->
+                        <!--</li>-->
+                        <!--<p class="clear"></p>-->
+                        <a href="javascript:void (0)" class="button button-blue" onclick="appoint()">
+                            <span>预约取号</span>
+                        </a>
+                        <a href="javascript:void (0)" class="button button-blue" onclick="present()">
+                            <span>现场取号</span>
+                        </a>
+                        <li></li>
+                    </ul>
+                </form>
+            </div>
+            <!--//content结束-->
+        </div>
+        <!--//bd结束-->
+        <p class="ftBg"></p>
+    </div>
+
+
+    <!--列表-->
+    <div class="j_clubContent" id="pointContent" style="display: none;padding-top: 20px;width: 1190px;margin: 0 auto;">
+        <div class="content" style="padding-top: 8px;">
+            <div class="detail">
+                <div class="masthead clearfix">
+                    <span class="why">身份证号</span>
+                    <span class="what">姓名</span>
+                    <span class="when">预约日期</span>
+                    <span class="notes right">预约时间段</span>
+                    <span class="type" style="border-right: none">业务类型</span>
+                </div>
+                <div id="J_pointDetail">
+                    <ul class="item-list" id="J_item_list">
+                        <li class="item clearfix">
+                            <div class="why">
+                                <span class="order-number" style="text-align: center">622425199405220616</span>
+                            </div>
+                            <div class="what">
+                                <span class="1 plus">张凯</span>
+                            </div>
+                            <div class="when" style="text-align:center;">2018年1月24日</div>
+                            <div class="notes" style="text-align:center;">9:00-10:00</div>
+                            <div class="notes" style="text-align:center;">综合业务</div>
+                        </li>
+                    </ul>
+                    <ul class="item-list" id="J_item_list1">
+                        <li class="item clearfix">
+                            <div class="why">
+                                <span class="order-number" style="text-align: center">622425199405220616</span>
+                            </div>
+                            <div class="what">
+                                <span class="1 plus">张凯</span>
+                            </div>
+                            <div class="when" style="text-align:center;">2018年1月24日</div>
+                            <div class="notes" style="text-align:center;">9:00-10:00</div>
+                            <div class="notes" style="text-align:center;">综合业务</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--//ct结束-->
+    <div class="ft">
+        <p>建议使用浏览器：IE7-11,Google Chrome</p>
+        <p class="grey"></p>
+    </div>
+    <!--//ft结束-->
+</div>
+
+<!--loading-->
+<div class="zeng_msgbox_layer_wrap" id="q_Msgbox" style="display: none">
+    <span class="zeng_msgbox_layer" style="z-index: 10000;" id="mode_tips_v2">
+        <span class="gtl_ico_clear"></span><span class="gtl_ico_loading"></span>
+        <span id="loadingInfo">正在加载中，请稍候...</span>
+        <span class="gtl_end"></span>
+    </span>
+</div>
+
+
+
+
+
+</body>
+<script type="text/javascript">
+
+//    alert(document.documentElement.clientHeight);
+//    $("#q_Msgbox").css("height",document.documentElement.clientHeight);
+    $("#mode_tips_v2").css("top",document.documentElement.clientHeight/2);
+
+    var tip = "正在加载中，请稍候...";
+
+
+    var businesstype;
+
+    function IdentityCodeValid(code) {
+        var city = {
+            11: "北京",
+            12: "天津",
+            13: "河北",
+            14: "山西",
+            15: "内蒙古",
+            21: "辽宁",
+            22: "吉林",
+            23: "黑龙江 ",
+            31: "上海",
+            32: "江苏",
+            33: "浙江",
+            34: "安徽",
+            35: "福建",
+            36: "江西",
+            37: "山东",
+            41: "河南",
+            42: "湖北 ",
+            43: "湖南",
+            44: "广东",
+            45: "广西",
+            46: "海南",
+            50: "重庆",
+            51: "四川",
+            52: "贵州",
+            53: "云南",
+            54: "西藏 ",
+            61: "陕西",
+            62: "甘肃",
+            63: "青海",
+            64: "宁夏",
+            65: "新疆",
+            71: "台湾",
+            81: "香港",
+            82: "澳门",
+            91: "国外 "
+        };
+        var tip = "";
+        var pass = true;
+
+        if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+            tip = "身份证号填写错误";
+            pass = false;
+        }
+
+        else if (!city[code.substr(0, 2)]) {
+            tip = "身份证号填写错误";
+            pass = false;
+        }
+        else {
+            //18位身份证需要验证最后一位校验位
+            if (code.length == 18) {
+                code = code.split('');
+                //∑(ai×Wi)(mod 11)
+                //加权因子
+                var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+                //校验位
+                var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+                var sum = 0;
+                var ai = 0;
+                var wi = 0;
+                for (var i = 0; i < 17; i++) {
+                    ai = code[i];
+                    wi = factor[i];
+                    sum += ai * wi;
+                }
+                var last = parity[sum % 11];
+                if (parity[sum % 11] != code[17]) {
+                    tip = "身份证号填写错误";
+                    pass = false;
+                }
+            }
+        }
+//        if (!pass) alert(tip);
+        return pass;
+    }
+
+    function backLogin() {
+        location.reload();
+    }
+    function bt(object) {
+        console.log($(object).children("input").attr("businessType"));
+        businesstype = $(object).children("input").attr("businessType")
+    }
+    function appoint() {
+        $("#formChoice").hide();
+        $("#formChild1").show();
+    }
+    function present() {
+        $("#formChoice").hide();
+        $("#formChild2").show();
+    }
+    $("#checkbt").click(function () {
+//        alert(111);
+//        $("#formChild1").hide();
+        var userName = $("#userName0").val(),
+        IDNumber = $("#password0").val();
+//        console.log(userName);
+//        console.log(IDNumber);
+        if($("#userName0").val() == "" || $("#password0").val() == ""){
+            $.myAlert('姓名或身份证号不能为空！')
+        }else if(!/^[\u4e00-\u9fa5]+$/i.test($("#userName0").val())){
+            $.myAlert('非法字符串，请重填');
+            $("#userName0").val("");
+        }
+        else if(!IdentityCodeValid($("#password0").val())){
+            $.myAlert('身份证号码错误，请重填');
+            $("#password0").val("");
+        }
+        else{
+            $("#q_Msgbox").show();
+            $.ajax({
+                url:'http://10.137.42.81:8080/paymentOut/queuing/queuingController/wxwebappointInfo',
+                type:'post',
+                dataType:'json',
+                data:{cardNumber:$("#password0").val()},
+                success:function (data) {
+                    console.log(data.stateValue);
+                    $.each(data.stateValue,function (index,value) {
+                        $("#J_pointDetail").append(
+                            "<ul recordId='"+value.id+"' class='item-list' id='J_item_list"+index+"' onclick='alert1(this)'>"+
+                            "<li class='item clearfix'>"+
+                            "<div class='why'>"+
+                            "<span class='order-number' style='text-align: center'>"+value.cardNumber+"</span>"+
+                            "</div>"+
+                            "<div class='what'>"+
+                            "<span class='1 plus'>"+张凯+"</span>"+
+                            "</div>"+
+                            "<div class='when' style='text-align:center;'>"+value.appointmenttime+"</div>"+
+                            "<div class='notes' style='text-align:center;'>"+value.time+"</div>"+
+                            "<div class='notes' style='text-align:center;'>"+value.business+"</div>"+
+                            "</li>"+
+                            "</ul>"
+                        )
+                    })
+                }
+            })
+        }
+
+    });
+    function alert1(object) {
+        $(object).css({"background":"#f2f2f2"});
+        $(object).siblings().css({"background":"#fff"});
+        console.log($(object).attr("recordId"));
+        $.myConfirm({
+            title:'提示',
+            message:'是否打印此条记录？',
+            callback:function () {
+                $("#q_Msgbox").show();
+                $("#loadingInfo").text("生成号码中，请稍候...");
+                $.ajax({
+                    url:'http://10.137.42.81:8080/paymentOut/queuing/queuingController/wxwebsignin',
+                    type:'post',
+                    dataType:'json',
+                    data:{
+                        cardNumber:0,
+                        name:0,
+                        businessType:0,
+                        id:$(object).attr("recordId")
+                    },
+                    success:function (data) {
+                        if(data.stateValue == 0){
+                            $.myToast("取号成功");
+                            var list = data.stateValue;
+                            window.open("print.html?dataId="+list.squence,"_blank")
+                        }else if(data.stateValue == 1){
+                            $.myAlert("取号失败，请重试");
+                        }else if(data.stateValue == 2){
+                            $.myAlert("该条记录已经取过号了，请选择其他记录");
+                        }else if(data.stateValue == 3){
+                            $.myAlert("该记录为黑名单记录，无法取号");
+                        }else if(data.stateValue == 4){
+                            $.myConfirm({
+                                title:'提示',
+                                message:'该身份信息已达本日取号次数上限，无法取号',
+                                callback:function () {
+                                    location.reload();
+                                }
+                            });
+                        }
+
+                    }
+                })
+            }
+        })
+
+    }
+    $("#btnLogin").click(function () {
+        var username = $("#userName").val(),
+            idnumber = $("#password").val();
+            console.log(businesstype);
+        if($("#userName").val() == "" || $("#password").val() == ""){
+            $.myAlert('姓名或身份证号不能为空！')
+        }else if(!/^[\u4e00-\u9fa5]+$/i.test($("#userName").val())){
+            $.myAlert('非法字符串，请重填');
+            $("#userName").val("");
+        }
+        else if(!IdentityCodeValid($("#password").val())){
+            $.myAlert('身份证号码错误，请重填');
+            $("#password").val("");
+        }else if(businesstype == undefined){
+            $.myAlert('请选择业务类型');
+        }
+        else{
+            $("#q_Msgbox").show();
+            $("#loadingInfo").text("生成号码中，请稍后...");
+            $.ajax({
+                url:'http://10.137.42.81:8080/paymentOut/queuing/queuingController/wxwebsignin',
+                type:'post',
+                dataType:'json',
+                data:{
+                    cardNumber:$("#password").val(),
+                    name:$("#userName").val(),
+                    businessType:businesstype,
+                    id:0
+                },
+                success:function (data) {
+                    if(data.stateValue == 0){
+                        $.myToast("取号成功");
+                        var list1 = data.stateValue;
+                        window.open("print.html?dataId="+list1.squence,"_blank")
+                    }else if(data.stateValue == 1){
+                        $.myAlert("取号失败，请重试");
+                    }else if(data.stateValue == 2){
+                        $.myAlert("该条记录已经取过号了，请选择其他记录");
+                    }else if(data.stateValue == 3){
+                        $.myAlert("该记录为黑名单记录，无法取号");
+                    }else if(data.stateValue == 4){
+                        $.myConfirm({
+                            title:'提示',
+                            message:'该身份信息已达本日取号次数上限，无法取号',
+                            callback:function () {
+                                location.reload();
+                            }
+                        });
+                    }
+
+                }
+            })
+        }
+    })
+</script>
+</html>
